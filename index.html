@@ -154,14 +154,14 @@
     display:flex;justify-content:space-between;align-items:center;
     padding:20px clamp(20px,5vw,56px);
     font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:.04em;
-    color:var(--text-muted);
+    color:#94A3B8;
     backdrop-filter:blur(14px);
-    background:rgba(244, 247, 252, 0.85);
-    border-bottom:1px solid var(--border-light);
-    box-shadow:0 4px 20px rgba(15, 23, 42, 0.03);
+    background:rgba(10, 10, 15, 0.85);
+    border-bottom:1px solid rgba(255, 255, 255, 0.08);
+    transition:background .4s ease, border-color .4s ease, color .4s ease;
   }
   nav .tag{
-    color:var(--trust-navy);
+    color:#F8FAFC;
     font-weight:700;
     display:flex;
     align-items:center;
@@ -177,157 +177,207 @@
   }
   nav .links{display:flex;gap:32px;}
   nav .links a{transition:color .2s ease;}
-  nav .links a:hover{color:var(--cloud-accent);}
+  nav .links a:hover{color:#60A5FA;}
   @media (max-width:640px){ nav .links{display:none;} }
 
-  /* ---------- Hero Section ---------- */
-  #hero{
-    position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;
-    justify-content:center;padding:140px clamp(20px,5vw,60px) 60px;overflow:hidden;
-  }
-  .hero-ascii-bg{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    opacity:0.04;mix-blend-mode:multiply;pointer-events:none;z-index:0;
-    filter:contrast(120%);
-  }
-  #circuit-canvas,#hero-canvas{position:absolute;inset:0;z-index:1;pointer-events:none;}
-  
-  .hero-container{
-    position:relative;z-index:10;width:100%;max-width:1280px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;
+  /* ---------- Dark Cinematic Hero Section ---------- */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 130px clamp(20px, 5vw, 60px) 70px;
+    overflow: hidden;
+    background: #0A0A0F;
+    color: #F8FAFC;
+    transform-origin: center bottom;
   }
 
-  .hero-content{display:flex;flex-direction:column;align-items:center;text-align:center;}
-  .eyebrow{
-    font-family:var(--font-display);font-size:clamp(11px,1.4vw,13px);
-    font-weight:700;letter-spacing:.18em;color:var(--cloud-accent);text-transform:uppercase;
-    margin-bottom:20px;opacity:0;
-    background:rgba(59, 130, 246, 0.08);
-    padding:6px 16px;
-    border-radius:20px;
-    border:1px solid rgba(59, 130, 246, 0.2);
+  .hero-spotlight-backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(circle at 72% 48%, rgba(43, 78, 255, 0.22) 0%, rgba(30, 58, 138, 0.1) 45%, transparent 70%);
   }
-  
-  h1.name{
-    font-family:var(--font-display);font-weight:800;
-    font-size:clamp(3.2rem,7.5vw,6rem);line-height:1.02;letter-spacing:-.03em;
-    background:linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #2563EB 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    filter: drop-shadow(0 4px 20px rgba(37, 99, 235, 0.12));
+
+  #dust-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1280px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  @media (max-width: 960px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 40px;
+    }
+    .hero-content {
+      align-items: center !important;
+      text-align: center !important;
+    }
+    .role-line, .hero-social-bar {
+      justify-content: center !important;
+    }
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 1.4vw, 13px);
+    font-weight: 700;
+    letter-spacing: .18em;
+    color: #60A5FA;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0;
+    background: rgba(43, 78, 255, 0.14);
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+  }
+
+  h1.name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(3.2rem, 7.2vw, 5.8rem);
+    line-height: 1.02;
+    letter-spacing: -.03em;
+    background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 50%, #60A5FA 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 4px 20px rgba(43, 78, 255, 0.25));
   }
   .name .word{display:inline-block;overflow:hidden;vertical-align:top;}
   .name .word span{display:inline-block;transform:translateY(110%);}
 
-  .role-line{
-    margin-top:22px;font-family:var(--font-display);font-weight:600;
-    font-size:clamp(16px,2.4vw,21px);color:var(--text-muted);
-    display:flex;gap:10px;align-items:center;justify-content:center;opacity:0;
+  .role-line {
+    margin-top: 22px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(16px, 2.4vw, 21px);
+    color: #94A3B8;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    opacity: 0;
   }
-  .role-line .cursor-blink{color:var(--sky-blue);animation:blink 1s step-end infinite;}
-  @keyframes blink{50%{opacity:0;}}
-  #roleWord{color:var(--cloud-accent);min-width:10ch;display:inline-block;text-align:left;font-weight:700;}
 
-  .hero-sub{
-    margin-top:18px;max-width:560px;
-    color:var(--text-muted);font-size:16px;line-height:1.65;opacity:0;
+  .role-line .cursor-blink { color: #60A5FA; animation: blink 1s step-end infinite; }
+  @keyframes blink{50%{opacity:0;}}
+  #roleWord { color: #60A5FA; min-width: 10ch; display: inline-block; text-align: left; font-weight: 700; }
+
+  .hero-sub {
+    margin-top: 18px;
+    max-width: 520px;
+    color: #94A3B8;
+    font-size: 16px;
+    line-height: 1.65;
+    opacity: 0;
   }
-  .hero-social-bar{
-    margin-top:30px;display:flex;gap:14px;justify-content:center;align-items:center;
-    flex-wrap:wrap;opacity:0;transition:opacity .5s ease;
+
+  .hero-social-bar {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    transition: opacity .5s ease;
   }
-  .h-social-btn{
-    display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:30px;
-    font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:.02em;
-    background:var(--bg-surface);border:1px solid var(--border-light);color:var(--text-main);
-    box-shadow:var(--shadow-soft);
-    transition:all .3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  .h-social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #F8FAFC;
+    backdrop-filter: blur(12px);
+    transition: all .3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .h-social-btn svg{width:16px;height:16px;transition:transform .3s ease;}
-  .h-social-btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:var(--sky-light);}
-  .h-social-btn.hs{border-color:rgba(217, 119, 6, 0.3);color:var(--amber-soft);}
-  .h-social-btn.hs:hover{background:var(--amber-soft);color:#fff;box-shadow:0 10px 25px rgba(217, 119, 6, 0.3);}
-  .h-social-btn.ig{border-color:rgba(225, 48, 108, 0.3);color:var(--ig);}
-  .h-social-btn.ig:hover{background:var(--ig);color:#fff;box-shadow:0 10px 25px rgba(225, 48, 108, 0.3);}
-  .h-social-btn.yt{border-color:rgba(239, 68, 68, 0.3);color:var(--yt);}
-  .h-social-btn.yt:hover{background:var(--yt);color:#fff;box-shadow:0 10px 25px rgba(239, 68, 68, 0.3);}
-  .h-social-btn.li{border-color:rgba(37, 99, 235, 0.3);color:var(--li);}
-  .h-social-btn.li:hover{background:var(--li);color:#fff;box-shadow:0 10px 25px rgba(37, 99, 235, 0.3);}
-
-  /* Spotlight Mouse Effect */
-  .spotlight-overlay {
-    position: absolute;
-    pointer-events: none;
-    width: 380px;
-    height: 380px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.12) 0%, rgba(96, 165, 250, 0.06) 40%, transparent 75%);
-    filter: blur(22px);
-    transform: translate(-50%, -50%);
-    transition: opacity 0.25s ease;
-    z-index: 3;
-    opacity: 0;
+  .h-social-btn:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.14);
+    border-color: #60A5FA;
+    box-shadow: 0 10px 30px rgba(43, 78, 255, 0.25);
   }
-  .spotlight-card:hover .spotlight-overlay { opacity: 1; }
 
-  /* ---------- 3D Robot Interactive Stage (Cloud Sky Theme) ---------- */
-  .hero-robot-stage {
+  /* 3D Robot Container on Right Side */
+  .hero-robot-container {
     position: relative;
     width: 100%;
-    max-width: 1280px;
-    height: 400px;
-    margin: 60px auto 0;
-    border-radius: 28px;
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-soft);
-    overflow: hidden;
+    height: 500px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 24px 44px;
-    backdrop-filter: blur(16px);
-    z-index: 10;
-    opacity: 0;
-    transform: translateY(30px);
+    justify-content: center;
   }
-  @media (max-width: 850px) {
-    .hero-robot-stage {
-      flex-direction: column;
-      height: auto;
-      text-align: center;
-      padding: 28px 24px;
-    }
+
+  .robot-floor-glow {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 340px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.4) 0%, rgba(30, 58, 138, 0.18) 50%, transparent 80%);
+    filter: blur(22px);
+    pointer-events: none;
   }
-  .robot-stage-text {
-    flex: 1.2;
-    z-index: 10;
-    max-width: 600px;
+
+  .robot-floor-ring {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%) rotateX(75deg);
+    width: 290px;
+    height: 290px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(96, 165, 250, 0.35);
+    pointer-events: none;
+    animation: ringSpin 25s linear infinite;
   }
-  .robot-stage-text h3 {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 800;
-    line-height: 1.1;
-    background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #2563EB 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 12px;
+
+  @keyframes ringSpin {
+    from { transform: translateX(-50%) rotateX(75deg) rotate(0deg); }
+    to { transform: translateX(-50%) rotateX(75deg) rotate(360deg); }
   }
-  .robot-stage-text p {
-    color: var(--text-muted);
-    font-size: 15px;
-    line-height: 1.6;
-    max-width: 480px;
-  }
+
   .robot-spline-wrapper {
-    flex: 1;
-    height: 380px;
-    width: 100%;
     position: relative;
+    width: 100%;
+    height: 100%;
     z-index: 5;
-    overflow: hidden;
   }
   spline-viewer {
     width: 100%;
@@ -344,14 +394,29 @@
     pointer-events: none !important;
   }
 
-  .scroll-cue{
-    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
-    display:flex;flex-direction:column;align-items:center;gap:10px;
-    font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.15em;
-    color:var(--text-subtle);z-index:1;opacity:0;
+  .scroll-cue {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    color: #64748B;
+    z-index: 10;
+    opacity: 0;
   }
-  .scroll-cue .bar{width:2px;height:32px;background:linear-gradient(var(--sky-blue),transparent);
-    animation:scrollmove 1.8s ease-in-out infinite;}
+  .scroll-cue .bar {
+    width: 1.5px;
+    height: 28px;
+    background: linear-gradient(#60A5FA, transparent);
+    animation: scrollmove 1.8s ease-in-out infinite;
+  }
   @keyframes scrollmove{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}
     50.01%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
 
@@ -359,7 +424,7 @@
   .trace-svg{position:absolute;top:0;left:clamp(14px,4vw,32px);z-index:0;pointer-events:none;overflow:visible;}
   .trace-svg line{stroke:var(--sky-light);stroke-width:2;opacity:.35;}
 
-  /* ---------- Section Shell ---------- */
+  /* ---------- Section Shell (Light Cloud Blue Theme) ---------- */
   section{position:relative;padding:110px clamp(20px,6vw,80px);z-index:1;}
   .section-head{display:flex;align-items:center;gap:16px;margin-bottom:48px;}
   .section-head .idx{
@@ -604,9 +669,10 @@
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important;transition-duration:0.01ms !important;}
     .hero-ascii-bg{display:none;}
-    #circuit-canvas,#hero-canvas{display:none;}
+    #dust-canvas{display:none;}
     .orbit-orb{animation:none !important;}
     .orbit-core-radar{animation:none !important;}
+    .robot-floor-ring{animation:none !important;}
     [data-reveal]{opacity:1;transform:none;}
     .scroll-cue .bar{animation:none;}
   }
@@ -614,7 +680,7 @@
 </head>
 <body>
 
-<!-- Ambient Cloud Mesh Background -->
+<!-- Ambient Cloud Mesh Background (for sections below Hero) -->
 <div class="ambient-mesh">
   <div class="mesh-blob blob-1"></div>
   <div class="mesh-blob blob-2"></div>
@@ -624,7 +690,7 @@
 <div class="cursor-dot"></div>
 <div class="cursor-reticle" id="reticle"></div>
 
-<nav>
+<nav id="navbar">
   <div class="tag">MANTEJ SINGH</div>
   <div class="links">
     <a href="#ventures" class="magnet">Ventures</a>
@@ -633,13 +699,16 @@
   </div>
 </nav>
 
-<!-- ================= HERO ================= -->
+<!-- ================= DARK CINEMATIC HERO ================= -->
 <section id="hero">
-  <video class="hero-ascii-bg" src="https://assets.21st.dev/ascii-recipes/videos/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/38f24872-2e1b-4582-bcf0-375dceb1e481.mp4" poster="https://assets.21st.dev/ascii-recipes/thumbnails/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/f1e9ca31-92ab-465d-a08f-41a0393623ce.webp" autoplay loop muted playsinline aria-hidden="true" role="presentation"></video>
-  <canvas id="circuit-canvas" aria-hidden="true"></canvas>
-  <canvas id="hero-canvas"></canvas>
+  <!-- Subtle particle dust motes canvas -->
+  <canvas id="dust-canvas" aria-hidden="true"></canvas>
+
+  <!-- Deep Blue/Indigo Studio Spotlight Glow Backdrop -->
+  <div class="hero-spotlight-backdrop"></div>
   
   <div class="hero-container">
+    <!-- Left Column: Human Intro Text & Social Links -->
     <div class="hero-content">
       <div class="eyebrow" id="eyebrow">FOUNDER &amp; CTO · TECH CREATOR</div>
       <h1 class="name" id="nameHeading">
@@ -667,22 +736,19 @@
         </a>
       </div>
     </div>
+
+    <!-- Right Column: 3D Robot Visual in Clean Negative Space -->
+    <div class="hero-robot-container" id="robotStage">
+      <!-- Floor Spotlight Pool & Dashed Ring under feet -->
+      <div class="robot-floor-glow"></div>
+      <div class="robot-floor-ring"></div>
+      <div class="robot-spline-wrapper">
+        <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+      </div>
+    </div>
   </div>
 
   <div class="scroll-cue" id="scrollCue"><span>SCROLL</span><div class="bar"></div></div>
-
-  <!-- 3D Robot & Spotlight Interactive Stage (Cloud Sky Theme) -->
-  <div class="hero-robot-stage spotlight-card magnet" id="robotStage">
-    <div class="spotlight-overlay" id="spotlightOverlay"></div>
-    <div class="robot-stage-text">
-      <div class="eyebrow" style="opacity: 1; margin-bottom: 12px; background: rgba(37,99,235,0.08); border-color: rgba(37,99,235,0.2);">INTERACTIVE 3D EXPERIENCE</div>
-      <h3>3D SYSTEM LAB</h3>
-      <p>Interactive 3D Robot model active. Move your cursor over the card to explore the scene in real time.</p>
-    </div>
-    <div class="robot-spline-wrapper">
-      <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
-    </div>
-  </div>
 </section>
 
 <div class="trace-wrap" id="traceWrap">
@@ -826,11 +892,47 @@ gsap.registerPlugin(ScrollTrigger);
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch = window.matchMedia('(hover:none)').matches;
 
-/* Pause video if reduced motion */
-if (reduceMotion) {
-  const heroVid = document.querySelector('.hero-ascii-bg');
-  if (heroVid) { heroVid.pause(); heroVid.removeAttribute('autoplay'); }
-}
+/* Particle Dust Motes in Hero Backdrop */
+(function(){
+  const canvas = document.getElementById('dust-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, motes = [];
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for(let i = 0; i < 35; i++){
+    motes.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.8 + 0.5,
+      alpha: Math.random() * 0.4 + 0.1,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: -Math.random() * 0.3 - 0.1
+    });
+  }
+
+  function render(){
+    requestAnimationFrame(render);
+    if(reduceMotion) return;
+    ctx.clearRect(0, 0, w, h);
+    for(let m of motes){
+      m.x += m.vx; m.y += m.vy;
+      if(m.y < 0) m.y = h;
+      if(m.x < 0) m.x = w;
+      if(m.x > w) m.x = 0;
+      ctx.beginPath();
+      ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(147, 197, 253, ${m.alpha})`;
+      ctx.fill();
+    }
+  }
+  render();
+})();
 
 /* Lazy-load Spline 3D scene via IntersectionObserver */
 (function(){
@@ -864,112 +966,46 @@ if(!isTouch){
   });
 }
 
-/* ---------------- Three.js Hero Crystal (Light Sky Blue Re-color) ---------------- */
+/* Navbar Theme Transition on Scroll */
 (function(){
-  const canvas = document.getElementById('hero-canvas');
-  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, .1, 100);
-  camera.position.set(0,0,8.5);
-
-  function setSize(){
-    const w=window.innerWidth, h=window.innerHeight;
-    renderer.setSize(w,h);
-    camera.aspect=w/h; camera.updateProjectionMatrix();
-  }
-  setSize();
-
-  // Sky Blue wireframe icosahedron core
-  const coreGeo = new THREE.IcosahedronGeometry(1.4, 1);
-  const coreMat = new THREE.MeshBasicMaterial({
-    color: 0x3B82F6,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.45
-  });
-  const faceMesh = new THREE.Mesh(coreGeo, coreMat);
-  scene.add(faceMesh);
-
-  // Outer glowing frame ring around crystal
-  const frameGeo = new THREE.RingGeometry(1.5, 1.58, 64);
-  const frameMat = new THREE.MeshBasicMaterial({
-    color: 0x2563EB,
-    side: THREE.DoubleSide,
-    transparent: true,
-    opacity: 0.6
-  });
-  const frameMesh = new THREE.Mesh(frameGeo, frameMat);
-  faceMesh.add(frameMesh);
-
-  // Rotating sky blue cybernetic rings
-  const ring1Geo = new THREE.TorusGeometry(2.1, 0.02, 16, 80);
-  const ring1Mat = new THREE.MeshBasicMaterial({color: 0x3B82F6, wireframe: true, transparent: true, opacity: 0.5});
-  const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
-  scene.add(ring1);
-
-  const ring2Geo = new THREE.TorusGeometry(2.5, 0.015, 16, 80);
-  const ring2Mat = new THREE.MeshBasicMaterial({color: 0x60A5FA, wireframe: true, transparent: true, opacity: 0.4});
-  const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-  scene.add(ring2);
-
-  const ring3Geo = new THREE.TorusGeometry(2.85, 0.012, 16, 80);
-  const ring3Mat = new THREE.MeshBasicMaterial({color: 0x818CF8, wireframe: true, transparent: true, opacity: 0.3});
-  const ring3 = new THREE.Mesh(ring3Geo, ring3Mat);
-  scene.add(ring3);
-
-  let mouseX=0, mouseY=0, targetX=0, targetY=0;
-  window.addEventListener('mousemove', e=>{
-    mouseX = (e.clientX/window.innerWidth - .5);
-    mouseY = (e.clientY/window.innerHeight - .5);
-  });
-
-  let scrollFrac = 0;
-  window.addEventListener('scroll', ()=>{ scrollFrac = Math.min(window.scrollY / window.innerHeight, 1.4); });
-
-  const clock = new THREE.Clock();
-  function animate(){
-    requestAnimationFrame(animate);
-    const t = clock.getElapsedTime();
-    if(!reduceMotion){
-      ring1.rotation.z = t * 0.4; ring1.rotation.x = Math.sin(t * 0.3) * 0.5;
-      ring2.rotation.y = -t * 0.5; ring2.rotation.z = Math.cos(t * 0.4) * 0.4;
-      ring3.rotation.x = t * 0.3; ring3.rotation.y = t * 0.2;
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', ()=>{
+    if (window.scrollY > 300) {
+      nav.style.background = 'rgba(244, 247, 252, 0.88)';
+      nav.style.borderColor = 'var(--border-light)';
+      nav.style.color = 'var(--text-muted)';
+      nav.querySelector('.tag').style.color = 'var(--trust-navy)';
+    } else {
+      nav.style.background = 'rgba(10, 10, 15, 0.85)';
+      nav.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+      nav.style.color = '#94A3B8';
+      nav.querySelector('.tag').style.color = '#F8FAFC';
     }
-
-    targetX += (mouseX-targetX)*0.06;
-    targetY += (mouseY-targetY)*0.06;
-    
-    faceMesh.rotation.y = targetX * 0.75;
-    faceMesh.rotation.x = -targetY * 0.6;
-    
-    camera.position.x = targetX * 0.8;
-    camera.position.y = -targetY * 0.8;
-    camera.lookAt(0,0,0);
-
-    const avatarBaseY = 1.1;
-    const posY = avatarBaseY - scrollFrac * 2.5;
-    const sc = 1 - scrollFrac * 0.25;
-    faceMesh.position.y = posY; faceMesh.scale.setScalar(sc);
-    ring1.position.y = posY; ring1.scale.setScalar(sc);
-    ring2.position.y = posY; ring2.scale.setScalar(sc);
-    ring3.position.y = posY; ring3.scale.setScalar(sc);
-
-    renderer.render(scene, camera);
-  }
-  animate();
-  window.addEventListener('resize', setSize);
+  });
 })();
 
-/* ---------------- Hero Text Intro ---------------- */
+/* Hero Intro Animation & Scroll-linked Reveal */
 const tl = gsap.timeline({defaults:{ease:'power3.out'}});
 tl.to('#eyebrow', {opacity:1, duration:.6}, .1)
   .to('.name .word span', {y:'0%', duration:1, stagger:.12}, .15)
   .to('#roleLine', {opacity:1, duration:.5}, .7)
   .to('#heroSub', {opacity:1, duration:.7}, .9)
   .to('#heroSocialBar', {opacity:1, duration:.7}, 1.0)
-  .to('#scrollCue', {opacity:1, duration:.6}, 1.2)
-  .to('#robotStage', {opacity:1, y:0, duration:.9, ease:'power2.out'}, 1.4);
+  .to('#scrollCue', {opacity:1, duration:.6}, 1.2);
+
+if (!reduceMotion) {
+  gsap.to('#hero', {
+    scale: 0.96,
+    opacity: 0.25,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'bottom 90%',
+      end: 'bottom 10%',
+      scrub: true
+    }
+  });
+}
 
 /* Role Cycler */
 const roles = ['Founder', 'CEO & CTO', 'Tech Creator', 'Hardware Tinkerer', 'LPU Student'];
