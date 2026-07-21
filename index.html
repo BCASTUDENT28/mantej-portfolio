@@ -94,7 +94,19 @@
     position:relative;height:100svh;display:flex;flex-direction:column;
     align-items:center;justify-content:center;text-align:center;overflow:hidden;
   }
-  #circuit-canvas,#hero-canvas{position:absolute;inset:0;z-index:0;}
+  .hero-photo-bg{
+    position:absolute;inset:0;
+    background-image:url('assets/instagram.png');
+    background-size:cover;background-position:center top;
+    opacity:0.15;filter:grayscale(30%) contrast(125%) brightness(75%);
+    mix-blend-mode:luminosity;pointer-events:none;z-index:0;
+  }
+  .hero-ascii-bg{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0.22;mix-blend-mode:screen;pointer-events:none;z-index:0;
+    filter:hue-rotate(240deg) saturate(150%);
+  }
+  #circuit-canvas,#hero-canvas{position:absolute;inset:0;z-index:1;}
   .hero-inner{position:relative;z-index:1;padding:0 20px;margin-top:140px;}
   .eyebrow{
     font-family:var(--font-mono);font-size:clamp(11px,1.4vw,13px);
@@ -361,6 +373,8 @@
 
 <!-- ================= HERO ================= -->
 <section id="hero">
+  <div class="hero-photo-bg"></div>
+  <video class="hero-ascii-bg" src="https://assets.21st.dev/ascii-recipes/videos/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/38f24872-2e1b-4582-bcf0-375dceb1e481.mp4" poster="https://assets.21st.dev/ascii-recipes/thumbnails/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/f1e9ca31-92ab-465d-a08f-41a0393623ce.webp" autoplay loop muted playsinline aria-label="Heximage — animated ASCII art"></video>
   <canvas id="circuit-canvas"></canvas>
   <canvas id="hero-canvas"></canvas>
   <div class="hero-inner">
