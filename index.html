@@ -741,6 +741,10 @@ if (robotStage && spotlightOverlay) {
     const rect = robotStage.getBoundingClientRect();
     spotlightOverlay.style.left = (e.clientX - rect.left) + 'px';
     spotlightOverlay.style.top = (e.clientY - rect.top) + 'px';
+    spotlightOverlay.style.opacity = '1';
+  });
+  robotStage.addEventListener('mouseleave', () => {
+    spotlightOverlay.style.opacity = '0';
   });
 }
 
