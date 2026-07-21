@@ -473,7 +473,7 @@
       </div>
       <div class="hero-media-img-wrap">
         <div class="hero-media-circle-accent"></div>
-        <img class="hero-media-img" src="assets/instagram.png" alt="Mantej Singh — Founder &amp; CTO">
+        <img class="hero-media-img" src="assets/linkedin.jpg" alt="Mantej Singh — Founder &amp; CTO">
       </div>
       <div class="hero-media-caption">
         <span>MANTEJ SINGH</span>
@@ -647,51 +647,85 @@ function tickClock(){ document.getElementById('clock').textContent = new Date().
 tickClock(); setInterval(tickClock,1000);
 
 /* ---------------- circuit-node field (2D canvas, behind crystal) ---------------- */
+/* ---------------- Matrix Green Binary Rain + Circuit Node Field ---------------- */
 (function(){
   const canvas = document.getElementById('circuit-canvas');
   const ctx = canvas.getContext('2d');
-  let w,h,nodes=[];
-  const COUNT = window.innerWidth < 700 ? 34 : 80;
+  let w, h, nodes = [];
+  const COUNT = window.innerWidth < 700 ? 30 : 65;
   const LINK_DIST = window.innerWidth < 700 ? 90 : 130;
+  
+  // Matrix Binary Rain Setup
+  const fontSize = 14;
+  let columns = 0;
+  let drops = [];
+  const matrixChars = '01010101MANTEJ01010101HUSTLESMITH01010101APPLIFYNOW';
 
   function resize(){
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
+    columns = Math.floor(w / fontSize);
+    drops = [];
+    for(let i = 0; i < columns; i++) {
+      drops[i] = Math.floor(Math.random() * -50);
+    }
+    nodes = [];
+    for(let i = 0; i < COUNT; i++){
+      nodes.push({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - .5) * 0.2, vy: (Math.random() - .5) * 0.2
+      });
+    }
   }
   resize();
   window.addEventListener('resize', resize);
 
-  for(let i=0;i<COUNT;i++){
-    nodes.push({
-      x: Math.random()*w, y: Math.random()*h,
-      vx: (Math.random()-.5)*0.15, vy: (Math.random()-.5)*0.15
-    });
-  }
-
   let lastTime = performance.now();
-  let hue = 180; // Start at teal-ish hue (approx 180 deg)
+  let hue = 150;
   function frame(timestamp){
     requestAnimationFrame(frame);
     if(reduceMotion){ return; }
-    ctx.clearRect(0,0,w,h);
     
-    // Slow hue drift over time (~8 degrees per second)
+    ctx.clearRect(0, 0, w, h);
+
+    // 1. Draw Glowing Green Matrix Binary Streams
+    ctx.font = '12px monospace';
+    for(let i = 0; i < drops.length; i++) {
+      const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      // Bright leading head character
+      ctx.fillStyle = '#a7f3d0';
+      ctx.fillText(char, x, y);
+
+      // Glowing trailing stream characters in Matrix emerald green
+      ctx.fillStyle = 'rgba(0, 255, 128, 0.25)';
+      ctx.fillText(char, x, y - fontSize);
+
+      if(y > h && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+
+    // 2. Draw Circuit Node Network
     const elapsed = (timestamp - lastTime) / 1000 || 0;
-    hue = (hue + elapsed * 8) % 360;
+    hue = (hue + elapsed * 6) % 360;
     lastTime = timestamp;
 
     for(const n of nodes){
       n.x += n.vx; n.y += n.vy;
-      if(n.x<0||n.x>w) n.vx*=-1;
-      if(n.y<0||n.y>h) n.vy*=-1;
+      if(n.x < 0 || n.x > w) n.vx *= -1;
+      if(n.y < 0 || n.y > h) n.vy *= -1;
     }
-    for(let i=0;i<nodes.length;i++){
-      for(let j=i+1;j<nodes.length;j++){
-        const dx = nodes[i].x-nodes[j].x, dy = nodes[i].y-nodes[j].y;
-        const d = Math.sqrt(dx*dx+dy*dy);
+    for(let i = 0; i < nodes.length; i++){
+      for(let j = i + 1; j < nodes.length; j++){
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
         if(d < LINK_DIST){
-          const op = (1 - d/LINK_DIST) * 0.35;
-          ctx.strokeStyle = `hsla(${hue}, 80%, 70%, ${op})`;
+          const op = (1 - d / LINK_DIST) * 0.3;
+          ctx.strokeStyle = `hsla(150, 90%, 65%, ${op})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
@@ -701,9 +735,8 @@ tickClock(); setInterval(tickClock,1000);
       }
     }
     for(const n of nodes){
-      const nodeHue = (hue + 60) % 360; // 60 degrees offset for nodes
-      ctx.fillStyle = `hsla(${nodeHue}, 80%, 75%, 0.55)`;
-      ctx.beginPath(); ctx.arc(n.x,n.y,1.6,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = `rgba(0, 255, 128, 0.6)`;
+      ctx.beginPath(); ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2); ctx.fill();
     }
   }
   frame();
