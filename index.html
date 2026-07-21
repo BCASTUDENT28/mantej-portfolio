@@ -180,7 +180,19 @@
     position:relative;width:100%;height:500px;
     border-radius:18px;overflow:hidden;background:#05060a;
   }
+  .hero-media-circle-accent{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:360px;height:360px;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,184,77,0.95) 0%, rgba(255,95,162,0.7) 50%, rgba(167,139,250,0.4) 100%);
+    box-shadow:0 0 60px rgba(255,184,77,0.5);
+    z-index:1;animation:pulseCircle 4s ease-in-out infinite alternate;
+  }
+  @keyframes pulseCircle{
+    0%{transform:translate(-50%,-50%) scale(0.92);opacity:0.8;}
+    100%{transform:translate(-50%,-50%) scale(1.06);opacity:1;}
+  }
   .hero-media-img{
+    position:relative;z-index:2;
     width:100%;height:100%;object-fit:cover;object-position:center top;
     display:block;filter:brightness(105%) contrast(105%);
     transition:transform .5s ease;
@@ -460,6 +472,7 @@
         <span>FOUNDER // LIVE</span>
       </div>
       <div class="hero-media-img-wrap">
+        <div class="hero-media-circle-accent"></div>
         <img class="hero-media-img" src="assets/instagram.png" alt="Mantej Singh — Founder &amp; CTO">
       </div>
       <div class="hero-media-caption">
