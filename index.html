@@ -104,7 +104,8 @@
   
   .hero-container{
     position:relative;z-index:10;width:100%;max-width:1280px;
-    display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
   }
   @media (max-width:960px){
     .hero-container{grid-template-columns:1fr;text-align:center;margin-top:40px;}
@@ -112,7 +113,7 @@
     .role-line,.hero-social-bar{justify-content:center !important;}
   }
 
-  .hero-content{display:flex;flex-direction:column;align-items:flex-start;text-align:left;}
+  .hero-content{display:flex;flex-direction:column;align-items:center;text-align:center;}
   .eyebrow{
     font-family:var(--font-mono);font-size:clamp(11px,1.4vw,13px);
     letter-spacing:.25em;color:var(--teal);text-transform:uppercase;
@@ -132,7 +133,7 @@
   .role-line{
     margin-top:22px;font-family:var(--font-mono);
     font-size:clamp(14px,2.2vw,18px);color:var(--text-dim);
-    display:flex;gap:10px;align-items:center;justify-content:flex-start;opacity:0;
+    display:flex;gap:10px;align-items:center;justify-content:center;opacity:0;
   }
   .role-line .cursor-blink{color:var(--violet);animation:blink 1s step-end infinite;}
   @keyframes blink{50%{opacity:0;}}
@@ -142,7 +143,7 @@
     color:var(--text-dim);font-size:15px;line-height:1.6;opacity:0;
   }
   .hero-social-bar{
-    margin-top:26px;display:flex;gap:12px;justify-content:flex-start;align-items:center;
+    margin-top:26px;display:flex;gap:12px;justify-content:center;align-items:center;
     flex-wrap:wrap;opacity:0;transition:opacity .5s ease;
   }
   .h-social-btn{
@@ -542,22 +543,6 @@
         </a>
       </div>
     </div>
-
-    <!-- Featured Clear Photo Card -->
-    <div class="hero-media-card magnet" id="heroMediaCard">
-      <div class="hero-media-badge">
-        <span class="pulse-dot"></span>
-        <span>FOUNDER // LIVE</span>
-      </div>
-      <div class="hero-media-img-wrap">
-        <div class="hero-media-circle-accent"></div>
-        <img class="hero-media-img" src="assets/linkedin.jpg" alt="Mantej Singh — Founder &amp; CTO">
-      </div>
-      <div class="hero-media-caption">
-        <span>MANTEJ SINGH</span>
-        <span>HUSTLESMITH STUDIO</span>
-      </div>
-    </div>
   </div>
 
   <div class="scroll-cue" id="scrollCue"><span>SCROLL</span><div class="bar"></div></div>
@@ -864,17 +849,15 @@ if (robotStage && spotlightOverlay) {
   }
   setSize();
 
-  // Load Mantej's face photo as a 3D texture
-  const textureLoader = new THREE.TextureLoader();
-  const faceTexture = textureLoader.load('assets/linkedin.jpg');
-  
-  // 3D Face disc mesh
-  const faceGeo = new THREE.CircleGeometry(1.5, 64);
-  const faceMat = new THREE.MeshBasicMaterial({
-    map: faceTexture,
-    side: THREE.DoubleSide
+  // Glowing wireframe icosahedron core
+  const coreGeo = new THREE.IcosahedronGeometry(1.4, 1);
+  const coreMat = new THREE.MeshBasicMaterial({
+    color: 0xa78bfa,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.6
   });
-  const faceMesh = new THREE.Mesh(faceGeo, faceMat);
+  const faceMesh = new THREE.Mesh(coreGeo, coreMat);
   scene.add(faceMesh);
 
   // Outer glowing frame ring around face
@@ -962,7 +945,6 @@ tl.to('#eyebrow', {opacity:1, duration:.6}, .1)
   .to('#roleLine', {opacity:1, duration:.5}, .7)
   .to('#heroSub', {opacity:1, duration:.7}, .9)
   .to('#heroSocialBar', {opacity:1, duration:.7}, 1.0)
-  .to('#heroMediaCard', {opacity:1, duration:.8}, .4)
   .to('#scrollCue', {opacity:1, duration:.6}, 1.2)
   .to('#robotStage', {opacity:1, y:0, duration:.9, ease:'power2.out'}, 1.4);
 
