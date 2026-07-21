@@ -261,18 +261,18 @@
   h1.name {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(3.2rem, 7.2vw, 5.8rem);
-    line-height: 1.02;
+    font-size: clamp(3rem, 6.8vw, 5.4rem);
+    line-height: 1.05;
     letter-spacing: -.03em;
-    background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 50%, #60A5FA 100%);
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 60%, #60A5FA 100%);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
+    -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 4px 20px rgba(43, 78, 255, 0.25));
     margin-bottom: 8px;
+    opacity: 1;
   }
-  .name .word{display:inline-block;vertical-align:top;}
-  .name .word span{display:inline-block;transform:none;}
 
   .role-line {
     margin-top: 22px;
@@ -712,10 +712,7 @@
     <!-- Left Column: Human Intro Text & Social Links -->
     <div class="hero-content">
       <div class="eyebrow" id="eyebrow">FOUNDER &amp; CTO · TECH CREATOR</div>
-      <h1 class="name" id="nameHeading">
-        <span class="word"><span>MANTEJ</span></span><br>
-        <span class="word"><span>SINGH</span></span>
-      </h1>
+      <h1 class="name" id="nameHeading">MANTEJ SINGH</h1>
       <div class="role-line" id="roleLine">
         <span>&gt;</span> <span id="roleWord">Founder</span><span class="cursor-blink">_</span>
       </div>
@@ -988,11 +985,11 @@ if(!isTouch){
 /* Hero Intro Animation & Scroll-linked Reveal */
 const tl = gsap.timeline({defaults:{ease:'power3.out'}});
 tl.to('#eyebrow', {opacity:1, duration:.6}, .1)
-  .to('.name .word span', {y:'0%', duration:1, stagger:.12}, .15)
-  .to('#roleLine', {opacity:1, duration:.5}, .7)
-  .to('#heroSub', {opacity:1, duration:.7}, .9)
-  .to('#heroSocialBar', {opacity:1, duration:.7}, 1.0)
-  .to('#scrollCue', {opacity:1, duration:.6}, 1.2);
+  .from('#nameHeading', {opacity:0, y:18, duration:0.8}, .2)
+  .to('#roleLine', {opacity:1, duration:.5}, .5)
+  .to('#heroSub', {opacity:1, duration:.7}, .7)
+  .to('#heroSocialBar', {opacity:1, duration:.7}, .8)
+  .to('#scrollCue', {opacity:1, duration:.6}, 1.0);
 
 if (!reduceMotion) {
   gsap.to('#hero', {
