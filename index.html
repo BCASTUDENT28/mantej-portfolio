@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
 <style>
   :root{
     --void:#05060a;
@@ -215,6 +216,81 @@
     font-family:var(--font-mono);font-size:11px;color:var(--text-dim);
   }
   .hero-media-caption span:first-child{color:var(--violet);font-weight:500;}
+
+  /* Spotlight Mouse Effect */
+  .spotlight-overlay {
+    position: absolute;
+    pointer-events: none;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.18) 0%, rgba(94,234,212,0.12) 40%, transparent 75%);
+    filter: blur(22px);
+    transform: translate(-50%, -50%);
+    transition: opacity 0.25s ease;
+    z-index: 3;
+    opacity: 0;
+  }
+  .spotlight-card:hover .spotlight-overlay { opacity: 1; }
+
+  .hero-robot-stage {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    height: 320px;
+    margin: 0 auto 36px;
+    border-radius: 24px;
+    background: rgba(8, 10, 18, 0.85);
+    border: 1px solid rgba(94, 234, 212, 0.35);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 30px rgba(94, 234, 212, 0.15);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    backdrop-filter: blur(14px);
+    z-index: 10;
+  }
+  @media (max-width: 850px) {
+    .hero-robot-stage {
+      flex-direction: column;
+      height: auto;
+      text-align: center;
+      padding: 24px 20px;
+    }
+  }
+  .robot-stage-text {
+    flex: 1.1;
+    z-index: 10;
+    max-width: 520px;
+  }
+  .robot-stage-text h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #5eead4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 8px;
+  }
+  .robot-stage-text p {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .robot-spline-wrapper {
+    flex: 0.9;
+    height: 280px;
+    width: 100%;
+    position: relative;
+    z-index: 5;
+  }
+  spline-viewer {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+  }
   .scroll-cue{
     position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
     display:flex;flex-direction:column;align-items:center;gap:10px;
@@ -434,7 +510,18 @@
 <section id="hero">
   <video class="hero-ascii-bg" src="https://assets.21st.dev/ascii-recipes/videos/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/38f24872-2e1b-4582-bcf0-375dceb1e481.mp4" poster="https://assets.21st.dev/ascii-recipes/thumbnails/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/f1e9ca31-92ab-465d-a08f-41a0393623ce.webp" autoplay loop muted playsinline aria-label="Heximage — animated ASCII art"></video>
   <canvas id="circuit-canvas"></canvas>
-  <canvas id="hero-canvas"></canvas>
+  <!-- 3D Robot & Spotlight Interactive Stage -->
+  <div class="hero-robot-stage spotlight-card magnet" id="robotStage">
+    <div class="spotlight-overlay" id="spotlightOverlay"></div>
+    <div class="robot-stage-text">
+      <div class="eyebrow" style="opacity: 1; margin-bottom: 8px;">INTERACTIVE 3D SYSTEM</div>
+      <h3>SYSTEM INITIALIZED // CYBERNETIC CORE</h3>
+      <p>Interactive 3D Robot model active. Move your cursor over the card to trigger live spotlight fields and rotate the 3D scene.</p>
+    </div>
+    <div class="robot-spline-wrapper">
+      <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+    </div>
+  </div>
   
   <div class="hero-container">
     <div class="hero-content">
@@ -645,6 +732,17 @@ if(!isTouch && !reduceMotion){
 /* ---------------- clock ---------------- */
 function tickClock(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-GB'); }
 tickClock(); setInterval(tickClock,1000);
+
+/* ---------------- spotlight mouse tracker ---------------- */
+const robotStage = document.getElementById('robotStage');
+const spotlightOverlay = document.getElementById('spotlightOverlay');
+if (robotStage && spotlightOverlay) {
+  robotStage.addEventListener('mousemove', (e) => {
+    const rect = robotStage.getBoundingClientRect();
+    spotlightOverlay.style.left = (e.clientX - rect.left) + 'px';
+    spotlightOverlay.style.top = (e.clientY - rect.top) + 'px';
+  });
+}
 
 /* ---------------- circuit-node field (2D canvas, behind crystal) ---------------- */
 /* ---------------- Matrix Green Binary Rain + Circuit Node Field ---------------- */
