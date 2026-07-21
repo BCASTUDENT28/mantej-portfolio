@@ -2634,6 +2634,85 @@ const isTouch = window.matchMedia('(hover:none)').matches;
   obs.observe(splineEl, { childList: true, subtree: true });
 })();
 
+/* Scroll-Linked 3D Robot Face & Body Motion Engine */
+(function(){
+  const robotStage = document.getElementById('robotStage');
+  const splineWrapper = document.getElementById('splineWrapper');
+  if (!robotStage || !splineWrapper) return;
+  const splineEl = robotStage.querySelector('spline-viewer');
+
+  let currentY = window.scrollY;
+  let lastScrollY = window.scrollY;
+  let targetTiltX = 0;
+  let targetTiltY = 0;
+  let targetTranslateY = 0;
+  let targetScale = 1;
+
+  let currentTiltX = 0;
+  let currentTiltY = 0;
+  let currentTranslateY = 0;
+  let currentScale = 1;
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let scrollTimeout = null;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 16;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 16;
+  });
+
+  window.addEventListener('scroll', () => {
+    currentY = window.scrollY;
+    const deltaY = currentY - lastScrollY;
+    lastScrollY = currentY;
+
+    const scrollRatio = Math.min(currentY / (window.innerHeight * 0.8), 1.5);
+
+    if (deltaY > 0) {
+      targetTiltX = Math.min(18, scrollRatio * 22 + Math.min(deltaY * 0.4, 14));
+      targetTiltY = Math.min(15, scrollRatio * 15 + Math.min(deltaY * 0.3, 10));
+      targetTranslateY = Math.min(45, scrollRatio * 40 + deltaY * 0.5);
+      targetScale = Math.max(0.88, 1 - scrollRatio * 0.12);
+    } else if (deltaY < 0) {
+      targetTiltX = Math.max(-12, scrollRatio * 12 + Math.max(deltaY * 0.4, -14));
+      targetTiltY = Math.max(-15, scrollRatio * 10 + Math.max(deltaY * 0.3, -10));
+      targetTranslateY = Math.max(-20, scrollRatio * 30 + deltaY * 0.5);
+      targetScale = Math.min(1.05, 1 - scrollRatio * 0.08);
+    }
+
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      targetTiltX = scrollRatio * 12;
+      targetTiltY = scrollRatio * 8;
+      targetTranslateY = scrollRatio * 25;
+    }, 180);
+  });
+
+  function updateRobotMotion() {
+    requestAnimationFrame(updateRobotMotion);
+    if (reduceMotion) return;
+
+    currentTiltX += (targetTiltX + mouseY * 0.5 - currentTiltX) * 0.08;
+    currentTiltY += (targetTiltY + mouseX * 0.5 - currentTiltY) * 0.08;
+    currentTranslateY += (targetTranslateY - currentTranslateY) * 0.08;
+    currentScale += (targetScale - currentScale) * 0.08;
+
+    const transformStr = `perspective(1000px) rotateX(${currentTiltX.toFixed(2)}deg) rotateY(${currentTiltY.toFixed(2)}deg) translateY(${currentTranslateY.toFixed(2)}px) scale(${currentScale.toFixed(3)})`;
+    splineWrapper.style.transform = transformStr;
+    splineWrapper.style.transformOrigin = "center center";
+
+    if (splineEl && splineEl.shadowRoot) {
+      const splineCanvas = splineEl.shadowRoot.querySelector('canvas');
+      if (splineCanvas) {
+        splineCanvas.style.transform = `rotateX(${(-currentTiltX * 0.4).toFixed(2)}deg) rotateY(${(-currentTiltY * 0.4).toFixed(2)}deg)`;
+      }
+    }
+  }
+
+  updateRobotMotion();
+})();
+
 /* Smooth Cursor Ring */
 if(!isTouch){
   const dot=document.querySelector('.cursor-dot'), ret=document.getElementById('reticle');
