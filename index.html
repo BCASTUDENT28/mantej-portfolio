@@ -932,23 +932,42 @@ const isTouch = window.matchMedia('(hover:none)').matches;
   render();
 })();
 
-/* Lazy-load Spline 3D scene via IntersectionObserver */
+/* Lazy-load Spline 3D scene via IntersectionObserver & Remove Spline Logo */
 (function(){
   const robotStageEl = document.getElementById('robotStage');
   if (!robotStageEl) return;
   const splineEl = robotStageEl.querySelector('spline-viewer');
   if (!splineEl) return;
+  
+  function removeSplineLogo() {
+    if (splineEl.shadowRoot) {
+      const logo = splineEl.shadowRoot.querySelector('#logo, a[href*="spline"], .watermark, [class*="logo"]');
+      if (logo) logo.remove();
+      if (!splineEl.shadowRoot.querySelector('#hide-logo-style')) {
+        const style = document.createElement('style');
+        style.id = 'hide-logo-style';
+        style.textContent = '#logo, a[href*="spline"], .watermark, [class*="logo"] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; width: 0 !important; height: 0 !important; }';
+        splineEl.shadowRoot.appendChild(style);
+      }
+    }
+  }
+
   const realUrl = splineEl.getAttribute('url');
   splineEl.removeAttribute('url'); // prevent eager load
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         splineEl.setAttribute('url', realUrl);
+        const poll = setInterval(removeSplineLogo, 100);
+        setTimeout(() => clearInterval(poll), 8000);
         io.unobserve(robotStageEl);
       }
     });
   }, { rootMargin: '200px' });
   io.observe(robotStageEl);
+
+  const obs = new MutationObserver(removeSplineLogo);
+  obs.observe(splineEl, { childList: true, subtree: true });
 })();
 
 /* Smooth Cursor Ring */
