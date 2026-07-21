@@ -175,10 +175,61 @@
     background:var(--sky-blue);
     box-shadow:0 0 10px var(--sky-blue);
   }
-  nav .links{display:flex;gap:32px;}
+  nav .links{display:flex;gap:28px;}
   nav .links a{transition:color .2s ease;}
   nav .links a:hover{color:#60A5FA;}
-  @media (max-width:640px){ nav .links{display:none;} }
+  
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    color: inherit;
+    z-index: 60;
+  }
+  .nav-toggle span {
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Mobile Nav Drawer */
+  .nav-drawer {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(244, 247, 252, 0.96);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+    gap: 14px;
+    z-index: 49;
+    transform: translateY(-120%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  }
+  .nav-drawer.open { transform: translateY(0); }
+  .drawer-link {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  }
+
+  @media (max-width: 820px) {
+    nav .links { display: none; }
+    .nav-toggle { display: flex; }
+  }
 
   /* ---------- Dark Cinematic Hero Section ---------- */
   #hero {
@@ -384,15 +435,6 @@
     width: 100%;
     height: 100%;
     border-radius: 20px;
-  }
-  /* Hide "Built with Spline" watermark */
-  spline-viewer::part(logo) { display: none !important; }
-  .robot-spline-wrapper a[href*="spline"],
-  .robot-spline-wrapper div[style*="Built with"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
   }
 
   .scroll-cue {
@@ -638,6 +680,222 @@
     .orbit-shell{flex-direction:column;}
   }
 
+  /* ---------- Retro Runner Game Section ---------- */
+  .game-wrapper {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    border-radius: 24px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-soft);
+    padding: 28px;
+    overflow: hidden;
+  }
+  .game-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--trust-navy);
+    margin-bottom: 16px;
+  }
+  .game-hud span { color: var(--cloud-accent); }
+  .canvas-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #E0F2FE 0%, #EFF6FF 70%, #DBEAFE 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+  #runnerCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .game-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    text-align: center;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+  }
+  .game-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .game-msg-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .game-msg-sub {
+    font-size: 14px;
+    color: #93C5FD;
+    margin-bottom: 20px;
+  }
+  .game-start-btn {
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    background: var(--cloud-accent);
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .game-start-btn:hover {
+    transform: translateY(-2px);
+    background: var(--trust-navy);
+  }
+  .game-credit {
+    margin-top: 14px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    opacity: 0.8;
+  }
+
+  /* ---------- Now Section ---------- */
+  .now-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .now-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .now-badge {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cloud-accent);
+    background: rgba(37, 99, 235, 0.08);
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(37, 99, 235, 0.2);
+  }
+  .now-updated {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .now-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 850px) {
+    .now-grid { grid-template-columns: 1fr; }
+  }
+  .now-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .now-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--sky-light);
+    box-shadow: var(--shadow-hover);
+  }
+  .now-card-num {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--cloud-accent);
+    margin-bottom: 12px;
+  }
+  .now-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 10px;
+  }
+  .now-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ---------- Uses / Setup Section ---------- */
+  .uses-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  @media (max-width: 800px) {
+    .uses-grid { grid-template-columns: 1fr; }
+  }
+  .uses-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    padding: 36px;
+    box-shadow: var(--shadow-soft);
+  }
+  .uses-category {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--cloud-accent);
+    margin-bottom: 20px;
+  }
+  .uses-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .uses-list li {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    padding-left: 20px;
+    position: relative;
+  }
+  .uses-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--sky-blue);
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 14px;
+  }
+  .uses-list li strong {
+    color: var(--text-main);
+  }
+
   /* ---------- QR Section ---------- */
   .qr-wrap{
     display:flex;gap:56px;align-items:center;justify-content:center;flex-wrap:wrap;
@@ -696,9 +954,24 @@
   <div class="links">
     <a href="#ventures" class="magnet">Ventures</a>
     <a href="#connect" class="magnet">Connect</a>
+    <a href="#game" class="magnet">Play Game</a>
+    <a href="#now" class="magnet">Now</a>
+    <a href="#uses" class="magnet">Uses</a>
     <a href="#qr" class="magnet">Scan</a>
   </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-drawer" id="navDrawer">
+  <a href="#ventures" class="drawer-link">Ventures</a>
+  <a href="#connect" class="drawer-link">Connect</a>
+  <a href="#game" class="drawer-link">Play Game</a>
+  <a href="#now" class="drawer-link">Now</a>
+  <a href="#uses" class="drawer-link">Uses</a>
+  <a href="#qr" class="drawer-link">Scan</a>
+</div>
 
 <!-- ================= DARK CINEMATIC HERO ================= -->
 <section id="hero">
@@ -857,10 +1130,89 @@
   </div>
 </section>
 
+<!-- ================= RETRO RUNNER GAME ================= -->
+<section id="game">
+  <div class="section-head" data-reveal>
+    <span class="idx">03</span><h2>Play Game</h2><div class="rule"></div>
+  </div>
+  <div class="game-wrapper" data-reveal>
+    <div class="game-hud">
+      <div class="game-score">SCORE: <span id="gameScore">0000</span></div>
+      <div class="game-best">BEST: <span id="gameBest">0000</span></div>
+    </div>
+    <div class="canvas-container">
+      <canvas id="runnerCanvas" width="800" height="300"></canvas>
+      <div class="game-overlay" id="gameOverlay">
+        <div class="game-msg-title" id="gameMsgTitle">ROBOT RUNNER</div>
+        <div class="game-msg-sub" id="gameMsgSub">Press Spacebar or Tap to Jump</div>
+        <button class="game-start-btn magnet" id="gameStartBtn">START RUN</button>
+      </div>
+    </div>
+    <div class="game-credit">Inspired by the classic offline dino game · Custom 2D Robot edition</div>
+  </div>
+</section>
+
+<!-- ================= NOW SECTION ================= -->
+<section id="now">
+  <div class="section-head" data-reveal>
+    <span class="idx">04</span><h2>What I'm Doing Now</h2><div class="rule"></div>
+  </div>
+  <div class="now-container" data-reveal>
+    <div class="now-header">
+      <div class="now-badge">CURRENT FOCUS</div>
+      <div class="now-updated">Last updated: July 2026</div>
+    </div>
+    <div class="now-grid">
+      <div class="now-card">
+        <div class="now-card-num">01</div>
+        <h3>Building ApplifyNow</h3>
+        <p>Polishing the core web-to-native app engine for iOS &amp; Android. Testing with our first beta batch of creator websites.</p>
+      </div>
+      <div class="now-card">
+        <div class="now-card-num">02</div>
+        <h3>HustleSmith Studio</h3>
+        <p>Curating and designing custom hand-painted denim pieces in collaboration with LPU Fine Arts students for our launch drop.</p>
+      </div>
+      <div class="now-card">
+        <div class="now-card-num">03</div>
+        <h3>Tech Vlogs &amp; Hardware</h3>
+        <p>Documenting startup lessons, campus builds, and microcontroller experiments weekly on YouTube.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= USES / SETUP SECTION ================= -->
+<section id="uses">
+  <div class="section-head" data-reveal>
+    <span class="idx">05</span><h2>Uses &amp; Setup</h2><div class="rule"></div>
+  </div>
+  <div class="uses-grid" data-reveal>
+    <div class="uses-card">
+      <div class="uses-category">HARDWARE SETUP</div>
+      <ul class="uses-list">
+        <li><strong>Primary Workstation:</strong> MacBook Pro M-Series for software architecture &amp; video rendering</li>
+        <li><strong>Hardware Tinkering:</strong> ESP32 microcontrollers, Arduino boards, and custom PCB dev kits</li>
+        <li><strong>Vlogging Rig:</strong> Mirrorless camera setup with wireless mics for studio &amp; campus shoots</li>
+        <li><strong>Desk Setup:</strong> Dual-monitor layout on heavy-duty arm mounts</li>
+      </ul>
+    </div>
+    <div class="uses-card">
+      <div class="uses-category">SOFTWARE &amp; TOOLING</div>
+      <ul class="uses-list">
+        <li><strong>IDE &amp; Terminal:</strong> VS Code with custom dark themes &amp; Zsh terminal</li>
+        <li><strong>Design &amp; 3D:</strong> Figma for UI/UX wireframing + Spline for 3D interactive web scenes</li>
+        <li><strong>Stack:</strong> JavaScript / TypeScript, HTML5/CSS3, Node.js, React &amp; Next.js</li>
+        <li><strong>Hosting &amp; CI/CD:</strong> Vercel, GitHub, and Cloudflare CDN</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- ================= QR ================= -->
 <section id="qr">
   <div class="section-head" data-reveal>
-    <span class="idx">03</span><h2>Scan to keep this</h2><div class="rule"></div>
+    <span class="idx">06</span><h2>Scan to keep this</h2><div class="rule"></div>
   </div>
   <div class="qr-wrap" data-reveal>
     <div class="qr-frame" id="qrFrame">
@@ -889,6 +1241,19 @@
 gsap.registerPlugin(ScrollTrigger);
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch = window.matchMedia('(hover:none)').matches;
+
+/* Mobile Nav Drawer Toggle */
+(function(){
+  const toggleBtn = document.getElementById('navToggle');
+  const drawer = document.getElementById('navDrawer');
+  if(!toggleBtn || !drawer) return;
+  toggleBtn.addEventListener('click', ()=>{
+    drawer.classList.toggle('open');
+  });
+  drawer.querySelectorAll('a').forEach(link=>{
+    link.addEventListener('click', ()=> drawer.classList.remove('open'));
+  });
+})();
 
 /* Particle Dust Motes in Hero Backdrop */
 (function(){
@@ -1050,7 +1415,6 @@ document.querySelectorAll('[data-reveal]').forEach(el=>{
     line.setAttribute('y2', H);
     line.setAttribute('x1', 1); line.setAttribute('x2', 1);
     line.setAttribute('stroke-dasharray', H);
-    gsap.set(line, {strokeDashoffset:H});
     ScrollTrigger.getAll().forEach(st=>{ if(st.vars.id==='trace') st.kill(); });
     gsap.to(line, {
       strokeDashoffset:0, ease:'none',
@@ -1188,6 +1552,239 @@ document.getElementById('mod-vlogs').addEventListener('click', ()=>{
     });
   }
   requestAnimationFrame(loop);
+})();
+
+/* ---------------- RETRO RUNNER GAME LOGIC ---------------- */
+(function(){
+  const canvas = document.getElementById('runnerCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const overlay = document.getElementById('gameOverlay');
+  const msgTitle = document.getElementById('gameMsgTitle');
+  const msgSub = document.getElementById('gameMsgSub');
+  const startBtn = document.getElementById('gameStartBtn');
+  const scoreEl = document.getElementById('gameScore');
+  const bestEl = document.getElementById('gameBest');
+
+  let bestScore = parseInt(localStorage.getItem('mantej_runner_best') || '0', 10);
+  bestEl.textContent = String(bestScore).padStart(4, '0');
+
+  let gameState = 'IDLE'; // IDLE, RUNNING, GAMEOVER
+  let isVisible = false;
+  let animId = null;
+
+  // Ground level
+  const groundY = 240;
+  let score = 0;
+  let gameSpeed = 5.5;
+
+  // Player Robot 2D Sprite
+  const player = {
+    x: 70,
+    y: groundY - 44,
+    w: 30,
+    h: 44,
+    vy: 0,
+    gravity: 0.68,
+    jumpPower: -12.5,
+    isJumping: false,
+    draw() {
+      // Robot Body (Black & Sky Blue)
+      ctx.fillStyle = '#0F172A';
+      ctx.beginPath();
+      ctx.roundRect(this.x, this.y, this.w, this.h, 6);
+      ctx.fill();
+      // Visor Eye
+      ctx.fillStyle = '#60A5FA';
+      ctx.fillRect(this.x + 8, this.y + 8, 14, 6);
+      // Chest Light
+      ctx.fillStyle = '#2563EB';
+      ctx.beginPath();
+      ctx.arc(this.x + 15, this.y + 24, 3, 0, Math.PI * 2);
+      ctx.fill();
+    },
+    update() {
+      this.y += this.vy;
+      this.vy += this.gravity;
+      if (this.y >= groundY - this.h) {
+        this.y = groundY - this.h;
+        this.vy = 0;
+        this.isJumping = false;
+      }
+    },
+    jump() {
+      if (!this.isJumping) {
+        this.vy = this.jumpPower;
+        this.isJumping = true;
+      }
+    }
+  };
+
+  let obstacles = [];
+  let clouds = [
+    { x: 100, y: 50, speed: 0.5, size: 40 },
+    { x: 400, y: 80, speed: 0.8, size: 55 },
+    { x: 680, y: 40, speed: 0.4, size: 35 }
+  ];
+
+  function spawnObstacle() {
+    const minGap = 200;
+    const lastObs = obstacles[obstacles.length - 1];
+    if (!lastObs || (canvas.width - lastObs.x > minGap + Math.random() * 180)) {
+      const type = Math.random() > 0.4 ? 'block' : 'cloud_block';
+      obstacles.push({
+        x: canvas.width,
+        y: groundY - (type === 'block' ? 36 : 28),
+        w: type === 'block' ? 24 : 36,
+        h: type === 'block' ? 36 : 28,
+        type
+      });
+    }
+  }
+
+  function drawBackground() {
+    // Parallax Clouds
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+    clouds.forEach(c => {
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, c.size * 0.4, 0, Math.PI * 2);
+      ctx.arc(c.x + c.size * 0.3, c.y - c.size * 0.1, c.size * 0.35, 0, Math.PI * 2);
+      ctx.arc(c.x + c.size * 0.6, c.y, c.size * 0.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (gameState === 'RUNNING') {
+        c.x -= c.speed;
+        if (c.x < -100) c.x = canvas.width + 50;
+      }
+    });
+
+    // Ground Line
+    ctx.strokeStyle = '#3B82F6';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, groundY);
+    ctx.lineTo(canvas.width, groundY);
+    ctx.stroke();
+
+    // Ground dash pattern
+    ctx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let x = 0; x < canvas.width; x += 20) {
+      ctx.moveTo(x, groundY + 8);
+      ctx.lineTo(x + 10, groundY + 8);
+    }
+    ctx.stroke();
+  }
+
+  function resetGame() {
+    score = 0;
+    gameSpeed = 5.5;
+    player.y = groundY - player.h;
+    player.vy = 0;
+    player.isJumping = false;
+    obstacles = [];
+    scoreEl.textContent = '0000';
+  }
+
+  function startGame() {
+    resetGame();
+    gameState = 'RUNNING';
+    overlay.classList.add('hidden');
+    loop();
+  }
+
+  function gameOver() {
+    gameState = 'GAMEOVER';
+    if (score > bestScore) {
+      bestScore = Math.floor(score);
+      localStorage.setItem('mantej_runner_best', bestScore);
+      bestEl.textContent = String(bestScore).padStart(4, '0');
+    }
+    msgTitle.textContent = 'GAME OVER';
+    msgSub.textContent = `Score: ${Math.floor(score)} · Best: ${bestScore}`;
+    startBtn.textContent = 'RETRY RUN';
+    overlay.classList.remove('hidden');
+  }
+
+  function loop() {
+    if (gameState !== 'RUNNING' || !isVisible) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBackground();
+
+    // Update & Draw Player
+    player.update();
+    player.draw();
+
+    // Update & Draw Obstacles
+    spawnObstacle();
+    for (let i = obstacles.length - 1; i >= 0; i--) {
+      const obs = obstacles[i];
+      obs.x -= gameSpeed;
+
+      // Draw Obstacle
+      ctx.fillStyle = obs.type === 'block' ? '#2563EB' : '#60A5FA';
+      ctx.beginPath();
+      ctx.roundRect(obs.x, obs.y, obs.w, obs.h, 4);
+      ctx.fill();
+
+      // AABB Collision Detection
+      if (
+        player.x < obs.x + obs.w &&
+        player.x + player.w > obs.x &&
+        player.y < obs.y + obs.h &&
+        player.y + player.h > obs.y
+      ) {
+        gameOver();
+        return;
+      }
+
+      if (obs.x + obs.w < 0) obstacles.splice(i, 1);
+    }
+
+    // Score & Speed Scaling
+    score += 0.25;
+    gameSpeed += 0.0008;
+    scoreEl.textContent = String(Math.floor(score)).padStart(4, '0');
+
+    animId = requestAnimationFrame(loop);
+  }
+
+  // Input Handlers
+  function handleJump(e) {
+    if (e.code === 'Space' || e.code === 'ArrowUp') {
+      if (gameState === 'RUNNING') {
+        e.preventDefault();
+        player.jump();
+      } else if (gameState === 'IDLE' || gameState === 'GAMEOVER') {
+        if (document.activeElement === canvas || isVisible) {
+          e.preventDefault();
+          startGame();
+        }
+      }
+    }
+  }
+  window.addEventListener('keydown', handleJump);
+  startBtn.addEventListener('click', startGame);
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (gameState === 'RUNNING') player.jump();
+    else startGame();
+  }, { passive: false });
+
+  // IntersectionObserver to pause game loop when scrolled out of view
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isVisible = entry.isIntersecting;
+      if (isVisible && gameState === 'RUNNING') loop();
+    });
+  }, { threshold: 0.2 });
+  io.observe(canvas);
+
+  // Initial draw
+  drawBackground();
+  player.draw();
 })();
 
 /* ---------------- QR & Clock ---------------- */
