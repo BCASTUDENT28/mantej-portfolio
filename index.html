@@ -39,6 +39,13 @@
   ::selection{background:var(--violet);color:var(--void);}
   a{color:inherit;text-decoration:none;}
 
+  /* #6 Accessibility — focus-visible for keyboard nav */
+  a:focus-visible, button:focus-visible, .module:focus-visible, .orbit-orb:focus-visible, .mstack-card:focus-visible, .magnet:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
   .grain{
     position:fixed;inset:0;z-index:2;pointer-events:none;opacity:0.035;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -437,14 +444,16 @@
   .orbit-copy .hint{font-family:var(--font-mono);font-size:11px;color:var(--violet);letter-spacing:.06em;}
 
   /* mobile fallback stack */
-  .orbit-mobile-stack{display:none;flex-direction:column;gap:16px;}
-  .mstack-card{position:relative;border:1px solid var(--line);border-radius:16px;padding:26px 24px;
+  /* #2 Mobile-first Connect polish */
+  .orbit-mobile-stack{display:none;flex-direction:column;gap:14px;}
+  .mstack-card{position:relative;border:1px solid var(--line);border-radius:16px;padding:18px 20px;
     display:flex;justify-content:space-between;align-items:center;overflow:hidden;
     background:linear-gradient(145deg,rgba(255,255,255,0.03),transparent);
-    transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;}
-  .mstack-card .left{display:flex;gap:16px;align-items:center;}
+    transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+    min-height:72px; /* #2 ensure 48px+ tap target */}
+  .mstack-card .left{display:flex;gap:14px;align-items:center;}
   .mstack-icon{
-    width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
     border:1px solid var(--line);flex-shrink:0;
     transition:border-color .3s ease, color .3s ease, background .3s ease, background-image .3s ease;
     background-size: cover; background-position: center; background-repeat: no-repeat;
@@ -452,10 +461,11 @@
   .mstack-card[data-platform="instagram"] .mstack-icon { background-image: url('assets/instagram.png'); }
   .mstack-card[data-platform="youtube"] .mstack-icon { background-image: url('assets/youtube.png'); }
   .mstack-card[data-platform="linkedin"] .mstack-icon { background-image: url('assets/linkedin.jpg'); }
-  .mstack-icon svg{width:20px;height:20px;stroke:var(--text);transition:stroke .3s ease, opacity .3s ease; opacity: 0;}
-  .mstack-card h4{font-family:var(--font-display);font-size:1.05rem;margin-bottom:3px;}
-  .mstack-card p{font-family:var(--font-mono);font-size:11.5px;color:var(--text-dim);}
-  .mstack-arrow{font-family:var(--font-mono);font-size:18px;color:var(--text-dim);transition:color .3s ease, transform .3s ease;}
+  .mstack-icon svg{width:22px;height:22px;stroke:var(--text);transition:stroke .3s ease, opacity .3s ease; opacity: 0;}
+  .mstack-card h4{font-family:var(--font-display);font-size:1.1rem;margin-bottom:4px;color:#fff;}
+  .mstack-card p{font-family:var(--font-mono);font-size:12px;color:#a0a8c8;} /* #6 contrast fix: #8890b3→#a0a8c8 */
+  .mstack-arrow{font-family:var(--font-mono);font-size:20px;color:#a0a8c8;transition:color .3s ease, transform .3s ease;
+    min-width:32px;min-height:32px;display:flex;align-items:center;justify-content:center;}
 
   /* mobile stack hovers per platform */
   .mstack-card[data-platform="instagram"]:hover { border-color: var(--ig); box-shadow: 0 0 20px rgba(221,42,123,.25); transform: translateY(-2px); }
@@ -507,7 +517,39 @@
 
   [data-reveal]{opacity:0;transform:translateY(28px);}
 
-  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+  /* #6 prefers-reduced-motion — comprehensive fallback */
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition-duration:0.01ms !important;}
+    .hero-ascii-bg{display:none;} /* hide decorative video */
+    #circuit-canvas,#hero-canvas{display:none;} /* hide animated canvases */
+    .orbit-orb{animation:none !important;}
+    [data-reveal]{opacity:1;transform:none;}
+    .scroll-cue .bar{animation:none;}
+  }
+
+  /* #4 CTA hierarchy for venture cards */
+  .module .go-primary{
+    display:inline-block;margin-top:14px;padding:10px 20px;border-radius:30px;
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;
+    background:var(--violet);color:#fff;border:none;
+    transition:all .3s ease;cursor:pointer;font-weight:500;
+  }
+  .module .go-primary:hover{background:var(--teal);color:var(--void);box-shadow:0 0 20px rgba(94,234,212,0.4);transform:translateY(-2px);}
+  .module .go-secondary{
+    display:block;margin-top:8px;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;
+    color:#a0a8c8;transition:color .2s ease;
+  }
+  .module .go-secondary:hover{color:var(--teal);}
+
+  /* #5 Proof point placeholder slots */
+  .proof-slot{
+    margin-top:14px;padding:10px 14px;border-radius:10px;
+    border:1px dashed rgba(255,255,255,0.12);background:rgba(255,255,255,0.02);
+    font-family:var(--font-mono);font-size:11px;color:#a0a8c8;
+    letter-spacing:.04em;text-align:center;
+  }
+  .proof-slot .proof-icon{margin-right:6px;opacity:0.6;}
 </style>
 </head>
 <body>
@@ -531,8 +573,9 @@
 
 <!-- ================= HERO ================= -->
 <section id="hero">
-  <video class="hero-ascii-bg" src="https://assets.21st.dev/ascii-recipes/videos/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/38f24872-2e1b-4582-bcf0-375dceb1e481.mp4" poster="https://assets.21st.dev/ascii-recipes/thumbnails/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/f1e9ca31-92ab-465d-a08f-41a0393623ce.webp" autoplay loop muted playsinline aria-label="Heximage — animated ASCII art"></video>
-  <canvas id="circuit-canvas"></canvas>
+  <!-- #1 Performance: poster as initial paint, video is decorative (#6 aria-hidden) -->
+  <video class="hero-ascii-bg" src="https://assets.21st.dev/ascii-recipes/videos/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/38f24872-2e1b-4582-bcf0-375dceb1e481.mp4" poster="https://assets.21st.dev/ascii-recipes/thumbnails/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/f1e9ca31-92ab-465d-a08f-41a0393623ce.webp" autoplay loop muted playsinline aria-hidden="true" role="presentation"></video>
+  <canvas id="circuit-canvas" aria-hidden="true"></canvas>
   <canvas id="hero-canvas"></canvas>
   
   <div class="hero-container">
@@ -590,32 +633,37 @@
     <span class="idx">01</span><h2>Ventures</h2><div class="rule"></div>
   </div>
   <div class="modules" data-reveal>
-    <div class="module disabled" id="mod-hustlesmith">
+    <!-- #4 CTA hierarchy + #5 proof-point slots -->
+    <div class="module disabled" id="mod-hustlesmith" tabindex="0" role="article" aria-label="HustleSmith Studio venture card">
       <svg class="scanborder"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="0" pathLength="100"/></svg>
       <div class="glow"></div>
       <div class="mod-id">MODULE_01 / BRAND</div>
       <span class="status pending">LAUNCHING SOON</span>
       <h3>HustleSmith Studio</h3>
       <p>Luxury custom denim — hand-painted and embroidered, made in collaboration with LPU's own Fine Arts students.</p>
-      <span class="go">www.hustlesmith.studio →</span>
+      <div class="proof-slot"><span class="proof-icon">📸</span> Product photo coming soon</div>
+      <span class="go-secondary">www.hustlesmith.studio →</span>
     </div>
-    <div class="module" id="mod-applifynow">
+    <div class="module" id="mod-applifynow" tabindex="0" role="article" aria-label="ApplifyNow venture card">
       <svg class="scanborder"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="0" pathLength="100"/></svg>
       <div class="glow"></div>
       <div class="mod-id">MODULE_02 / SAAS</div>
       <span class="status">ACTIVE</span>
       <h3>ApplifyNow</h3>
       <p>Turns any website URL into a native iOS &amp; Android app. Building it as CEO &amp; CTO.</p>
-      <span class="go">FOLLOW THE BUILD →</span>
+      <div class="proof-slot"><span class="proof-icon">🖥️</span> App screenshot coming soon</div>
+      <span class="go-primary">FOLLOW THE BUILD →</span>
     </div>
-    <div class="module" id="mod-vlogs">
+    <div class="module" id="mod-vlogs" tabindex="0" role="article" aria-label="Tech Vlogs venture card">
       <svg class="scanborder"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="0" pathLength="100"/></svg>
       <div class="glow"></div>
       <div class="mod-id">MODULE_03 / CONTENT</div>
       <span class="status">LIVE</span>
       <h3>Tech Vlogs</h3>
       <p>Documenting startups, hardware builds, and campus life — unfiltered, on YouTube.</p>
-      <span class="go">WATCH ON YOUTUBE →</span>
+      <div class="proof-slot"><span class="proof-icon">📊</span> Subscriber count placeholder</div>
+      <span class="go-primary">WATCH ON YOUTUBE →</span>
+      <span class="go-secondary">See latest video →</span>
     </div>
   </div>
 </section>
@@ -689,7 +737,7 @@
     <div class="qr-copy">
       <h2>Take this with you.</h2>
       <p>Scan to open this page on your phone — every link, one place. Save it, share it, come back to it later.</p>
-      <div class="hint">// updates automatically once this is live on a domain</div>
+      <!-- #3 removed dev placeholder comment -->
     </div>
   </div>
 </section>
@@ -709,6 +757,31 @@
 gsap.registerPlugin(ScrollTrigger);
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch = window.matchMedia('(hover:none)').matches;
+
+/* #1 Performance: pause hero video if reduced motion */
+if (reduceMotion) {
+  const heroVid = document.querySelector('.hero-ascii-bg');
+  if (heroVid) { heroVid.pause(); heroVid.removeAttribute('autoplay'); }
+}
+
+/* #1 Performance: lazy-load Spline 3D scene via IntersectionObserver */
+(function(){
+  const robotStageEl = document.getElementById('robotStage');
+  if (!robotStageEl) return;
+  const splineEl = robotStageEl.querySelector('spline-viewer');
+  if (!splineEl) return;
+  const realUrl = splineEl.getAttribute('url');
+  splineEl.removeAttribute('url'); // prevent eager load
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        splineEl.setAttribute('url', realUrl);
+        io.unobserve(robotStageEl);
+      }
+    });
+  }, { rootMargin: '200px' });
+  io.observe(robotStageEl);
+})();
 
 /* ---------------- cursor reticle ---------------- */
 if(!isTouch){
