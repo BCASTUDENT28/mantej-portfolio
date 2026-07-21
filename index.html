@@ -241,6 +241,262 @@
   }
   .spotlight-card:hover .spotlight-overlay { opacity: 1; }
 
+  /* ---------- 3-Screen Cyberpunk Identity Showcase (Phone Cards) ---------- */
+  .identity-showcase-container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 60px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    padding: 0 10px;
+    justify-content: center;
+    z-index: 10;
+    position: relative;
+  }
+
+  .phone-card {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    border-radius: 40px;
+    padding: 24px;
+    background: rgba(12, 14, 24, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(167, 139, 250, 0.15);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 700px;
+    text-align: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  }
+
+  .phone-card:hover {
+    transform: translateY(-8px) scale(1.015);
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.95), 0 0 50px rgba(94, 234, 212, 0.35);
+    border-color: rgba(94, 234, 212, 0.5);
+  }
+
+  .phone-card.card-01 {
+    background: linear-gradient(165deg, rgba(9, 44, 36, 0.95) 0%, rgba(23, 29, 43, 0.95) 45%, rgba(74, 40, 24, 0.95) 100%);
+    border-color: rgba(94, 234, 212, 0.35);
+  }
+
+  .phone-card.card-02 {
+    background: linear-gradient(165deg, rgba(61, 28, 20, 0.95) 0%, rgba(21, 24, 36, 0.95) 50%, rgba(28, 53, 59, 0.95) 100%);
+    border-color: rgba(255, 184, 77, 0.35);
+  }
+
+  .phone-card.card-03 {
+    background: linear-gradient(165deg, rgba(68, 32, 29, 0.95) 0%, rgba(26, 22, 38, 0.95) 50%, rgba(13, 18, 28, 0.95) 100%);
+    border-color: rgba(255, 95, 162, 0.35);
+  }
+
+  .phone-status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+    letter-spacing: 0.08em;
+  }
+
+  .phone-notch {
+    width: 80px;
+    height: 16px;
+    background: #000;
+    border-radius: 20px;
+  }
+
+  .phone-header-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .phone-card-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .phone-card-subtitle {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.4;
+    margin-bottom: 18px;
+  }
+
+  .phone-media-container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    background: #05060a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .phone-media-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.5s ease;
+  }
+
+  .phone-card:hover .phone-media-img {
+    transform: scale(1.05);
+  }
+
+  .phone-spec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 16px;
+  }
+
+  .phone-spec-item {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .phone-spec-item .val {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .phone-mode-pills {
+    display: flex;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px;
+    border-radius: 30px;
+    margin-bottom: 16px;
+  }
+
+  .phone-mode-pill {
+    flex: 1;
+    text-align: center;
+    padding: 6px 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .phone-mode-pill.active {
+    background: #fff;
+    color: #000;
+    font-weight: 600;
+  }
+
+  .phone-glass-offer {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+    padding: 14px 16px;
+    backdrop-filter: blur(12px);
+    margin-bottom: 16px;
+  }
+
+  .phone-glass-badge {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  .phone-glass-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .phone-glass-desc {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .phone-glass-perks {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .phone-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .phone-badge-num {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 16px;
+  }
+
+  .phone-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+
+  .phone-card:hover .phone-cta-btn {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+
   .hero-robot-stage {
     position: relative;
     width: 100%;
@@ -392,16 +648,87 @@
   @keyframes scandraw{to{stroke-dashoffset:-100;}}
 
   /* ---------- orbital connect (desktop) ---------- */
+  /* ---------- orbital connect (desktop & mobile HUD avatar) ---------- */
   .orbit-shell{display:flex;gap:40px;align-items:center;justify-content:center;flex-wrap:wrap;}
   .orbit-stage{position:relative;width:380px;height:380px;flex-shrink:0;}
+  
   .orbit-core{
-    position:absolute;top:50%;left:50%;width:64px;height:64px;border-radius:50%;
+    position:absolute;top:50%;left:50%;width:72px;height:72px;border-radius:50%;
     transform:translate(-50%,-50%);
-    background:radial-gradient(circle at 35% 30%, #fff 0%, var(--violet) 35%, #241a44 75%);
-    box-shadow:0 0 50px rgba(167,139,250,.55), 0 0 110px rgba(94,234,212,.2);
-    animation:corepulse 4s ease-in-out infinite;
+    background:var(--panel);
+    border:1.5px solid var(--teal);
+    box-shadow:0 0 20px rgba(94,234,212,.4), 0 0 45px rgba(167,139,250,.25);
+    cursor:pointer;z-index:4;
+    transition:box-shadow .3s ease, border-color .3s ease, transform .3s ease;
   }
-  @keyframes corepulse{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.08);}}
+  .orbit-core:hover, .orbit-core:focus-visible{
+    border-color:var(--magenta);
+    box-shadow:0 0 25px rgba(255,95,162,.6), 0 0 50px rgba(94,234,212,.4);
+    transform:translate(-50%,-50%) scale(1.06);
+  }
+
+  .orbit-core-radar{
+    position:absolute;inset:-9px;border-radius:50%;
+    border:1px dashed rgba(167,139,250,.55);
+    animation:radarSweep 18s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes radarSweep{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+  .orbit-core .reticle-corner{
+    position:absolute;width:7px;height:7px;border-color:var(--teal);
+    transition:border-color .3s ease;pointer-events:none;z-index:6;
+  }
+  .orbit-core:hover .reticle-corner{ border-color:var(--magenta); }
+  .orbit-core .tl{top:-4px;left:-4px;border-top:1.5px solid;border-left:1.5px solid;}
+  .orbit-core .tr{top:-4px;right:-4px;border-top:1.5px solid;border-right:1.5px solid;}
+  .orbit-core .bl{bottom:-4px;left:-4px;border-bottom:1.5px solid;border-left:1.5px solid;}
+  .orbit-core .br{bottom:-4px;right:-4px;border-bottom:1.5px solid;border-right:1.5px solid;}
+
+  .orbit-core-avatar{
+    position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:var(--void);
+  }
+  .orbit-core-img{
+    width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%;
+    /* Duotone cyan/violet palette filter */
+    filter:contrast(120%) brightness(92%) sepia(40%) hue-rotate(135deg) saturate(200%);
+    transition:filter .3s ease, transform .3s ease;
+  }
+  .orbit-core:hover .orbit-core-img{
+    filter:contrast(110%) brightness(105%) sepia(20%) hue-rotate(150deg) saturate(240%);
+  }
+
+  .avatar-scanbeam{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, transparent 0%, rgba(94,234,212,.4) 50%, transparent 100%);
+    opacity:0;pointer-events:none;transition:opacity .3s ease;
+  }
+  .orbit-core:hover .avatar-scanbeam{
+    opacity:1;animation:scanbeamAnim 1.2s ease-in-out infinite;
+  }
+  @keyframes scanbeamAnim{ 0%{transform:translateY(-100%);} 100%{transform:translateY(100%);} }
+
+  .orbit-core-label{
+    position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);
+    font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;
+    color:var(--teal);background:rgba(5,6,10,.85);padding:2px 8px;border-radius:4px;
+    border:1px solid rgba(94,234,212,.3);white-space:nowrap;pointer-events:none;
+    text-shadow:0 0 8px rgba(94,234,212,.5);
+  }
+
+  /* Mobile stack operator header card */
+  .mstack-operator-card{
+    display:flex;align-items:center;gap:14px;padding:14px 18px;
+    background:rgba(11,13,23,.85);border:1px solid rgba(94,234,212,.3);
+    border-radius:16px;box-shadow:0 0 20px rgba(94,234,212,.15);margin-bottom:4px;
+  }
+  .mstack-operator-avatar{
+    position:relative;width:50px;height:50px;border-radius:50%;flex-shrink:0;
+    border:1.5px solid var(--teal);
+  }
+  .mstack-op-tag{font-family:var(--font-mono);font-size:10px;color:var(--teal);letter-spacing:.12em;margin-bottom:2px;}
+  .mstack-operator-card h4{font-family:var(--font-display);font-size:1.1rem;color:#ffffff;margin-bottom:2px;}
+  .mstack-operator-card p{font-family:var(--font-mono);font-size:11px;color:#a0a8c8;}
   .orbit-path{position:absolute;top:50%;left:50%;width:320px;height:176px;transform:translate(-50%,-50%);
     border:1px dashed rgba(255,255,255,.08);border-radius:50%;}
   .orbit-orb{
@@ -608,6 +935,117 @@
     </div>
   </div>
 
+  <!-- ================= 3-SCREEN CYBERPUNK IDENTITY SHOWCASE ================= -->
+  <div class="identity-showcase-container" id="identityShowcase" data-reveal>
+    
+    <!-- CARD 01: STYLE PROFILE -->
+    <div class="phone-card card-01 magnet">
+      <div>
+        <div class="phone-status-bar">
+          <span>9:41</span>
+          <div class="phone-notch"></div>
+          <span>5G ⚡</span>
+        </div>
+        <div class="phone-header-tag">HAUGHTY AVENUE // FOUNDER MODE</div>
+        <div class="phone-card-title">
+          <span>Style Profile</span>
+          <span>↗</span>
+        </div>
+        <div class="phone-card-subtitle">Define your identity. Curate your edge with luxury hand-painted custom denim.</div>
+        
+        <div class="phone-media-container">
+          <img src="assets/instagram.png" alt="Mantej Singh — Founder &amp; Designer" class="phone-media-img">
+        </div>
+
+        <div class="phone-spec-list">
+          <div class="phone-spec-item"><span>Signature Mood</span><span class="val">Bold &amp; Custom ›</span></div>
+          <div class="phone-spec-item"><span>Primary Stack</span><span class="val">React / Node / AI ›</span></div>
+          <div class="phone-spec-item"><span>Headwear</span><span class="val">Streetwear Denim ›</span></div>
+          <div class="phone-spec-item"><span>Eyewear</span><span class="val">Slim Cyber Oval ›</span></div>
+          <div class="phone-spec-item"><span>Vibe</span><span class="val">Unapologetic ›</span></div>
+        </div>
+      </div>
+
+      <div class="phone-card-footer">
+        <div class="phone-badge-num">01.</div>
+        <a href="https://www.hustlesmith.studio" target="_blank" class="phone-cta-btn">Save Profile →</a>
+      </div>
+    </div>
+
+    <!-- CARD 02: FIND YOUR VISION -->
+    <div class="phone-card card-02 magnet">
+      <div>
+        <div class="phone-status-bar">
+          <span>9:41</span>
+          <div class="phone-notch"></div>
+          <span>132 connections</span>
+        </div>
+        <div class="phone-header-tag">EXPLORER NETWORK // CTO CORE</div>
+        <div class="phone-card-title">
+          <span>Find your next vision</span>
+          <span>↗</span>
+        </div>
+        <div class="phone-card-subtitle">Search beyond limits. Discover what's next in native mobile app conversion.</div>
+        
+        <div class="phone-media-container">
+          <img src="assets/linkedin.jpg" alt="Mantej Singh — CTO" class="phone-media-img">
+        </div>
+
+        <div class="phone-spec-list">
+          <div class="phone-spec-item"><span>SEARCH FIELD</span><span class="val">Techwear / Cybernetic / Future</span></div>
+          <div class="phone-spec-item"><span>TREND MAP</span><span class="val">Scanning signals... 72%</span></div>
+        </div>
+        <div style="width:100%; height:4px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden; margin-bottom:14px;">
+          <div style="width:72%; height:100%; background:linear-gradient(90deg, var(--teal), var(--amber));"></div>
+        </div>
+      </div>
+
+      <div class="phone-card-footer">
+        <div class="phone-badge-num">02.</div>
+        <a href="https://www.linkedin.com/in/mantej-singh-307134379/" target="_blank" class="phone-cta-btn">Start Search →</a>
+      </div>
+    </div>
+
+    <!-- CARD 03: CHOOSE YOUR MODE -->
+    <div class="phone-card card-03 magnet">
+      <div>
+        <div class="phone-status-bar">
+          <span>9:41</span>
+          <div class="phone-notch"></div>
+          <span>LIVE 🔴</span>
+        </div>
+        <div class="phone-header-tag">CREATOR HUB // TECH VLOGS</div>
+        <div class="phone-card-title">
+          <span>Choose Your Mode</span>
+          <span>↗</span>
+        </div>
+
+        <div class="phone-mode-pills">
+          <div class="phone-mode-pill">Essentials</div>
+          <div class="phone-mode-pill">Pro</div>
+          <div class="phone-mode-pill active">Visionary</div>
+        </div>
+
+        <div class="phone-glass-offer">
+          <div class="phone-glass-badge"><span>VISIONARY</span><span>Best Value</span></div>
+          <div class="phone-glass-title">Unlimited Access</div>
+          <div class="phone-glass-desc">Full access to all drops, early releases, hardware builds &amp; tech vlogs.</div>
+          <div class="phone-glass-perks">
+            <span>✓ Unlimited Collections</span>
+            <span>✓ Priority Access</span>
+            <span>✓ One-on-One Advisory</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone-card-footer">
+        <div class="phone-badge-num">03.</div>
+        <a href="https://www.youtube.com/@mantejtechvlogs" target="_blank" class="phone-cta-btn">Join Now →</a>
+      </div>
+    </div>
+
+  </div>
+
   <div class="scroll-cue" id="scrollCue"><span>SCROLL</span><div class="bar"></div></div>
 
   <!-- 3D Robot & Spotlight Interactive Stage -->
@@ -676,7 +1114,18 @@
   <div class="orbit-shell" data-reveal>
     <div class="orbit-stage" id="orbitStage">
       <div class="orbit-path"></div>
-      <div class="orbit-core"></div>
+      <div class="orbit-core" tabindex="0" role="img" aria-label="Mantej Singh — Operator">
+        <div class="orbit-core-radar"></div>
+        <div class="reticle-corner tl"></div>
+        <div class="reticle-corner tr"></div>
+        <div class="reticle-corner bl"></div>
+        <div class="reticle-corner br"></div>
+        <div class="orbit-core-avatar">
+          <img src="assets/linkedin.jpg" alt="Mantej Singh — Operator" class="orbit-core-img" loading="lazy">
+          <div class="avatar-scanbeam"></div>
+        </div>
+        <div class="orbit-core-label">MS_//OPERATOR</div>
+      </div>
       <div class="orbit-orb magnet" data-platform="instagram" id="orb-ig">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
       </div>
@@ -695,6 +1144,20 @@
     </div>
 
     <div class="orbit-mobile-stack">
+      <div class="mstack-operator-card">
+        <div class="mstack-operator-avatar">
+          <img src="assets/linkedin.jpg" alt="Mantej Singh — Operator" class="orbit-core-img">
+          <div class="reticle-corner tl"></div>
+          <div class="reticle-corner tr"></div>
+          <div class="reticle-corner bl"></div>
+          <div class="reticle-corner br"></div>
+        </div>
+        <div>
+          <div class="mstack-op-tag">MS_//OPERATOR · ID: VERIFIED</div>
+          <h4>MANTEJ SINGH</h4>
+          <p>Founder &amp; CTO — HustleSmith Studio &amp; ApplifyNow</p>
+        </div>
+      </div>
       <a class="mstack-card" data-platform="instagram" href="https://www.instagram.com/hustler_mantej/" target="_blank" rel="noopener">
         <div class="left"><div class="mstack-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div>
         <div><h4>Instagram</h4><p>Behind the build — @hustler_mantej</p></div></div>
