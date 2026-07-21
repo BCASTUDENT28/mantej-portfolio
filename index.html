@@ -237,10 +237,10 @@
     position: relative;
     width: 100%;
     max-width: 1280px;
-    height: 320px;
-    margin: 0 auto 36px;
+    height: 340px;
+    margin: 60px auto 0;
     border-radius: 24px;
-    background: rgba(8, 10, 18, 0.85);
+    background: rgba(8, 10, 18, 0.92);
     border: 1px solid rgba(94, 234, 212, 0.35);
     box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 30px rgba(94, 234, 212, 0.15);
     overflow: hidden;
@@ -250,6 +250,8 @@
     padding: 20px 40px;
     backdrop-filter: blur(14px);
     z-index: 10;
+    opacity: 0;
+    transform: translateY(30px);
   }
   @media (max-width: 850px) {
     .hero-robot-stage {
@@ -510,18 +512,7 @@
 <section id="hero">
   <video class="hero-ascii-bg" src="https://assets.21st.dev/ascii-recipes/videos/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/38f24872-2e1b-4582-bcf0-375dceb1e481.mp4" poster="https://assets.21st.dev/ascii-recipes/thumbnails/user_3GTmm8jNoQIxVVDZmyng4bN3uFj/f1e9ca31-92ab-465d-a08f-41a0393623ce.webp" autoplay loop muted playsinline aria-label="Heximage — animated ASCII art"></video>
   <canvas id="circuit-canvas"></canvas>
-  <!-- 3D Robot & Spotlight Interactive Stage -->
-  <div class="hero-robot-stage spotlight-card magnet" id="robotStage">
-    <div class="spotlight-overlay" id="spotlightOverlay"></div>
-    <div class="robot-stage-text">
-      <div class="eyebrow" style="opacity: 1; margin-bottom: 8px;">INTERACTIVE 3D SYSTEM</div>
-      <h3>SYSTEM INITIALIZED // CYBERNETIC CORE</h3>
-      <p>Interactive 3D Robot model active. Move your cursor over the card to trigger live spotlight fields and rotate the 3D scene.</p>
-    </div>
-    <div class="robot-spline-wrapper">
-      <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
-    </div>
-  </div>
+  <canvas id="hero-canvas"></canvas>
   
   <div class="hero-container">
     <div class="hero-content">
@@ -570,6 +561,19 @@
   </div>
 
   <div class="scroll-cue" id="scrollCue"><span>SCROLL</span><div class="bar"></div></div>
+
+  <!-- 3D Robot & Spotlight Interactive Stage -->
+  <div class="hero-robot-stage spotlight-card magnet" id="robotStage">
+    <div class="spotlight-overlay" id="spotlightOverlay"></div>
+    <div class="robot-stage-text">
+      <div class="eyebrow" style="opacity: 1; margin-bottom: 8px;">INTERACTIVE 3D SYSTEM</div>
+      <h3>SYSTEM INITIALIZED // CYBERNETIC CORE</h3>
+      <p>Interactive 3D Robot model active. Move your cursor over the card to trigger live spotlight fields and rotate the 3D scene.</p>
+    </div>
+    <div class="robot-spline-wrapper">
+      <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+    </div>
+  </div>
 </section>
 
 <div class="trace-wrap" id="traceWrap">
@@ -959,7 +963,8 @@ tl.to('#eyebrow', {opacity:1, duration:.6}, .1)
   .to('#heroSub', {opacity:1, duration:.7}, .9)
   .to('#heroSocialBar', {opacity:1, duration:.7}, 1.0)
   .to('#heroMediaCard', {opacity:1, duration:.8}, .4)
-  .to('#scrollCue', {opacity:1, duration:.6}, 1.2);
+  .to('#scrollCue', {opacity:1, duration:.6}, 1.2)
+  .to('#robotStage', {opacity:1, y:0, duration:.9, ease:'power2.out'}, 1.4);
 
 /* ---------------- decode/scramble role cycler ---------------- */
 const roles = ['MANTEJ SINGH', 'FOUNDER & CTO', 'HUSTLESMITH', 'APPLIFYNOW', 'LOVELY', 'PROFESSIONAL', 'UNIVERSITY'];
