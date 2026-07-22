@@ -2484,6 +2484,68 @@
   animation: notifAnim 1s ease-out forwards;
 }
 
+
+/* ---------- SKILLS & TECH LOGOS GRID ---------- */
+.skills-section-wrapper {
+  margin-bottom: 48px;
+}
+.skills-category-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--accent-blue);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.skills-logos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 16px;
+}
+.skill-logo-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.skill-logo-card:hover {
+  transform: translateY(-6px) scale(1.05);
+  border-color: rgba(56, 189, 248, 0.6);
+  background: rgba(30, 41, 59, 0.85);
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
+}
+.skill-logo-card img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.5));
+  transition: transform 0.3s ease;
+}
+.skill-logo-card:hover img {
+  transform: scale(1.18) rotate(4deg);
+}
+.skill-name {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
 </style>
 </head>
 <body>
@@ -3301,11 +3363,103 @@
   </div>
 </section>
 
-<!-- ================= USES / SETUP SECTION ================= -->
+<!-- ================= SKILLS, USES & SETUP SECTION ================= -->
 <section id="uses" class="sec-base">
   <div class="section-head" data-reveal>
-    <span class="idx">08</span><h2>Uses &amp; Setup</h2><div class="rule"></div>
+    <span class="idx">08</span><h2>Skills &amp; Tech Stack</h2><div class="rule"></div>
   </div>
+
+  <!-- Development Skills & Coding Language Logos Grid -->
+  <div class="skills-section-wrapper" data-reveal>
+    <div class="skills-category-title">⚡ DEVELOPMENT LANGUAGES &amp; CORE STACK</div>
+    <div class="skills-logos-grid">
+      <div class="skill-logo-card magnet" title="JavaScript (JS)">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" loading="lazy">
+        <span class="skill-name">JavaScript</span>
+      </div>
+      <div class="skill-logo-card magnet" title="TypeScript (TS)">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="TypeScript" loading="lazy">
+        <span class="skill-name">TypeScript</span>
+      </div>
+      <div class="skill-logo-card magnet" title="React.js">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" loading="lazy">
+        <span class="skill-name">React.js</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Next.js">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="Next.js" loading="lazy" style="filter:invert(1);">
+        <span class="skill-name">Next.js</span>
+      </div>
+      <div class="skill-logo-card magnet" title="HTML5">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" loading="lazy">
+        <span class="skill-name">HTML5</span>
+      </div>
+      <div class="skill-logo-card magnet" title="CSS3">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" loading="lazy">
+        <span class="skill-name">CSS3</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Tailwind CSS">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" loading="lazy">
+        <span class="skill-name">Tailwind</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Three.js 3D">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/threejs/threejs-original.svg" alt="Three.js" loading="lazy" style="filter:invert(1);">
+        <span class="skill-name">Three.js</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Node.js">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" loading="lazy">
+        <span class="skill-name">Node.js</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Python">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" loading="lazy">
+        <span class="skill-name">Python</span>
+      </div>
+      <div class="skill-logo-card magnet" title="C / C++">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++" loading="lazy">
+        <span class="skill-name">C / C++</span>
+      </div>
+      <div class="skill-logo-card magnet" title="PostgreSQL">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" loading="lazy">
+        <span class="skill-name">PostgreSQL</span>
+      </div>
+      <div class="skill-logo-card magnet" title="MongoDB">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="MongoDB" loading="lazy">
+        <span class="skill-name">MongoDB</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Docker">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" loading="lazy">
+        <span class="skill-name">Docker</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Git">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" loading="lazy">
+        <span class="skill-name">Git</span>
+      </div>
+      <div class="skill-logo-card magnet" title="GitHub">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" loading="lazy" style="filter:invert(1);">
+        <span class="skill-name">GitHub</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Arduino">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" alt="Arduino" loading="lazy">
+        <span class="skill-name">Arduino</span>
+      </div>
+      <div class="skill-logo-card magnet" title="VS Code">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy">
+        <span class="skill-name">VS Code</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Figma">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" loading="lazy">
+        <span class="skill-name">Figma</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Vercel">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" alt="Vercel" loading="lazy" style="filter:invert(1);">
+        <span class="skill-name">Vercel</span>
+      </div>
+      <div class="skill-logo-card magnet" title="Linux">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" loading="lazy">
+        <span class="skill-name">Linux</span>
+      </div>
+    </div>
+  </div>
+
   <div class="uses-grid" data-reveal>
     <div class="uses-card">
       <div class="uses-category">HARDWARE SETUP</div>
