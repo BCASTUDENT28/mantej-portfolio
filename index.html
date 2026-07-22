@@ -12,36 +12,43 @@
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
 <style>
   :root{
-    /* 2026 Cloud Dancer & Sky Blue Palette */
-    --bg-base: #F4F7FC;          /* Soft cloud-white base */
-    --bg-surface: #FFFFFF;       /* Pure white card backgrounds */
-    --bg-glass: rgba(255, 255, 255, 0.82); /* Frosted cloud glass */
-    --bg-panel: #EBF3FA;         /* Soft slate-blue tint */
+    /* Soft Moody Navy/Charcoal Dark Theme Palette */
+    --bg-base: #1B2438;          /* Primary section background */
+    --bg-base-alt: #161D2E;      /* Alternating section background band */
+    --bg-elevated: #232B3D;      /* Card background sitting on top of --bg-base */
+    --bg-elevated-2: #2A3349;    /* Hover / nested state background */
+    --bg-glass: rgba(35, 43, 61, 0.75); /* Frosted dark glass */
+    --bg-panel: #232B3D;         /* Secondary panel background */
     
-    --text-main: #0F172A;        /* Deep slate/navy for crisp readability (WCAG AA 14:1) */
-    --text-muted: #475569;       /* Slate gray for secondary text (WCAG AA 5.8:1+) */
-    --text-subtle: #64748B;      /* Muted label text (WCAG AA 4.5:1+) */
+    --text-primary: #E7ECF5;     /* Off-white body copy (WCAG AAA 11.8:1) */
+    --text-secondary: #9CA8C0;   /* Muted supporting text (WCAG AA 6.2:1) */
+    --text-subtle: #6B7A99;      /* Muted label / date text */
+    --text-main: #E7ECF5;        /* Alias for text-primary */
+    --text-muted: #9CA8C0;       /* Alias for text-secondary */
     
-    --sky-blue: #3B82F6;        /* Vibrant sky blue primary accent */
-    --sky-light: #60A5FA;       /* Soft sky glow */
-    --trust-navy: #1E3A8A;       /* Deep trust blue header anchor */
-    --cloud-accent: #2563EB;     /* Confident electric blue */
-    --amber-soft: #D97706;       /* Warm amber badge */
+    --accent-blue: #7EB0F0;      /* Highlights, links, GooeyText tagline */
+    --sky-blue: #7EB0F0;         /* Alias */
+    --sky-light: #7EB0F0;        /* Alias */
+    --cloud-accent: #7EB0F0;     /* Alias */
+    --trust-navy: #60A5FA;       /* Bright sky accent */
+    --amber-soft: #F59E0B;       /* Warm amber badge */
     
-    /* Neon Green Accent (WCAG AA Pass on dark & light) */
+    /* Neon Green Accent (WCAG AAA Pass on navy & dark charcoal) */
+    --accent-green: #34D399;
     --neon-accent: #34D399;
-    --neon-glow: rgba(52, 211, 153, 0.4);
+    --neon-glow: rgba(52, 211, 153, 0.35);
     
-    --border-light: rgba(226, 232, 240, 0.9);
-    --border-glow: rgba(59, 130, 246, 0.3);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-light: rgba(255, 255, 255, 0.08);
+    --border-glow: rgba(126, 176, 240, 0.3);
     
-    /* Multi-layer elevation shadows */
-    --shadow-soft: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 12px 32px -4px rgba(59, 130, 246, 0.08);
-    --shadow-hover: 0 20px 45px -10px rgba(30, 58, 138, 0.14), 0 0 35px rgba(96, 165, 250, 0.3);
+    /* Dark elevation highlights & glows */
+    --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.25);
+    --shadow-hover: 0 0 24px rgba(126, 176, 240, 0.15), 0 10px 30px rgba(0, 0, 0, 0.4);
     
     --ig: #E1306C;
     --yt: #EF4444;
-    --li: #2563EB;
+    --li: #3B82F6;
     
     --font-display: 'Plus Jakarta Sans', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -51,13 +58,13 @@
   html{scroll-behavior:smooth;}
   body{
     background:var(--bg-base);
-    color:var(--text-main);
+    color:var(--text-primary);
     font-family:var(--font-body);
     overflow-x:hidden;
     cursor:default;
   }
 
-  /* Fine-grain editorial texture overlay across light sections */
+  /* Fine-grain editorial texture overlay tuned for dark navy surfaces */
   .fine-grain-overlay {
     position: fixed;
     inset: 0;
@@ -66,7 +73,7 @@
     opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
-  ::selection{background:var(--sky-light);color:#ffffff;}
+  ::selection{background:var(--accent-blue);color:#0F172A;}
   a{color:inherit;text-decoration:none;}
 
   /* Accessibility — focus-visible */
@@ -683,29 +690,39 @@
   .trace-svg{position:absolute;top:0;left:clamp(14px,4vw,32px);z-index:0;pointer-events:none;overflow:visible;}
   .trace-svg line{stroke:var(--sky-light);stroke-width:2;opacity:.35;}
 
-  /* ---------- Section Shell (Elevated Light Cloud Blue Theme) ---------- */
-  section{
-    position:relative;
-    padding:125px clamp(20px,6vw,80px);
-    z-index:1;
+  /* ---------- Section Shell (Moody Navy Dark Theme) ---------- */
+  section {
+    position: relative;
+    padding: 125px clamp(20px, 6vw, 80px);
+    z-index: 1;
+    border-top: 1px solid var(--border-subtle);
   }
-  .section-head{display:flex;align-items:center;gap:16px;margin-bottom:52px;}
-  .section-head .idx{
-    font-family:var(--font-display);font-size:13px;font-weight:800;
-    color:var(--cloud-accent);
-    background:rgba(37, 99, 235, 0.08);
-    padding:4px 14px;
-    border-radius:14px;
-    border:1px solid rgba(37, 99, 235, 0.2);
+  section.sec-base {
+    background: var(--bg-base);
   }
-  .section-head h2{
-    font-family:var(--font-display);
-    font-weight:800;
-    font-size:clamp(2.1rem,4.2vw,3.2rem);
-    letter-spacing:-.03em;
-    color:var(--text-main);
+  section.sec-alt {
+    background: var(--bg-base-alt);
   }
-  .section-head .rule{flex:1;height:1px;background:var(--border-light);}
+
+  .section-head { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; }
+  .section-head .idx {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent-blue);
+    background: rgba(126, 176, 240, 0.12);
+    padding: 5px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(126, 176, 240, 0.25);
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+    letter-spacing: -.03em;
+    color: var(--text-primary);
+  }
+  .section-head .rule { flex: 1; height: 1px; background: var(--border-subtle); }
 
   /* ---------- Ventures Section & Videos ---------- */
   #mod-hustlesmith {
@@ -725,22 +742,24 @@
   }
   @media (max-width:960px){ .modules{grid-template-columns:1fr;} }
   .module{
-    background:var(--bg-glass);
-    backdrop-filter:blur(14px);
-    border:1px solid var(--border-light);
-    border-radius:26px;
-    padding:36px 30px;
-    position:relative;
-    box-shadow:var(--shadow-soft);
-    transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .4s ease, border-color .4s ease;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
+    background: var(--bg-glass);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 26px;
+    padding: 36px 30px;
+    position: relative;
+    box-shadow: var(--shadow-soft);
+    transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .4s ease, border-color .4s ease, background .4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .module:hover{
-    transform:translateY(-8px) scale(1.008);
-    box-shadow:var(--shadow-hover);
-    border-color:var(--sky-light);
+    transform: translateY(-8px) scale(1.008);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 0 24px rgba(126, 176, 240, 0.15), 0 10px 30px rgba(0, 0, 0, 0.4);
+    border-color: rgba(126, 176, 240, 0.35);
   }
   .module .mod-id{
     font-family:var(--font-display);font-size:11px;font-weight:800;
@@ -760,9 +779,9 @@
   }
   /* Neon Green status badges */
   .module .status.live, .now-badge, .nav .tag::before {
-    background: rgba(52, 211, 153, 0.12) !important;
-    color: #059669 !important;
-    border: 1px solid rgba(52, 211, 153, 0.35);
+    background: rgba(52, 211, 153, 0.15) !important;
+    color: var(--accent-green) !important;
+    border: 1px solid rgba(52, 211, 153, 0.35) !important;
   }
   .module .status.live::before, .nav .tag::before {
     content:'';
@@ -2006,7 +2025,7 @@
 <svg class="trace-svg" id="traceSvg"><line id="traceLine" x1="0" y1="0" x2="0" y2="0"/></svg>
 
 <!-- ================= VENTURES ================= -->
-<section id="ventures">
+<section id="ventures" class="sec-base">
   <div class="section-head" data-reveal>
     <span class="idx">01</span><h2>Ventures</h2><div class="rule"></div>
   </div>
@@ -2093,7 +2112,7 @@
 </section>
 
 <!-- ================= CONNECT ================= -->
-<section id="connect">
+<section id="connect" class="sec-alt">
   <div class="section-head" data-reveal>
     <span class="idx">02</span><h2>Connect</h2><div class="rule"></div>
   </div>
@@ -2164,7 +2183,7 @@
 </section>
 
 <!-- ================= JOURNEY & TIMELINE ================= -->
-<section id="journey">
+<section id="journey" class="sec-base">
   <div class="section-head" data-reveal>
     <span class="idx">03</span><h2>Journey &amp; Milestones</h2><div class="rule"></div>
   </div>
@@ -2210,7 +2229,7 @@
 </section>
 
 <!-- ================= MODULE_04 / CAMPUS & CULTURE ================= -->
-<section id="campus">
+<section id="campus" class="sec-alt">
   <!-- Geometric Abstract Phulkari-inspired Motif Background -->
   <div class="phulkari-bg-motif" aria-hidden="true">
     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -2321,7 +2340,7 @@
 </section>
 
 <!-- ================= FOUNDER DASH MINI-GAME ================= -->
-<section id="game">
+<section id="game" class="sec-base">
   <div class="section-head" data-reveal>
     <span class="idx">05</span><h2>Founder Dash</h2><div class="rule"></div>
   </div>
@@ -2352,9 +2371,9 @@
 </section>
 
 <!-- ================= NOW SECTION ================= -->
-<section id="now">
+<section id="now" class="sec-alt">
   <div class="section-head" data-reveal>
-    <span class="idx">05</span><h2>What I'm Doing Now</h2><div class="rule"></div>
+    <span class="idx">06</span><h2>What I'm Doing Now</h2><div class="rule"></div>
   </div>
   <div class="now-container" data-reveal>
     <div class="now-header">
@@ -2382,9 +2401,9 @@
 </section>
 
 <!-- ================= USES / SETUP SECTION ================= -->
-<section id="uses">
+<section id="uses" class="sec-base">
   <div class="section-head" data-reveal>
-    <span class="idx">06</span><h2>Uses &amp; Setup</h2><div class="rule"></div>
+    <span class="idx">07</span><h2>Uses &amp; Setup</h2><div class="rule"></div>
   </div>
   <div class="uses-grid" data-reveal>
     <div class="uses-card">
@@ -2409,9 +2428,9 @@
 </section>
 
 <!-- ================= TESTIMONIALS SECTION ================= -->
-<section id="testimonials">
+<section id="testimonials" class="sec-alt">
   <div class="section-head" data-reveal>
-    <span class="idx">07</span><h2>Testimonials</h2><div class="rule"></div>
+    <span class="idx">08</span><h2>Testimonials</h2><div class="rule"></div>
   </div>
   <div class="testimonials-wrapper" data-reveal>
     <div class="testi-container">
@@ -2464,9 +2483,9 @@
 </section>
 
 <!-- ================= GUESTBOOK SECTION ================= -->
-<section id="guestbook">
+<section id="guestbook" class="sec-base">
   <div class="section-head" data-reveal>
-    <span class="idx">08</span><h2>Guestbook</h2><div class="rule"></div>
+    <span class="idx">09</span><h2>Guestbook</h2><div class="rule"></div>
   </div>
   <div class="guestbook-container" data-reveal>
     <div class="guestbook-form-card">
@@ -2494,7 +2513,7 @@
 </section>
 
 <!-- ================= QR ================= -->
-<section id="qr">
+<section id="qr" class="sec-alt">
   <div class="section-head" data-reveal>
     <span class="idx">09</span><h2>Scan to keep this</h2><div class="rule"></div>
   </div>
@@ -2731,10 +2750,10 @@ if(!isTouch){
   const nav = document.getElementById('navbar');
   window.addEventListener('scroll', ()=>{
     if (window.scrollY > 300) {
-      nav.style.background = 'rgba(244, 247, 252, 0.88)';
-      nav.style.borderColor = 'var(--border-light)';
-      nav.style.color = 'var(--text-muted)';
-      nav.querySelector('.tag').style.color = 'var(--trust-navy)';
+      nav.style.background = 'rgba(27, 36, 56, 0.92)';
+      nav.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+      nav.style.color = '#E7ECF5';
+      nav.querySelector('.tag').style.color = '#E7ECF5';
     } else {
       nav.style.background = 'rgba(10, 10, 15, 0.85)';
       nav.style.borderColor = 'rgba(255, 255, 255, 0.08)';
@@ -3426,13 +3445,12 @@ document.getElementById('mod-vlogs').addEventListener('click', ()=>{
       bgGrad.addColorStop(1, '#312E81');
     } else if (G.score > 250) {
       bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      bgGrad.addColorStop(0, '#0F172A');
-      bgGrad.addColorStop(1, '#1E293B');
+      bgGrad.addColorStop(0, '#1B2438');
+      bgGrad.addColorStop(1, '#232B3D');
     } else {
       bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      bgGrad.addColorStop(0, '#E0F2FE');
-      bgGrad.addColorStop(0.7, '#EFF6FF');
-      bgGrad.addColorStop(1, '#DBEAFE');
+      bgGrad.addColorStop(0, '#161D2E');
+      bgGrad.addColorStop(1, '#1B2438');
     }
 
     ctx.fillStyle = bgGrad;
