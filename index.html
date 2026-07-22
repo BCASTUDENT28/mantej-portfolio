@@ -836,15 +836,45 @@
   .venture-video-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: 16px;
+    aspect-ratio: 9 / 16;
+    max-height: 520px;
+    border-radius: 18px;
     overflow: hidden;
     margin-top: 14px;
     margin-bottom: 16px;
-    background: #0F172A;
-    border: 1px solid var(--border-light);
-    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.08);
+    background: #090a0f;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+  .venture-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .venture-video-container:hover .venture-video {
+    transform: scale(1.02);
+  }
+  .video-sound-toggle {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+  .video-sound-toggle:hover {
+    background: rgba(56, 189, 248, 0.3);
+    border-color: #38bdf8;
+    transform: scale(1.1);
   }
   .venture-video {
     width: 100%;
@@ -2477,12 +2507,17 @@
       
       <!-- Video 1: HustleSmith Brand Promo -->
       <div class="venture-video-container" data-video="studio">
-        <video class="venture-video" id="video-studio" preload="none" muted loop playsinline poster="images/hustlesmith_denim_hero.png">
+        <video class="venture-video" id="video-studio" autoplay muted loop playsinline preload="auto">
           <source src="assets/hustlesmith_promo.mp4" type="video/mp4">
         </video>
         <div class="video-overlay-controls">
-          <button class="video-play-btn" aria-label="Play/Pause Video">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <button class="video-sound-toggle" aria-label="Toggle Mute/Unmute Sound" title="Sound On/Off">
+            <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+            </svg>
+            <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+              <path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+            </svg>
           </button>
           <span class="video-tag">Brand Promo</span>
         </div>
@@ -2503,12 +2538,17 @@
       
       <!-- Video 2: Stealth Demo -->
       <div class="venture-video-container" data-video="stealth">
-        <video class="venture-video" id="video-stealth" preload="none" muted loop playsinline poster="images/lpu_robo_park.jpg">
+        <video class="venture-video" id="video-stealth" autoplay muted loop playsinline preload="auto">
           <source src="assets/ai_reel_replica.mp4" type="video/mp4">
         </video>
         <div class="video-overlay-controls">
-          <button class="video-play-btn" aria-label="Play/Pause Video">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <button class="video-sound-toggle" aria-label="Toggle Mute/Unmute Sound" title="Sound On/Off">
+            <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+            </svg>
+            <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+              <path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+            </svg>
           </button>
           <span class="video-tag">⚡ Stealth SaaS</span>
         </div>
@@ -2529,12 +2569,17 @@
 
       <!-- Video 3: AI Video Tutorial Masterclass -->
       <div class="venture-video-container" data-video="vlogs">
-        <video class="venture-video" id="video-vlogs" preload="none" muted loop playsinline poster="images/lpu_auditorium.jpg">
+        <video class="venture-video" id="video-vlogs" autoplay muted loop playsinline preload="auto">
           <source src="assets/ai_youtube_tutorial.mp4" type="video/mp4">
         </video>
         <div class="video-overlay-controls">
-          <button class="video-play-btn" aria-label="Play/Pause Video">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <button class="video-sound-toggle" aria-label="Toggle Mute/Unmute Sound" title="Sound On/Off">
+            <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+            </svg>
+            <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+              <path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+            </svg>
           </button>
           <span class="video-tag">🔥 AI Video Tutorial</span>
         </div>
@@ -4596,8 +4641,6 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     if (cards.length < 3) return;
 
     cards.forEach((card, idx) => {
-      const video = card.querySelector('video');
-      
       card.addEventListener('mouseenter', () => {
         if (window.innerWidth <= 960) return;
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -4608,18 +4651,11 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
         else if (idx === 2) colSpec = '0.8fr 0.8fr 2fr';
         
         container.style.setProperty('--col-spec', colSpec);
-
-        if (video) {
-          video.play().catch(() => {});
-        }
       });
 
       card.addEventListener('mouseleave', () => {
         if (window.innerWidth <= 960) return;
         container.style.setProperty('--col-spec', '1fr 1fr 1fr');
-        if (video) {
-          video.pause();
-        }
       });
     });
   })();
@@ -4638,6 +4674,56 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     }
     updateClock();
     setInterval(updateClock, 1000);
+  })();
+
+
+  // Automatic Continuous Video Loop & Sound ON/OFF Engine
+  (function() {
+    const videoContainers = document.querySelectorAll('.venture-video-container');
+    
+    videoContainers.forEach(container => {
+      const video = container.querySelector('video');
+      const soundBtn = container.querySelector('.video-sound-toggle');
+      if (!video) return;
+
+      // Ensure autoplay & loop
+      video.muted = true;
+      video.loop = true;
+      video.play().catch(() => {});
+
+      // Sound ON/OFF Handler
+      if (soundBtn) {
+        const iconOff = soundBtn.querySelector('.sound-off-icon');
+        const iconOn = soundBtn.querySelector('.sound-on-icon');
+
+        soundBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          video.muted = !video.muted;
+          if (video.muted) {
+            if (iconOff) iconOff.style.display = 'block';
+            if (iconOn) iconOn.style.display = 'none';
+          } else {
+            if (iconOff) iconOff.style.display = 'none';
+            if (iconOn) iconOn.style.display = 'block';
+            video.play().catch(() => {});
+          }
+        });
+      }
+    });
+
+    // Auto play videos when in viewport
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target.querySelector('video');
+        if (video) {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          }
+        }
+      });
+    }, { threshold: 0.2 });
+
+    videoContainers.forEach(c => observer.observe(c));
   })();
 
 </body>
