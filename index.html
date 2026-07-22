@@ -2020,6 +2020,115 @@
 
   /* ---------- QR Section ---------- */
 
+  /* Share Modal Popup Styles */
+  .share-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(9, 10, 15, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.25s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .share-modal-card {
+    background: var(--bg-elevated, #161D2E);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 24px;
+    padding: 32px;
+    max-width: 440px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    text-align: center;
+  }
+  .share-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    color: var(--text-subtle);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .share-modal-close:hover { color: #ffffff; }
+  .share-modal-icon { font-size: 2.2rem; margin-bottom: 8px; }
+  .share-modal-header h3 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .share-modal-header p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 22px;
+  }
+  .share-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .share-opt-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    transition: all 0.25s ease;
+  }
+  .share-opt-btn.wa { background: #25D366; }
+  .share-opt-btn.ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .share-opt-btn.yt { background: #FF0000; }
+  .share-opt-btn.li { background: #0A66C2; }
+  .share-opt-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .share-copy-link-wrap {
+    display: flex;
+    gap: 8px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 6px;
+  }
+  .share-copy-link-wrap input {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 8px 12px;
+    flex: 1;
+    outline: none;
+  }
+  .share-copy-link-wrap button {
+    background: #38bdf8;
+    color: #0f172a;
+    border: none;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .share-copy-link-wrap button:hover { background: #7eb0f0; }
+
+
   /* QR Share Button Style */
   .qr-share-btn {
     background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
@@ -4783,12 +4892,29 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
       }
     }
 
-    // Native Web Share API (WhatsApp, Instagram, Telegram, Apps menu)
+    // Guaranteed Universal Share Engine (Native Web Share + Custom Modal)
+  (function() {
     const shareBtn = document.getElementById('shareQrBtn');
-    const shareStatus = document.getElementById('shareStatusMsg');
+    const shareModal = document.getElementById('shareModal');
+    const closeBtn = document.getElementById('closeShareModal');
+    const copyBtn = document.getElementById('copyShareLinkBtn');
+    const linkInput = document.getElementById('shareLinkInput');
+    const toast = document.getElementById('modalCopyToast');
+
+    function openModal() {
+      if (shareModal) shareModal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      if (shareModal) shareModal.style.display = 'none';
+      if (toast) toast.style.display = 'none';
+    }
 
     if (shareBtn) {
-      shareBtn.addEventListener('click', async () => {
+      shareBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         const shareData = {
           title: 'Mantej Singh — Portfolio & Tech Vlogs',
           text: 'Take a screenshot of this QR code and share it with your friends to subscribe on YouTube (@mantejtechvlogs) and follow on Instagram (@hustler_mantej)!',
@@ -4798,32 +4924,82 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
         if (navigator.share) {
           try {
             await navigator.share(shareData);
-            if (shareStatus) {
-              shareStatus.textContent = '✓ Shared successfully!';
-              shareStatus.style.display = 'block';
-              setTimeout(() => { shareStatus.style.display = 'none'; }, 3000);
-            }
           } catch (err) {
-            console.log('Share dismissed or cancelled:', err);
+            // User cancelled native share or opened browser dialog -> open fallback modal
+            if (err.name !== 'AbortError') {
+              openModal();
+            }
           }
         } else {
-          // Fallback: Copy link & open WhatsApp web
-          try {
-            await navigator.clipboard.writeText(shareData.url);
-            const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareData.text + ' ' + shareData.url)}`;
-            window.open(waUrl, '_blank');
-            if (shareStatus) {
-              shareStatus.textContent = '✓ Link copied & opening WhatsApp share!';
-              shareStatus.style.display = 'block';
-              setTimeout(() => { shareStatus.style.display = 'none'; }, 4000);
-            }
-          } catch (e) {
-            alert('Share link: https://mantej.vercel.app');
-          }
+          openModal();
+        }
+      });
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (shareModal) {
+      shareModal.addEventListener('click', (e) => {
+        if (e.target === shareModal) closeModal();
+      });
+    }
+
+    if (copyBtn && linkInput) {
+      copyBtn.addEventListener('click', () => {
+        linkInput.select();
+        try {
+          navigator.clipboard.writeText(linkInput.value).then(() => {
+            if (toast) toast.style.display = 'block';
+          }).catch(() => {
+            document.execCommand('copy');
+            if (toast) toast.style.display = 'block';
+          });
+        } catch (e) {
+          if (toast) toast.style.display = 'block';
         }
       });
     }
   })();
+
+
+<!-- Interactive Share Modal -->
+<div class="share-modal-backdrop" id="shareModal" style="display:none;">
+  <div class="share-modal-card">
+    <button class="share-modal-close" id="closeShareModal" aria-label="Close Modal">&times;</button>
+    <div class="share-modal-header">
+      <div class="share-modal-icon">📲</div>
+      <h3>Share Portfolio &amp; QR Code</h3>
+      <p>Take a screenshot of the QR code or share directly via any application below:</p>
+    </div>
+    
+    <div class="share-options-grid">
+      <a href="https://api.whatsapp.com/send?text=Check%20out%20Mantej%20Singh%27s%20portfolio,%20YouTube%20%26%20Instagram!%20Take%20a%20screenshot%20of%20the%20QR%20code%20to%20connect:%20https://mantej.vercel.app" target="_blank" rel="noopener" class="share-opt-btn wa">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.764.459 3.487 1.333 5.006l-1.417 5.176 5.297-1.389c1.472.802 3.134 1.224 4.774 1.225h.004c5.505 0 9.988-4.478 9.989-9.985 0-2.668-1.038-5.177-2.924-7.062a9.923 9.923 0 00-7.056-2.955zm5.666 14.288c-.24.673-1.399 1.282-1.923 1.344-.524.062-1.2.088-3.447-.841-2.876-1.189-4.726-4.116-4.87-4.307-.144-.191-1.168-1.554-1.168-2.964 0-1.41.738-2.103 1.002-2.39.264-.287.575-.359.767-.359.192 0 .384.002.551.01.179.008.419-.068.657.502.24.575.815 1.989.887 2.133.072.144.12.312.024.503-.096.191-.144.311-.287.478-.144.168-.303.376-.433.504-.144.144-.294.301-.126.589.168.288.747 1.233 1.603 1.996 1.101.981 2.031 1.286 2.319 1.43.288.144.456.12.624-.072.168-.192.719-.838.911-1.126.192-.288.384-.24.647-.144.264.096 1.677.791 1.964.935.288.144.479.216.551.336.072.12.072.695-.168 1.368z"/></svg>
+        <span>WhatsApp</span>
+      </a>
+
+      <a href="https://www.instagram.com/hustler_mantej/" target="_blank" rel="noopener" class="share-opt-btn ig">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span>Instagram</span>
+      </a>
+
+      <a href="https://www.youtube.com/@mantejtechvlogs?sub_confirmation=1" target="_blank" rel="noopener" class="share-opt-btn yt">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span>YouTube</span>
+      </a>
+
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://mantej.vercel.app" target="_blank" rel="noopener" class="share-opt-btn li">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        <span>LinkedIn</span>
+      </a>
+    </div>
+
+    <div class="share-copy-link-wrap">
+      <input type="text" readonly id="shareLinkInput" value="https://mantej.vercel.app">
+      <button id="copyShareLinkBtn">COPY LINK 📋</button>
+    </div>
+    <div id="modalCopyToast" style="display:none; color:var(--accent-green); font-size:12px; font-weight:700; margin-top:8px;">COPIED TO CLIPBOARD! ✓</div>
+  </div>
+</div>
 
 </body>
 </html>
