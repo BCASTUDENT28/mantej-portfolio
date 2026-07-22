@@ -4346,9 +4346,12 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
       hud.style.display = 'block';
       resetGame();
       clock.start();
-      if (!animFrameId) {
-        animFrameId = requestAnimationFrame(gameLoop);
+      if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
       }
+      animFrameId = requestAnimationFrame(gameLoop);
+    }
     } else if (newState === 'GAME_OVER') {
       isPlaying = false;
       isPaused = true;
@@ -4488,10 +4491,147 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
   }
 
   function gameLoop() {
-    if (gameState !== 'PLAYING' || isPaused) {
+    if (gameState !== 'PLAYING') {
       animFrameId = null;
       return;
     }
+    animFrameId = requestAnimationFrame(gameLoop);
+    if (isPaused) return;
+
+    const dt = Math.min(clock.getDelta(), 0.1);
+    
+    // Player X lerp
+    targetX = lane * 2;
+    player.position.x += (targetX - player.position.x) * 10 * dt;
+    
+    // Jump physics
+    if (!isGrounded) {
+      playerVY += gravity * dt;
+      player.position.y += playerVY * dt;
+      if (player.position.y <= 0) {
+        player.position.y = 0;
+        isGrounded = true;
+        playerVY = 0;
+        player.scale.set(1.3, 0.7, 1.3);
+      }
+    }
+    player.scale.lerp(new THREE.Vector3(1,1,1), 10 * dt);
+    
+    // Player rotation
+    player.rotation.x -= speed * dt * 0.5;
+    player.rotation.y += dt;
+
+    // Shadow tracking
+    shadow.position.x = player.position.x;
+    shadow.scale.setScalar(1 - (player.position.y * 0.2));
+    shadow.material.opacity = Math.max(0, 0.5 - (player.position.y * 0.1));
+
+    // World moving
+    const moveDist = speed * dt;
+    gridHelper.position.z = (gridHelper.position.z + moveDist) % 10;
+    
+    // Move side pillars
+    for(let i=0; i<PILLAR_COUNT; i++) {
+      pillarData[i].z += moveDist;
+      if (pillarData[i].z > 5) {
+        pillarData[i].z -= PILLAR_COUNT * 4;
+      }
+    }
+
+    // Dynamic FOV
+    let speedRatio = (speed - 15) / 20;
+    camera.fov = baseFov + Math.min(speedRatio * 12, 12);
+    camera.rotation.x = - Math.min(speedRatio * 0.05, 0.05);
+    camera.updateProjectionMatrix();
+
+    // Fog Hue Shift
+    if (score > 1000) {
+      scene.fog.color.lerp(new THREE.Color(0x1a0018), dt * 2);
+    } else if (score > 500) {
+      scene.fog.color.lerp(new THREE.Color(0x001a18), dt * 2);
+    } else {
+      scene.fog.color.lerp(baseFogColor, dt * 2);
+    }
+
+    // Score & Speed
+    score += Math.floor(moveDist * combo);
+    scoreVal.textContent = score;
+    speed += dt * 0.15;
+
+    // Spawning
+    spawnTimer -= dt;
+    if (spawnTimer <= 0) {
+      spawnTimer = (Math.random() * 0.5 + 0.5) * (15/speed);
+      if (Math.random() > 0.3) spawnObstacle(-40);
+      if (Math.random() > 0.6) spawnPickup(-40);
+    }
+
+    // Obstacle Collision
+    for(let i=0; i<OBSTACLE_COUNT; i++) {
+      if (obsData[i].active) {
+        obsData[i].z += moveDist;
+        if (obsData[i].z > 5) {
+          obsData[i].active = false;
+        } else {
+          if (Math.abs(obsData[i].z - player.position.z) < 0.8 &&
+              Math.abs(obsData[i].x - player.position.x) < 0.8 &&
+              player.position.y < 0.8) {
+            setGameState('GAME_OVER');
+          }
+        }
+      }
+    }
+
+    // Pickup Collision
+    for(let i=0; i<PICKUP_COUNT; i++) {
+      if (pickupData[i].active) {
+        pickupData[i].z += moveDist;
+        pickupData[i].rotY += dt * 2;
+        if (pickupData[i].z > 5) {
+          pickupData[i].active = false;
+          combo = 1;
+          comboVal.style.opacity = 0;
+        } else {
+          if (Math.abs(pickupData[i].z - player.position.z) < 1.0 &&
+              Math.abs(pickupData[i].x - player.position.x) < 1.0 &&
+              player.position.y < 1.5) {
+            pickupData[i].active = false;
+            score += 100 * combo;
+            combo++;
+            comboVal.textContent = `COMBO x${combo}`;
+            comboVal.style.opacity = 1;
+            showNotif(pickupNames[pickupData[i].type]);
+            
+            let hex = pickupData[i].type === 0 ? 0xf59e0b : pickupData[i].type === 1 ? 0xd946ef : 0xef4444;
+            spawnExplosion(pickupData[i].x, 1, pickupData[i].z, hex);
+          }
+        }
+      }
+    }
+
+    // Particle update
+    for(let i=0; i<PARTICLE_COUNT; i++) {
+      if(partData[i].active) {
+        partData[i].pos.addScaledVector(partData[i].vel, dt);
+        partData[i].life -= dt * 2;
+        if(partData[i].life <= 0) partData[i].active = false;
+      }
+    }
+
+    updateInstancedMeshes();
+
+    // Camera Shake
+    if (shakeTime > 0) {
+      shakeTime -= dt;
+      camera.position.x = (Math.random() - 0.5) * 0.5;
+      camera.position.y = baseCameraY + (Math.random() - 0.5) * 0.5;
+    } else {
+      camera.position.x = 0;
+      camera.position.y = baseCameraY;
+    }
+
+    renderer.render(scene, camera);
+  }
 
     animFrameId = requestAnimationFrame(gameLoop);
 
