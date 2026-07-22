@@ -2019,6 +2019,33 @@
   }
 
   /* ---------- QR Section ---------- */
+
+  /* QR Share Button Style */
+  .qr-share-btn {
+    background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+    border: none;
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 12px 24px;
+    border-radius: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(56, 189, 248, 0.35);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .qr-share-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 28px rgba(56, 189, 248, 0.5);
+  }
+  .qr-share-btn:active {
+    transform: translateY(0);
+  }
+
   .qr-wrap{
     display:flex;gap:56px;align-items:center;justify-content:center;flex-wrap:wrap;
     border:1px solid var(--border-light);border-radius:28px;padding:56px;
@@ -3274,12 +3301,23 @@
   </div>
   <div class="qr-wrap" data-reveal>
     <div class="qr-frame" id="qrFrame">
-      <div id="qrcode"></div>
+      <div id="qrcode">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fmantej.vercel.app&color=0f172a&bgcolor=ffffff" alt="Mantej Singh Portfolio QR Code" width="180" height="180" style="display:block; border-radius:8px;">
+      </div>
       <div class="qr-beam"></div>
     </div>
     <div class="qr-copy">
-      <h2>Take this with you.</h2>
-      <p>Scan to open this portfolio on your phone — every link, one place. Save it, share it, or come back later.</p>
+      <h2>Take a screenshot &amp; share! 📸</h2>
+      <p>Take a screenshot of this QR code and share it with your friends to subscribe on <strong>YouTube</strong> (@mantejtechvlogs) and follow on <strong>Instagram</strong> (@hustler_mantej)!</p>
+      
+      <button class="qr-share-btn magnet" id="shareQrBtn" style="margin-top:20px;">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        <span>SHARE QR CODE &amp; PORTFOLIO 📲</span>
+      </button>
+      <div id="shareStatusMsg" style="font-size:12px; color:var(--accent-green); margin-top:8px; display:none;"></div>
     </div>
   </div>
 </section>
@@ -4724,6 +4762,67 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     }, { threshold: 0.2 });
 
     videoContainers.forEach(c => observer.observe(c));
+  })();
+
+
+  // QR Code Renderer & Native Web Share API Handler
+  (function() {
+    // QRCode JS fallback generation
+    if (typeof QRCode !== 'undefined') {
+      const qrel = document.getElementById('qrcode');
+      if (qrel && !qrel.querySelector('canvas')) {
+        qrel.innerHTML = '';
+        new QRCode(qrel, {
+          text: window.location.href,
+          width: 180,
+          height: 180,
+          colorDark: "#0f172a",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      }
+    }
+
+    // Native Web Share API (WhatsApp, Instagram, Telegram, Apps menu)
+    const shareBtn = document.getElementById('shareQrBtn');
+    const shareStatus = document.getElementById('shareStatusMsg');
+
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async () => {
+        const shareData = {
+          title: 'Mantej Singh — Portfolio & Tech Vlogs',
+          text: 'Take a screenshot of this QR code and share it with your friends to subscribe on YouTube (@mantejtechvlogs) and follow on Instagram (@hustler_mantej)!',
+          url: 'https://mantej.vercel.app'
+        };
+
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+            if (shareStatus) {
+              shareStatus.textContent = '✓ Shared successfully!';
+              shareStatus.style.display = 'block';
+              setTimeout(() => { shareStatus.style.display = 'none'; }, 3000);
+            }
+          } catch (err) {
+            console.log('Share dismissed or cancelled:', err);
+          }
+        } else {
+          // Fallback: Copy link & open WhatsApp web
+          try {
+            await navigator.clipboard.writeText(shareData.url);
+            const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareData.text + ' ' + shareData.url)}`;
+            window.open(waUrl, '_blank');
+            if (shareStatus) {
+              shareStatus.textContent = '✓ Link copied & opening WhatsApp share!';
+              shareStatus.style.display = 'block';
+              setTimeout(() => { shareStatus.style.display = 'none'; }, 4000);
+            }
+          } catch (e) {
+            alert('Share link: https://mantej.vercel.app');
+          }
+        }
+      });
+    }
   })();
 
 </body>
