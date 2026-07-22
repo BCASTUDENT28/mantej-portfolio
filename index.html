@@ -692,10 +692,10 @@
   .trace-svg{position:absolute;top:0;left:clamp(14px,4vw,32px);z-index:0;pointer-events:none;overflow:visible;}
   .trace-svg line{stroke:var(--sky-light);stroke-width:2;opacity:.35;}
 
-  /* ---------- Section Shell (Moody Navy Dark Theme) ---------- */
+  /* ---------- Section Shell (Moody Navy Dark Theme - Compact Heights) ---------- */
   section {
     position: relative;
-    padding: 125px clamp(20px, 6vw, 80px);
+    padding: 70px clamp(20px, 5vw, 60px);
     z-index: 1;
     border-top: 1px solid var(--border-subtle);
   }
@@ -2081,12 +2081,12 @@
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 480px;
+    max-width: 240px;
+    height: 320px;
     border-radius: 18px;
     overflow: hidden;
     border: 1px solid var(--border-subtle);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.35);
-    aspect-ratio: 9/16;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
     background: #0D1117;
   }
   .story-video-wrap video {
@@ -2161,11 +2161,11 @@
   <div class="tag">MANTEJ SINGH</div>
   <div class="links">
     <a href="#ventures" class="magnet">Ventures</a>
-    <a href="#story" class="magnet">Story</a>
-    <a href="#connect" class="magnet">Connect</a>
-    <a href="#journey" class="magnet">Journey</a>
-    <a href="#campus" class="magnet">Campus</a>
     <a href="#game" class="magnet">Play Game</a>
+    <a href="#story" class="magnet">Story</a>
+    <a href="#campus" class="magnet">Campus</a>
+    <a href="#journey" class="magnet">Journey</a>
+    <a href="#connect" class="magnet">Connect</a>
     <a href="#now" class="magnet">Now</a>
     <a href="#uses" class="magnet">Uses</a>
     <a href="#testimonials" class="magnet">Testimonials</a>
@@ -2179,11 +2179,11 @@
 
 <div class="nav-drawer" id="navDrawer">
   <a href="#ventures" class="drawer-link">Ventures</a>
-  <a href="#story" class="drawer-link">Story</a>
-  <a href="#connect" class="drawer-link">Connect</a>
-  <a href="#journey" class="drawer-link">Journey</a>
-  <a href="#campus" class="drawer-link">Campus</a>
   <a href="#game" class="drawer-link">Play Game</a>
+  <a href="#story" class="drawer-link">Story</a>
+  <a href="#campus" class="drawer-link">Campus</a>
+  <a href="#journey" class="drawer-link">Journey</a>
+  <a href="#connect" class="drawer-link">Connect</a>
   <a href="#now" class="drawer-link">Now</a>
   <a href="#uses" class="drawer-link">Uses</a>
   <a href="#testimonials" class="drawer-link">Testimonials</a>
@@ -2391,10 +2391,46 @@
   </div>
 </section>
 
-<!-- ================= STORY — Vertical Scroll-Reveal Chapters ================= -->
+<!-- ================= FOUNDER DASH MINI-GAME (SECTION 02) ================= -->
+<section id="game" class="sec-alt">
+  <div class="section-head" data-reveal>
+    <span class="idx">02</span><h2>Founder Dash</h2><div class="rule"></div>
+  </div>
+  <div class="game-wrapper" data-reveal>
+    <div class="game-hud">
+      <div class="game-hud-group">
+        <div class="game-score">SCORE: <span id="gameScore">0000</span></div>
+        <div class="game-best">BEST: <span id="gameBest">0000</span></div>
+        <div class="game-streak" id="gameStreak">STREAK: 1x</div>
+      </div>
+      <button class="game-sound-btn" id="gameSoundBtn" aria-label="Toggle Sound Effects">🔇 Sound: OFF</button>
+    </div>
+    <div class="canvas-container" id="canvasContainer">
+      <!-- Heximage ASCII Art Video Attract Mode Background -->
+      <div class="game-attract-bg" id="gameAttractBg">
+        <video class="game-ascii-video" id="gameAsciiVideo" poster="images/heximage-poster.webp" loop muted playsinline aria-hidden="true"></video>
+        <div class="game-scrim-overlay"></div>
+      </div>
+      <canvas id="runnerCanvas" width="800" height="320"></canvas>
+      <div class="game-overlay" id="gameOverlay">
+        <div class="game-msg-title" id="gameMsgTitle">FOUNDER DASH</div>
+        <div class="game-msg-sub" id="gameMsgSub">Dodge bugs, collect denim power-ups, &amp; build your streak!</div>
+        <div class="game-controls-hint">⌨️ Spacebar / W / Tap to Jump</div>
+        <button class="game-start-btn magnet" id="gameStartBtn">START DASH</button>
+        <div class="game-leaderboard" id="gameLeaderboard">
+          <div class="game-lb-title">Top Founders Leaderboard</div>
+          <div id="gameLbRows"></div>
+        </div>
+      </div>
+    </div>
+    <div class="game-credit">Founder Dash · High-Performance 60fps Canvas Engine</div>
+  </div>
+</section>
+
+<!-- ================= STORY — Vertical Scroll-Reveal Chapters (SECTION 03) ================= -->
 <section id="story" class="story-section sec-base">
   <div class="section-head" data-reveal>
-    <span class="idx">—</span><h2>The Story</h2><div class="rule"></div>
+    <span class="idx">03</span><h2>The Story</h2><div class="rule"></div>
   </div>
 
   <div class="story-cards">
@@ -2514,7 +2550,7 @@
 <!-- ================= CONNECT ================= -->
 <section id="connect" class="sec-alt">
   <div class="section-head" data-reveal>
-    <span class="idx">02</span><h2>Connect</h2><div class="rule"></div>
+    <span class="idx">06</span><h2>Connect</h2><div class="rule"></div>
   </div>
   <div class="orbit-shell" data-reveal>
     <div class="orbit-stage" id="orbitStage">
@@ -2585,7 +2621,7 @@
 <!-- ================= JOURNEY & TIMELINE ================= -->
 <section id="journey" class="sec-base">
   <div class="section-head" data-reveal>
-    <span class="idx">03</span><h2>Journey &amp; Milestones</h2><div class="rule"></div>
+    <span class="idx">05</span><h2>Journey &amp; Milestones</h2><div class="rule"></div>
   </div>
   <div class="timeline-container" data-reveal>
     <div class="timeline-track"></div>
@@ -2784,46 +2820,10 @@
   </div>
 </section>
 
-<!-- ================= FOUNDER DASH MINI-GAME ================= -->
-<section id="game" class="sec-base">
-  <div class="section-head" data-reveal>
-    <span class="idx">05</span><h2>Founder Dash</h2><div class="rule"></div>
-  </div>
-  <div class="game-wrapper" data-reveal>
-    <div class="game-hud">
-      <div class="game-hud-group">
-        <div class="game-score">SCORE: <span id="gameScore">0000</span></div>
-        <div class="game-best">BEST: <span id="gameBest">0000</span></div>
-        <div class="game-streak" id="gameStreak">STREAK: 1x</div>
-      </div>
-      <button class="game-sound-btn" id="gameSoundBtn" aria-label="Toggle Sound Effects">🔇 Sound: OFF</button>
-    </div>
-    <div class="canvas-container" id="canvasContainer">
-      <!-- Heximage ASCII Art Video Attract Mode Background -->
-      <div class="game-attract-bg" id="gameAttractBg">
-        <video class="game-ascii-video" id="gameAsciiVideo" poster="images/heximage-poster.webp" loop muted playsinline aria-hidden="true"></video>
-        <div class="game-scrim-overlay"></div>
-      </div>
-      <canvas id="runnerCanvas" width="800" height="320"></canvas>
-      <div class="game-overlay" id="gameOverlay">
-        <div class="game-msg-title" id="gameMsgTitle">FOUNDER DASH</div>
-        <div class="game-msg-sub" id="gameMsgSub">Dodge bugs, collect denim power-ups, &amp; build your streak!</div>
-        <div class="game-controls-hint">⌨️ Spacebar / W / Tap to Jump</div>
-        <button class="game-start-btn magnet" id="gameStartBtn">START DASH</button>
-        <div class="game-leaderboard" id="gameLeaderboard">
-          <div class="game-lb-title">Top Founders Leaderboard</div>
-          <div id="gameLbRows"></div>
-        </div>
-      </div>
-    </div>
-    <div class="game-credit">Founder Dash · High-Performance 60fps Canvas Engine</div>
-  </div>
-</section>
-
 <!-- ================= NOW SECTION ================= -->
 <section id="now" class="sec-alt">
   <div class="section-head" data-reveal>
-    <span class="idx">06</span><h2>What I'm Doing Now</h2><div class="rule"></div>
+    <span class="idx">07</span><h2>What I'm Doing Now</h2><div class="rule"></div>
   </div>
   <div class="now-container" data-reveal>
     <div class="now-header">
@@ -2853,7 +2853,7 @@
 <!-- ================= USES / SETUP SECTION ================= -->
 <section id="uses" class="sec-base">
   <div class="section-head" data-reveal>
-    <span class="idx">07</span><h2>Uses &amp; Setup</h2><div class="rule"></div>
+    <span class="idx">08</span><h2>Uses &amp; Setup</h2><div class="rule"></div>
   </div>
   <div class="uses-grid" data-reveal>
     <div class="uses-card">
@@ -2880,7 +2880,7 @@
 <!-- ================= TESTIMONIALS SECTION ================= -->
 <section id="testimonials" class="sec-alt">
   <div class="section-head" data-reveal>
-    <span class="idx">08</span><h2>Testimonials</h2><div class="rule"></div>
+    <span class="idx">09</span><h2>Testimonials</h2><div class="rule"></div>
   </div>
   <div class="testimonials-wrapper" data-reveal>
     <div class="testi-container">
@@ -2935,7 +2935,7 @@
 <!-- ================= GUESTBOOK SECTION ================= -->
 <section id="guestbook" class="sec-base">
   <div class="section-head" data-reveal>
-    <span class="idx">09</span><h2>Guestbook</h2><div class="rule"></div>
+    <span class="idx">10</span><h2>Guestbook</h2><div class="rule"></div>
   </div>
   <div class="guestbook-container" data-reveal>
     <div class="guestbook-form-card">
@@ -2965,7 +2965,7 @@
 <!-- ================= QR ================= -->
 <section id="qr" class="sec-alt">
   <div class="section-head" data-reveal>
-    <span class="idx">09</span><h2>Scan to keep this</h2><div class="rule"></div>
+    <span class="idx">11</span><h2>Scan to keep this</h2><div class="rule"></div>
   </div>
   <div class="qr-wrap" data-reveal>
     <div class="qr-frame" id="qrFrame">
