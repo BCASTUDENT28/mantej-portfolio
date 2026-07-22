@@ -1878,165 +1878,150 @@
 
   [data-reveal]{opacity:0;transform:translateY(28px);}
 
-  /* ========== FlowSection — Scroll-Pinned Story ========== */
-  .flow-section {
+  /* ========== Story Section — Vertical Scroll-Reveal Cards ========== */
+  .story-section {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(180deg, var(--bg-base) 0%, #151C2C 50%, var(--bg-base-alt) 100%);
+    background: linear-gradient(180deg, var(--bg-base) 0%, #131A2B 100%);
+    padding-bottom: 80px;
   }
-  .flow-section .section-head {
-    padding: 80px clamp(20px,6vw,80px) 0;
-    position: relative;
-    z-index: 5;
-  }
-  .flow-pin-wrap {
+  .story-cards {
     display: flex;
-    flex-wrap: nowrap;
-    width: 500vw; /* 5 panels × 100vw */
-    will-change: transform;
+    flex-direction: column;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 80px);
   }
-  .flow-panel {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
+  .story-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
     align-items: center;
-    justify-content: center;
+    padding: clamp(48px, 6vw, 80px) 0;
     position: relative;
-    padding: clamp(40px, 6vw, 100px);
-    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-subtle);
   }
-  .flow-panel-inner {
-    max-width: 680px;
+  .story-card:last-child { border-bottom: none; }
+  .story-card:nth-child(even) { direction: rtl; }
+  .story-card:nth-child(even) > * { direction: ltr; }
+  .story-card-text {
     position: relative;
-    z-index: 3;
+    z-index: 2;
   }
-  .flow-chapter {
+  .story-chapter {
     font-family: var(--font-display);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent-green);
-    margin-bottom: 20px;
-    opacity: 0;
-    transform: translateY(20px);
+    margin-bottom: 18px;
   }
-  .flow-title {
+  .story-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    font-size: clamp(1.6rem, 3.2vw, 2.6rem);
     font-weight: 800;
-    line-height: 1.12;
+    line-height: 1.15;
     color: var(--text-primary);
-    margin-bottom: 24px;
-    opacity: 0;
-    transform: translateY(30px);
+    margin-bottom: 20px;
   }
-  .flow-body {
-    font-size: clamp(15px, 1.6vw, 18px);
+  .story-body {
+    font-size: clamp(14px, 1.4vw, 17px);
     line-height: 1.75;
     color: var(--text-secondary);
-    max-width: 560px;
-    opacity: 0;
-    transform: translateY(30px);
+    max-width: 500px;
   }
-  .flow-accent {
-    display: inline-block;
+  .story-accent {
     color: var(--accent-blue);
     font-weight: 700;
   }
-  .flow-tag {
+  .story-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+  }
+  .story-tag {
     display: inline-block;
     background: var(--bg-elevated-2);
     color: var(--accent-green);
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     padding: 5px 14px;
     border-radius: 100px;
     letter-spacing: 0.08em;
-    margin-top: 20px;
-    margin-right: 6px;
-    border: 1px solid rgba(52, 211, 153, 0.15);
-    opacity: 0;
-    transform: translateY(15px);
+    border: 1px solid rgba(52, 211, 153, 0.12);
   }
-  /* Large ghost number watermark behind each panel */
-  .flow-ghost-num {
-    position: absolute;
-    right: 6%;
-    top: 50%;
-    transform: translateY(-50%);
+  /* Visual side — ghost number + optional video */
+  .story-card-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+  }
+  .story-ghost {
     font-family: var(--font-display);
-    font-size: clamp(14rem, 22vw, 28rem);
+    font-size: clamp(8rem, 14vw, 16rem);
     font-weight: 900;
     color: rgba(126, 176, 240, 0.04);
     line-height: 1;
-    pointer-events: none;
-    user-select: none;
-    z-index: 1;
-  }
-  /* Divider line between panels */
-  .flow-divider {
     position: absolute;
-    right: 0;
-    top: 15%;
-    height: 70%;
-    width: 1px;
-    background: linear-gradient(180deg, transparent, var(--border-subtle), transparent);
-  }
-  /* Progress pips */
-  .flow-progress {
-    position: fixed;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 0.4s;
+    user-select: none;
     pointer-events: none;
+    z-index: 0;
   }
-  .flow-progress.visible { opacity: 1; }
-  .flow-pip {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--bg-elevated-2);
+  .story-video-wrap {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 18px;
+    overflow: hidden;
     border: 1px solid var(--border-subtle);
-    transition: all 0.4s;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+    aspect-ratio: 9/16;
+    background: #0D1117;
   }
-  .flow-pip.active {
-    background: var(--accent-green);
-    box-shadow: 0 0 12px var(--neon-glow);
-    transform: scale(1.3);
+  .story-video-wrap video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
-  /* Mobile: stack vertically instead of horizontal scroll */
-  @media (max-width: 768px) {
-    .flow-pin-wrap {
-      flex-direction: column;
-      width: 100%;
+  .story-video-label {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(8px);
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 5px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.08);
+    z-index: 3;
+  }
+  /* Card-only ghost (no video) — centered */
+  .story-card-visual.no-video .story-ghost {
+    position: relative;
+    font-size: clamp(10rem, 18vw, 22rem);
+  }
+  @media (max-width: 800px) {
+    .story-card {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding: 48px 0;
     }
-    .flow-panel {
-      width: 100%;
-      height: auto;
-      min-height: 85vh;
-      padding: 60px 24px;
-    }
-    .flow-ghost-num {
-      font-size: 8rem;
-      right: 10%;
-    }
-    .flow-progress { display: none; }
-    .flow-divider {
-      right: auto;
-      left: 0;
-      top: auto;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
-    }
+    .story-card:nth-child(even) { direction: ltr; }
+    .story-card-visual { min-height: 160px; }
+    .story-video-wrap { max-width: 320px; margin: 0 auto; }
+    .story-card-visual.no-video .story-ghost { font-size: 7rem; }
   }
 
   /* prefers-reduced-motion fallback */
@@ -2229,16 +2214,16 @@
         <p>Luxury custom denim — hand-painted and embroidered, made in collaboration with LPU's Fine Arts talent.</p>
       </div>
       
-      <!-- Video 1: Denim Embroidery BTS -->
+      <!-- Video 1: HustleSmith Brand Promo -->
       <div class="venture-video-container" data-video="studio">
-        <video class="venture-video" id="video-studio" preload="none" muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='337' viewBox='0 0 600 337'%3E%3Crect width='100%25' height='100%25' fill='%231E293B'/%3E%3Ctext x='50%25' y='45%25' font-family='sans-serif' font-weight='bold' font-size='20' fill='%2360A5FA' text-anchor='middle'%3E🧵 Custom Embroidery BTS%3C/text%3E%3Ctext x='50%25' y='60%25' font-family='sans-serif' font-size='14' fill='%2394A3B8' text-anchor='middle'%3E(Hover to preview BTS process)%3C/text%3E%3C/svg%3E">
-          <source src="assets/studio_bts.mp4" type="video/mp4">
+        <video class="venture-video" id="video-studio" preload="none" muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='337' viewBox='0 0 600 337'%3E%3Crect width='100%25' height='100%25' fill='%231E293B'/%3E%3Ctext x='50%25' y='45%25' font-family='sans-serif' font-weight='bold' font-size='20' fill='%2360A5FA' text-anchor='middle'%3E💎 HustleSmith Promo%3C/text%3E%3Ctext x='50%25' y='60%25' font-family='sans-serif' font-size='14' fill='%2394A3B8' text-anchor='middle'%3E(Hover to preview)%3C/text%3E%3C/svg%3E">
+          <source src="assets/hustlesmith_promo.mp4" type="video/mp4">
         </video>
         <div class="video-overlay-controls">
           <button class="video-play-btn" aria-label="Play/Pause Video">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </button>
-          <span class="video-tag">Denim BTS</span>
+          <span class="video-tag">Brand Promo</span>
         </div>
       </div>
 
@@ -2302,94 +2287,111 @@
   </div>
 </section>
 
-<!-- ================= FLOW STORY — Scroll-Pinned Chapters ================= -->
-<section id="story" class="flow-section">
+<!-- ================= STORY — Vertical Scroll-Reveal Chapters ================= -->
+<section id="story" class="story-section sec-base">
   <div class="section-head" data-reveal>
     <span class="idx">—</span><h2>The Story</h2><div class="rule"></div>
   </div>
 
-  <!-- Progress Pips (fixed, shown only while pinned) -->
-  <div class="flow-progress" id="flowProgress">
-    <div class="flow-pip active" data-pip="0"></div>
-    <div class="flow-pip" data-pip="1"></div>
-    <div class="flow-pip" data-pip="2"></div>
-    <div class="flow-pip" data-pip="3"></div>
-    <div class="flow-pip" data-pip="4"></div>
-  </div>
+  <div class="story-cards">
 
-  <div class="flow-viewport" id="flowViewport">
-    <div class="flow-pin-wrap" id="flowPinWrap">
-
-      <!-- Panel 1: The Origin -->
-      <div class="flow-panel" data-flow-panel="0">
-        <div class="flow-ghost-num">01</div>
-        <div class="flow-panel-inner">
-          <div class="flow-chapter">CHAPTER 01 — ORIGIN</div>
-          <h3 class="flow-title">I don't just study tech.<br>I build with it.</h3>
-          <p class="flow-body">Started at LPU with a soldering iron and a secondhand Arduino. While everyone else was memorizing theory, I was flashing firmware onto microcontrollers at 2 AM — debugging signal noise by ear. That restlessness became a compass: <span class="flow-accent">if it can be built, it should be built tonight.</span></p>
-          <span class="flow-tag">HARDWARE</span>
-          <span class="flow-tag">EMBEDDED SYSTEMS</span>
-          <span class="flow-tag">LPU</span>
-        </div>
-        <div class="flow-divider"></div>
-      </div>
-
-      <!-- Panel 2: HustleSmith -->
-      <div class="flow-panel" data-flow-panel="1">
-        <div class="flow-ghost-num">02</div>
-        <div class="flow-panel-inner">
-          <div class="flow-chapter">CHAPTER 02 — THE BRAND</div>
-          <h3 class="flow-title">HustleSmith Studio:<br>Denim is our canvas.</h3>
-          <p class="flow-body">Luxury custom denim — every jacket hand-painted and embroidered in collaboration with LPU's Fine Arts talent. No factory lines, no mass production. Each piece is a one-of-one artifact that merges <span class="flow-accent">streetwear edge with handcraft tradition.</span> Launching soon from a dorm room turned atelier.</p>
-          <span class="flow-tag">LUXURY DENIM</span>
-          <span class="flow-tag">HAND-PAINTED</span>
-          <span class="flow-tag">LAUNCHING SOON</span>
-        </div>
-        <div class="flow-divider"></div>
-      </div>
-
-      <!-- Panel 3: ApplifyNow -->
-      <div class="flow-panel" data-flow-panel="2">
-        <div class="flow-ghost-num">03</div>
-        <div class="flow-panel-inner">
-          <div class="flow-chapter">CHAPTER 03 — THE PLATFORM</div>
-          <h3 class="flow-title">ApplifyNow: URL in,<br>native app out.</h3>
-          <p class="flow-body">Serving as CEO &amp; CTO — built the automated pipeline that converts any website URL into production-ready iOS &amp; Android apps. <span class="flow-accent">No code rewrite, no SDK lock-in.</span> The entire conversion engine runs serverless, and I wrote every line of the backend and the React Native bridge.</p>
-          <span class="flow-tag">SAAS</span>
-          <span class="flow-tag">CEO & CTO</span>
-          <span class="flow-tag">ACTIVE</span>
-        </div>
-        <div class="flow-divider"></div>
-      </div>
-
-      <!-- Panel 4: The Stack -->
-      <div class="flow-panel" data-flow-panel="3">
-        <div class="flow-ghost-num">04</div>
-        <div class="flow-panel-inner">
-          <div class="flow-chapter">CHAPTER 04 — THE STACK</div>
-          <h3 class="flow-title">Full stack by day,<br>red team by night.</h3>
-          <p class="flow-body">React, Node, Python, Postgres, Docker — the usual suspects. But the part that keeps me up at night is the <span class="flow-accent">cybersecurity rabbit hole</span>: penetration testing, network forensics, and CTF competitions. I break things methodically so I can build them stronger.</p>
-          <span class="flow-tag">FULL STACK</span>
-          <span class="flow-tag">CYBERSECURITY</span>
-          <span class="flow-tag">CTF PLAYER</span>
-        </div>
-        <div class="flow-divider"></div>
-      </div>
-
-      <!-- Panel 5: The Creator -->
-      <div class="flow-panel" data-flow-panel="4">
-        <div class="flow-ghost-num">05</div>
-        <div class="flow-panel-inner">
-          <div class="flow-chapter">CHAPTER 05 — THE CREATOR</div>
-          <h3 class="flow-title">Building in public.<br>Every single day.</h3>
-          <p class="flow-body">Tech vlogs on YouTube documenting the real startup grind — not the highlight reel. From soldering station demos to app launch countdowns, <span class="flow-accent">the camera rolls while the code compiles.</span> Instagram for the culture, YouTube for the craft, and the portfolio you're scrolling right now ties it all together.</p>
-          <span class="flow-tag">VLOGGER</span>
-          <span class="flow-tag">YOUTUBE</span>
-          <span class="flow-tag">BUILD IN PUBLIC</span>
+    <!-- Chapter 01: Origin -->
+    <div class="story-card" data-story-card>
+      <div class="story-card-text">
+        <div class="story-chapter">CHAPTER 01 — ORIGIN</div>
+        <h3 class="story-title">I don’t just study tech.<br>I build with it.</h3>
+        <p class="story-body">Started at LPU with a soldering iron and a secondhand Arduino. While everyone else was memorizing theory, I was flashing firmware onto microcontrollers at 2 AM — debugging signal noise by ear. That restlessness became a compass: <span class="story-accent">if it can be built, it should be built tonight.</span></p>
+        <div class="story-tags">
+          <span class="story-tag">HARDWARE</span>
+          <span class="story-tag">EMBEDDED SYSTEMS</span>
+          <span class="story-tag">LPU</span>
         </div>
       </div>
-
+      <div class="story-card-visual no-video">
+        <span class="story-ghost">01</span>
+      </div>
     </div>
+
+    <!-- Chapter 02: The Brand (with promo video) -->
+    <div class="story-card" data-story-card>
+      <div class="story-card-text">
+        <div class="story-chapter">CHAPTER 02 — THE BRAND</div>
+        <h3 class="story-title">HustleSmith Studio:<br>Denim is our canvas.</h3>
+        <p class="story-body">Luxury custom denim — every jacket hand-painted and embroidered in collaboration with LPU’s Fine Arts talent. No factory lines, no mass production. Each piece is a one-of-one artifact that merges <span class="story-accent">streetwear edge with handcraft tradition.</span></p>
+        <div class="story-tags">
+          <span class="story-tag">LUXURY DENIM</span>
+          <span class="story-tag">HAND-PAINTED</span>
+          <span class="story-tag">LAUNCHING SOON</span>
+        </div>
+      </div>
+      <div class="story-card-visual">
+        <span class="story-ghost">02</span>
+        <div class="story-video-wrap">
+          <video autoplay muted loop playsinline>
+            <source src="assets/hustlesmith_promo.mp4" type="video/mp4">
+          </video>
+          <span class="story-video-label">💎 HUSTLESMITH PROMO</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 03: The Platform -->
+    <div class="story-card" data-story-card>
+      <div class="story-card-text">
+        <div class="story-chapter">CHAPTER 03 — THE PLATFORM</div>
+        <h3 class="story-title">ApplifyNow: URL in,<br>native app out.</h3>
+        <p class="story-body">Serving as CEO &amp; CTO — built the automated pipeline that converts any website URL into production-ready iOS &amp; Android apps. <span class="story-accent">No code rewrite, no SDK lock-in.</span> The entire conversion engine runs serverless, and I wrote every line of the backend and the React Native bridge.</p>
+        <div class="story-tags">
+          <span class="story-tag">SAAS</span>
+          <span class="story-tag">CEO &amp; CTO</span>
+          <span class="story-tag">ACTIVE</span>
+        </div>
+      </div>
+      <div class="story-card-visual no-video">
+        <span class="story-ghost">03</span>
+      </div>
+    </div>
+
+    <!-- Chapter 04: The Stack -->
+    <div class="story-card" data-story-card>
+      <div class="story-card-text">
+        <div class="story-chapter">CHAPTER 04 — THE STACK</div>
+        <h3 class="story-title">Full stack by day,<br>red team by night.</h3>
+        <p class="story-body">React, Node, Python, Postgres, Docker — the usual suspects. But the part that keeps me up at night is the <span class="story-accent">cybersecurity rabbit hole</span>: penetration testing, network forensics, and CTF competitions. I break things methodically so I can build them stronger.</p>
+        <div class="story-tags">
+          <span class="story-tag">FULL STACK</span>
+          <span class="story-tag">CYBERSECURITY</span>
+          <span class="story-tag">CTF PLAYER</span>
+        </div>
+      </div>
+      <div class="story-card-visual no-video">
+        <span class="story-ghost">04</span>
+      </div>
+    </div>
+
+    <!-- Chapter 05: The Creator (with mountain reel) -->
+    <div class="story-card" data-story-card>
+      <div class="story-card-text">
+        <div class="story-chapter">CHAPTER 05 — THE CREATOR</div>
+        <h3 class="story-title">Building in public.<br>Every single day.</h3>
+        <p class="story-body">Tech vlogs on YouTube documenting the real startup grind — not the highlight reel. From soldering station demos to app launch countdowns, <span class="story-accent">the camera rolls while the code compiles.</span> Instagram for the culture, YouTube for the craft.</p>
+        <div class="story-tags">
+          <span class="story-tag">VLOGGER</span>
+          <span class="story-tag">YOUTUBE</span>
+          <span class="story-tag">BUILD IN PUBLIC</span>
+        </div>
+      </div>
+      <div class="story-card-visual">
+        <span class="story-ghost">05</span>
+        <div class="story-video-wrap">
+          <video autoplay muted loop playsinline>
+            <source src="assets/mantej_mountain_reel.mp4" type="video/mp4">
+          </video>
+          <span class="story-video-label">🏔️ MANTEJ — ON THE ROAD</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -4212,95 +4214,42 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-/* ============== FlowSection — GSAP Scroll-Pinned Story Engine ============== */
+/* ============== Story Section — Vertical Scroll-Reveal Cards ============== */
 (function(){
-  const isMobile = window.innerWidth <= 768;
-  const viewport = document.getElementById('flowViewport');
-  const wrap     = document.getElementById('flowPinWrap');
-  const panels   = document.querySelectorAll('.flow-panel');
-  const pips     = document.querySelectorAll('.flow-pip');
-  const progressBar = document.getElementById('flowProgress');
-  if (!viewport || !wrap || panels.length === 0) return;
+  const cards = document.querySelectorAll('[data-story-card]');
+  if (!cards.length) return;
 
-  /* --- Desktop: Horizontal scroll-pin with GSAP --- */
-  if (!isMobile) {
-    const totalPanels = panels.length;
+  cards.forEach((card, idx) => {
+    const text    = card.querySelector('.story-card-text');
+    const visual  = card.querySelector('.story-card-visual');
+    const fromDir = idx % 2 === 0 ? -60 : 60;
 
-    const pinTL = gsap.timeline({
-      scrollTrigger: {
-        trigger: viewport,
-        pin: true,
-        scrub: 0.8,
-        start: 'top top',
-        end: () => '+=' + (viewport.offsetWidth * (totalPanels - 1)),
-        onEnter: () => progressBar.classList.add('visible'),
-        onLeave: () => progressBar.classList.remove('visible'),
-        onEnterBack: () => progressBar.classList.add('visible'),
-        onLeaveBack: () => progressBar.classList.remove('visible'),
-        onUpdate: (self) => {
-          const prog = self.progress;
-          const activeIdx = Math.min(Math.round(prog * (totalPanels - 1)), totalPanels - 1);
-          pips.forEach((p, i) => p.classList.toggle('active', i === activeIdx));
-        }
+    gsap.set(text, { opacity: 0, x: fromDir * -1 });
+    if (visual) gsap.set(visual, { opacity: 0, x: fromDir });
+
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 78%',
+      once: true,
+      onEnter: () => {
+        gsap.to(text, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' });
+        if (visual) gsap.to(visual, { opacity: 1, x: 0, duration: 0.9, delay: 0.15, ease: 'power3.out' });
       }
     });
+  });
 
-    pinTL.to(wrap, {
-      x: () => -(viewport.offsetWidth * (totalPanels - 1)),
-      ease: 'none'
+  /* Lazy-load story videos when visible */
+  const storyVideos = document.querySelectorAll('.story-video-wrap video');
+  storyVideos.forEach(vid => {
+    ScrollTrigger.create({
+      trigger: vid.closest('.story-card'),
+      start: 'top 90%',
+      once: true,
+      onEnter: () => {
+        vid.play().catch(() => {});
+      }
     });
-
-    /* Per-panel content stagger reveals */
-    panels.forEach((panel, idx) => {
-      const chapter = panel.querySelector('.flow-chapter');
-      const title   = panel.querySelector('.flow-title');
-      const body    = panel.querySelector('.flow-body');
-      const tags    = panel.querySelectorAll('.flow-tag');
-
-      ScrollTrigger.create({
-        trigger: panel,
-        containerAnimation: pinTL,
-        start: 'left 60%',
-        onEnter: () => {
-          gsap.to(chapter, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
-          gsap.to(title, { opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: 'power3.out' });
-          gsap.to(body, { opacity: 1, y: 0, duration: 0.7, delay: 0.25, ease: 'power3.out' });
-          gsap.to(tags, { opacity: 1, y: 0, duration: 0.5, delay: 0.4, stagger: 0.08, ease: 'power3.out' });
-        },
-        onLeaveBack: () => {
-          gsap.set([chapter, title, body, ...tags], { opacity: 0, y: 20 });
-        }
-      });
-    });
-
-    /* Auto-reveal first panel immediately */
-    const fp = panels[0];
-    gsap.to(fp.querySelector('.flow-chapter'), { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: viewport, start: 'top 70%' } });
-    gsap.to(fp.querySelector('.flow-title'), { opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: 'power3.out', scrollTrigger: { trigger: viewport, start: 'top 70%' } });
-    gsap.to(fp.querySelector('.flow-body'), { opacity: 1, y: 0, duration: 0.7, delay: 0.25, ease: 'power3.out', scrollTrigger: { trigger: viewport, start: 'top 70%' } });
-    gsap.to(fp.querySelectorAll('.flow-tag'), { opacity: 1, y: 0, duration: 0.5, delay: 0.4, stagger: 0.08, ease: 'power3.out', scrollTrigger: { trigger: viewport, start: 'top 70%' } });
-
-  } else {
-    /* --- Mobile: Simple scroll-based reveals (no pin) --- */
-    panels.forEach(panel => {
-      const chapter = panel.querySelector('.flow-chapter');
-      const title   = panel.querySelector('.flow-title');
-      const body    = panel.querySelector('.flow-body');
-      const tags    = panel.querySelectorAll('.flow-tag');
-
-      ScrollTrigger.create({
-        trigger: panel,
-        start: 'top 75%',
-        once: true,
-        onEnter: () => {
-          gsap.to(chapter, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
-          gsap.to(title, { opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: 'power3.out' });
-          gsap.to(body, { opacity: 1, y: 0, duration: 0.7, delay: 0.25, ease: 'power3.out' });
-          gsap.to(tags, { opacity: 1, y: 0, duration: 0.5, delay: 0.4, stagger: 0.08, ease: 'power3.out' });
-        }
-      });
-    });
-  }
+  });
 })();
 
 </script>
