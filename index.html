@@ -1878,6 +1878,167 @@
 
   [data-reveal]{opacity:0;transform:translateY(28px);}
 
+  /* ========== FlowSection — Scroll-Pinned Story ========== */
+  .flow-section {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--bg-base) 0%, #151C2C 50%, var(--bg-base-alt) 100%);
+  }
+  .flow-section .section-head {
+    padding: 80px clamp(20px,6vw,80px) 0;
+    position: relative;
+    z-index: 5;
+  }
+  .flow-pin-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 500vw; /* 5 panels × 100vw */
+    will-change: transform;
+  }
+  .flow-panel {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: clamp(40px, 6vw, 100px);
+    flex-shrink: 0;
+  }
+  .flow-panel-inner {
+    max-width: 680px;
+    position: relative;
+    z-index: 3;
+  }
+  .flow-chapter {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .flow-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.12;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .flow-body {
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 560px;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .flow-accent {
+    display: inline-block;
+    color: var(--accent-blue);
+    font-weight: 700;
+  }
+  .flow-tag {
+    display: inline-block;
+    background: var(--bg-elevated-2);
+    color: var(--accent-green);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 100px;
+    letter-spacing: 0.08em;
+    margin-top: 20px;
+    margin-right: 6px;
+    border: 1px solid rgba(52, 211, 153, 0.15);
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  /* Large ghost number watermark behind each panel */
+  .flow-ghost-num {
+    position: absolute;
+    right: 6%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-size: clamp(14rem, 22vw, 28rem);
+    font-weight: 900;
+    color: rgba(126, 176, 240, 0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+  }
+  /* Divider line between panels */
+  .flow-divider {
+    position: absolute;
+    right: 0;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--border-subtle), transparent);
+  }
+  /* Progress pips */
+  .flow-progress {
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .flow-progress.visible { opacity: 1; }
+  .flow-pip {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--bg-elevated-2);
+    border: 1px solid var(--border-subtle);
+    transition: all 0.4s;
+  }
+  .flow-pip.active {
+    background: var(--accent-green);
+    box-shadow: 0 0 12px var(--neon-glow);
+    transform: scale(1.3);
+  }
+  /* Mobile: stack vertically instead of horizontal scroll */
+  @media (max-width: 768px) {
+    .flow-pin-wrap {
+      flex-direction: column;
+      width: 100%;
+    }
+    .flow-panel {
+      width: 100%;
+      height: auto;
+      min-height: 85vh;
+      padding: 60px 24px;
+    }
+    .flow-ghost-num {
+      font-size: 8rem;
+      right: 10%;
+    }
+    .flow-progress { display: none; }
+    .flow-divider {
+      right: auto;
+      left: 0;
+      top: auto;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+    }
+  }
+
   /* prefers-reduced-motion fallback */
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important;transition-duration:0.01ms !important;}
@@ -1888,6 +2049,7 @@
     .robot-floor-ring{animation:none !important;}
     [data-reveal]{opacity:1;transform:none;}
     .scroll-cue .bar{animation:none;}
+    .flow-chapter,.flow-title,.flow-body,.flow-tag{opacity:1;transform:none;}
   }
 </style>
 </head>
@@ -1910,6 +2072,7 @@
   <div class="tag">MANTEJ SINGH</div>
   <div class="links">
     <a href="#ventures" class="magnet">Ventures</a>
+    <a href="#story" class="magnet">Story</a>
     <a href="#connect" class="magnet">Connect</a>
     <a href="#journey" class="magnet">Journey</a>
     <a href="#campus" class="magnet">Campus</a>
@@ -1927,6 +2090,7 @@
 
 <div class="nav-drawer" id="navDrawer">
   <a href="#ventures" class="drawer-link">Ventures</a>
+  <a href="#story" class="drawer-link">Story</a>
   <a href="#connect" class="drawer-link">Connect</a>
   <a href="#journey" class="drawer-link">Journey</a>
   <a href="#campus" class="drawer-link">Campus</a>
@@ -2134,6 +2298,97 @@
         <a href="https://www.youtube.com/@mantejtechvlogs" target="_blank" class="go-primary">WATCH ON YOUTUBE →</a>
         <a href="https://www.youtube.com/@mantejtechvlogs" target="_blank" class="go-secondary">Watch full video on YouTube →</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FLOW STORY — Scroll-Pinned Chapters ================= -->
+<section id="story" class="flow-section">
+  <div class="section-head" data-reveal>
+    <span class="idx">—</span><h2>The Story</h2><div class="rule"></div>
+  </div>
+
+  <!-- Progress Pips (fixed, shown only while pinned) -->
+  <div class="flow-progress" id="flowProgress">
+    <div class="flow-pip active" data-pip="0"></div>
+    <div class="flow-pip" data-pip="1"></div>
+    <div class="flow-pip" data-pip="2"></div>
+    <div class="flow-pip" data-pip="3"></div>
+    <div class="flow-pip" data-pip="4"></div>
+  </div>
+
+  <div class="flow-viewport" id="flowViewport">
+    <div class="flow-pin-wrap" id="flowPinWrap">
+
+      <!-- Panel 1: The Origin -->
+      <div class="flow-panel" data-flow-panel="0">
+        <div class="flow-ghost-num">01</div>
+        <div class="flow-panel-inner">
+          <div class="flow-chapter">CHAPTER 01 — ORIGIN</div>
+          <h3 class="flow-title">I don't just study tech.<br>I build with it.</h3>
+          <p class="flow-body">Started at LPU with a soldering iron and a secondhand Arduino. While everyone else was memorizing theory, I was flashing firmware onto microcontrollers at 2 AM — debugging signal noise by ear. That restlessness became a compass: <span class="flow-accent">if it can be built, it should be built tonight.</span></p>
+          <span class="flow-tag">HARDWARE</span>
+          <span class="flow-tag">EMBEDDED SYSTEMS</span>
+          <span class="flow-tag">LPU</span>
+        </div>
+        <div class="flow-divider"></div>
+      </div>
+
+      <!-- Panel 2: HustleSmith -->
+      <div class="flow-panel" data-flow-panel="1">
+        <div class="flow-ghost-num">02</div>
+        <div class="flow-panel-inner">
+          <div class="flow-chapter">CHAPTER 02 — THE BRAND</div>
+          <h3 class="flow-title">HustleSmith Studio:<br>Denim is our canvas.</h3>
+          <p class="flow-body">Luxury custom denim — every jacket hand-painted and embroidered in collaboration with LPU's Fine Arts talent. No factory lines, no mass production. Each piece is a one-of-one artifact that merges <span class="flow-accent">streetwear edge with handcraft tradition.</span> Launching soon from a dorm room turned atelier.</p>
+          <span class="flow-tag">LUXURY DENIM</span>
+          <span class="flow-tag">HAND-PAINTED</span>
+          <span class="flow-tag">LAUNCHING SOON</span>
+        </div>
+        <div class="flow-divider"></div>
+      </div>
+
+      <!-- Panel 3: ApplifyNow -->
+      <div class="flow-panel" data-flow-panel="2">
+        <div class="flow-ghost-num">03</div>
+        <div class="flow-panel-inner">
+          <div class="flow-chapter">CHAPTER 03 — THE PLATFORM</div>
+          <h3 class="flow-title">ApplifyNow: URL in,<br>native app out.</h3>
+          <p class="flow-body">Serving as CEO &amp; CTO — built the automated pipeline that converts any website URL into production-ready iOS &amp; Android apps. <span class="flow-accent">No code rewrite, no SDK lock-in.</span> The entire conversion engine runs serverless, and I wrote every line of the backend and the React Native bridge.</p>
+          <span class="flow-tag">SAAS</span>
+          <span class="flow-tag">CEO & CTO</span>
+          <span class="flow-tag">ACTIVE</span>
+        </div>
+        <div class="flow-divider"></div>
+      </div>
+
+      <!-- Panel 4: The Stack -->
+      <div class="flow-panel" data-flow-panel="3">
+        <div class="flow-ghost-num">04</div>
+        <div class="flow-panel-inner">
+          <div class="flow-chapter">CHAPTER 04 — THE STACK</div>
+          <h3 class="flow-title">Full stack by day,<br>red team by night.</h3>
+          <p class="flow-body">React, Node, Python, Postgres, Docker — the usual suspects. But the part that keeps me up at night is the <span class="flow-accent">cybersecurity rabbit hole</span>: penetration testing, network forensics, and CTF competitions. I break things methodically so I can build them stronger.</p>
+          <span class="flow-tag">FULL STACK</span>
+          <span class="flow-tag">CYBERSECURITY</span>
+          <span class="flow-tag">CTF PLAYER</span>
+        </div>
+        <div class="flow-divider"></div>
+      </div>
+
+      <!-- Panel 5: The Creator -->
+      <div class="flow-panel" data-flow-panel="4">
+        <div class="flow-ghost-num">05</div>
+        <div class="flow-panel-inner">
+          <div class="flow-chapter">CHAPTER 05 — THE CREATOR</div>
+          <h3 class="flow-title">Building in public.<br>Every single day.</h3>
+          <p class="flow-body">Tech vlogs on YouTube documenting the real startup grind — not the highlight reel. From soldering station demos to app launch countdowns, <span class="flow-accent">the camera rolls while the code compiles.</span> Instagram for the culture, YouTube for the craft, and the portfolio you're scrolling right now ties it all together.</p>
+          <span class="flow-tag">VLOGGER</span>
+          <span class="flow-tag">YOUTUBE</span>
+          <span class="flow-tag">BUILD IN PUBLIC</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -3956,6 +4211,98 @@ function updateClock() {
 }
 setInterval(updateClock, 1000);
 updateClock();
+
+/* ============== FlowSection — GSAP Scroll-Pinned Story Engine ============== */
+(function(){
+  const isMobile = window.innerWidth <= 768;
+  const viewport = document.getElementById('flowViewport');
+  const wrap     = document.getElementById('flowPinWrap');
+  const panels   = document.querySelectorAll('.flow-panel');
+  const pips     = document.querySelectorAll('.flow-pip');
+  const progressBar = document.getElementById('flowProgress');
+  if (!viewport || !wrap || panels.length === 0) return;
+
+  /* --- Desktop: Horizontal scroll-pin with GSAP --- */
+  if (!isMobile) {
+    const totalPanels = panels.length;
+
+    const pinTL = gsap.timeline({
+      scrollTrigger: {
+        trigger: viewport,
+        pin: true,
+        scrub: 0.8,
+        start: 'top top',
+        end: () => '+=' + (viewport.offsetWidth * (totalPanels - 1)),
+        onEnter: () => progressBar.classList.add('visible'),
+        onLeave: () => progressBar.classList.remove('visible'),
+        onEnterBack: () => progressBar.classList.add('visible'),
+        onLeaveBack: () => progressBar.classList.remove('visible'),
+        onUpdate: (self) => {
+          const prog = self.progress;
+          const activeIdx = Math.min(Math.round(prog * (totalPanels - 1)), totalPanels - 1);
+          pips.forEach((p, i) => p.classList.toggle('active', i === activeIdx));
+        }
+      }
+    });
+
+    pinTL.to(wrap, {
+      x: () => -(viewport.offsetWidth * (totalPanels - 1)),
+      ease: 'none'
+    });
+
+    /* Per-panel content stagger reveals */
+    panels.forEach((panel, idx) => {
+      const chapter = panel.querySelector('.flow-chapter');
+      const title   = panel.querySelector('.flow-title');
+      const body    = panel.querySelector('.flow-body');
+      const tags    = panel.querySelectorAll('.flow-tag');
+
+      ScrollTrigger.create({
+        trigger: panel,
+        containerAnimation: pinTL,
+        start: 'left 60%',
+        onEnter: () => {
+          gsap.to(chapter, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+          gsap.to(title, { opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: 'power3.out' });
+          gsap.to(body, { opacity: 1, y: 0, duration: 0.7, delay: 0.25, ease: 'power3.out' });
+          gsap.to(tags, { opacity: 1, y: 0, duration: 0.5, delay: 0.4, stagger: 0.08, ease: 'power3.out' });
+        },
+        onLeaveBack: () => {
+          gsap.set([chapter, title, body, ...tags], { opacity: 0, y: 20 });
+        }
+      });
+    });
+
+    /* Auto-reveal first panel immediately */
+    const fp = panels[0];
+    gsap.to(fp.querySelector('.flow-chapter'), { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: viewport, start: 'top 70%' } });
+    gsap.to(fp.querySelector('.flow-title'), { opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: 'power3.out', scrollTrigger: { trigger: viewport, start: 'top 70%' } });
+    gsap.to(fp.querySelector('.flow-body'), { opacity: 1, y: 0, duration: 0.7, delay: 0.25, ease: 'power3.out', scrollTrigger: { trigger: viewport, start: 'top 70%' } });
+    gsap.to(fp.querySelectorAll('.flow-tag'), { opacity: 1, y: 0, duration: 0.5, delay: 0.4, stagger: 0.08, ease: 'power3.out', scrollTrigger: { trigger: viewport, start: 'top 70%' } });
+
+  } else {
+    /* --- Mobile: Simple scroll-based reveals (no pin) --- */
+    panels.forEach(panel => {
+      const chapter = panel.querySelector('.flow-chapter');
+      const title   = panel.querySelector('.flow-title');
+      const body    = panel.querySelector('.flow-body');
+      const tags    = panel.querySelectorAll('.flow-tag');
+
+      ScrollTrigger.create({
+        trigger: panel,
+        start: 'top 75%',
+        once: true,
+        onEnter: () => {
+          gsap.to(chapter, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+          gsap.to(title, { opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: 'power3.out' });
+          gsap.to(body, { opacity: 1, y: 0, duration: 0.7, delay: 0.25, ease: 'power3.out' });
+          gsap.to(tags, { opacity: 1, y: 0, duration: 0.5, delay: 0.4, stagger: 0.08, ease: 'power3.out' });
+        }
+      });
+    });
+  }
+})();
+
 </script>
 </body>
 </html>
