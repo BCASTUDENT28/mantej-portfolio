@@ -3271,32 +3271,6 @@
 </section>
 
 
-<!-- ================= SCAN & SAVE QR CODE ================= -->
-<section id="qr" class="sec-base">
-  <div class="section-head" data-reveal>
-    <span class="idx">09</span><h2>Scan &amp; Save QR Code</h2><div class="rule"></div>
-  </div>
-  <div class="qr-share-wrapper" data-reveal style="max-width:800px;margin:0 auto;background:rgba(30,41,59,0.7);border:1px solid rgba(56,189,248,0.3);border-radius:24px;padding:36px;text-align:center;backdrop-filter:blur(16px);box-shadow:0 12px 40px rgba(0,0,0,0.5);">
-    <div style="font-size:1.4rem;font-family:var(--font-display);font-weight:800;color:#f8fafc;margin-bottom:12px;">📱 SAVE QR TO GALLERY / PHOTOS</div>
-    <p style="color:#94a3b8;font-size:1rem;line-height:1.6;margin-bottom:24px;max-width:600px;margin-left:auto;margin-right:auto;">
-      Click the green button below to download and save this QR code directly into your phone's Gallery or Photos! Share it with your friends to subscribe on YouTube (<strong style="color:#38bdf8;">@mantejtechvlogs</strong>) and follow on Instagram (<strong style="color:#e879f9;">@hustler_mantej</strong>).
-    </p>
-    
-    <div style="display:flex;justify-content:center;align-items:center;margin-bottom:28px;">
-      <div id="qrcode" style="background:#ffffff;padding:16px;border-radius:16px;box-shadow:0 0 30px rgba(56,189,248,0.3);display:inline-block;"></div>
-    </div>
-
-    <div>
-      <button class="magnet" id="saveQrBtn" onclick="saveQrCodeToGallery(event)" style="padding:14px 32px;font-family:var(--font-display);font-weight:700;border-radius:14px;background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#ffffff;border:none;box-shadow:0 4px 25px rgba(16,185,129,0.5);cursor:pointer;font-size:1rem;display:inline-flex;align-items:center;gap:10px;transition:all 0.3s ease;">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        SAVE QR TO GALLERY / PHOTOS 📥
-      </button>
-      <div id="qrSaveToast" style="display:none;color:#34d399;font-size:0.95rem;font-weight:700;margin-top:14px;letter-spacing:0.05em;">✓ QR CODE SAVED TO GALLERY / DOWNLOADS!</div>
-    </div>
-  </div>
-</section>
-
-
 <!-- ================= NOW SECTION ================= -->
 <section id="now" class="sec-alt">
   <div class="section-head" data-reveal>
@@ -3358,30 +3332,29 @@
 
 
 
-<!-- ================= QR ================= -->
+<!-- ================= QR & SAVE TO GALLERY ================= -->
 <section id="qr" class="sec-alt">
   <div class="section-head" data-reveal>
-    <span class="idx">11</span><h2>Scan to keep this</h2><div class="rule"></div>
+    <span class="idx">11</span><h2>Scan &amp; Save QR Code</h2><div class="rule"></div>
   </div>
-  <div class="qr-wrap" data-reveal>
-    <div class="qr-frame" id="qrFrame">
+  <div class="qr-wrap" data-reveal style="max-width:800px;margin:0 auto;background:rgba(30,41,59,0.7);border:1px solid rgba(56,189,248,0.3);border-radius:24px;padding:36px;text-align:center;backdrop-filter:blur(16px);box-shadow:0 12px 40px rgba(0,0,0,0.5);display:flex;flex-direction:column;align-items:center;">
+    <div class="qr-frame" id="qrFrame" style="margin-bottom:24px;">
       <div id="qrcode">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fmantej.vercel.app&color=0f172a&bgcolor=ffffff" alt="Mantej Singh Portfolio QR Code" width="180" height="180" style="display:block; border-radius:8px;">
+        <img id="realQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fmantej.vercel.app&color=0f172a&bgcolor=ffffff" alt="Mantej Singh Portfolio QR Code" width="200" height="200" style="display:block; border-radius:12px; background:#ffffff; padding:12px; box-shadow:0 0 30px rgba(56,189,248,0.4);">
       </div>
       <div class="qr-beam"></div>
     </div>
-    <div class="qr-copy">
-      <h2>Take a screenshot &amp; share! 📸</h2>
-      <p>Take a screenshot of this QR code and share it with your friends to subscribe on <strong>YouTube</strong> (@mantejtechvlogs) and follow on <strong>Instagram</strong> (@hustler_mantej)!</p>
+    <div class="qr-copy" style="max-width:600px;">
+      <h2 style="font-size:1.5rem;font-family:var(--font-display);font-weight:800;color:#f8fafc;margin-bottom:12px;">Save QR Code to Gallery / Photos 📸</h2>
+      <p style="color:#94a3b8;font-size:1rem;line-height:1.6;margin-bottom:24px;">
+        Click the green button below to download and save this QR code directly into your phone's Gallery or Photos! Share it with your friends to subscribe on YouTube (<strong style="color:#38bdf8;">@mantejtechvlogs</strong>) and follow on Instagram (<strong style="color:#e879f9;">@hustler_mantej</strong>).
+      </p>
       
-      <button class="qr-share-btn magnet" id="shareQrBtn" style="margin-top:20px;">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-        </svg>
-        <span>SHARE QR CODE &amp; PORTFOLIO 📲</span>
+      <button class="magnet" id="saveQrBtn" onclick="saveQrCodeToGallery(event)" style="padding:14px 32px;font-family:var(--font-display);font-weight:700;border-radius:14px;background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#ffffff;border:none;box-shadow:0 4px 25px rgba(16,185,129,0.5);cursor:pointer;font-size:1rem;display:inline-flex;align-items:center;gap:10px;transition:all 0.3s ease;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        SAVE QR TO GALLERY / PHOTOS 📥
       </button>
-      <div id="shareStatusMsg" style="font-size:12px; color:var(--accent-green); margin-top:8px; display:none;"></div>
+      <div id="qrSaveToast" style="display:none;color:#34d399;font-size:0.95rem;font-weight:700;margin-top:14px;letter-spacing:0.05em;">✓ QR CODE SAVED TO GALLERY / DOWNLOADS!</div>
     </div>
   </div>
 </section>
@@ -5007,37 +4980,47 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
 
     // Guaranteed Universal Share Engine (Native Web Share + Custom Modal)
   
-    window.saveQrCodeToGallery = function(e) {
+    window.saveQrCodeToGallery = async function(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
-    const qrel = document.getElementById('qrcode');
-    if (!qrel) return;
-    
-    let dataUrl = '';
-    const canvas = qrel.querySelector('canvas');
-    const img = qrel.querySelector('img');
-    
-    if (canvas) {
-      dataUrl = canvas.toDataURL('image/png');
-    } else if (img && img.src) {
-      dataUrl = img.src;
-    }
-    
-    if (!dataUrl) {
-      alert('QR Code is still generating, please try again in a moment!');
+    const imgEl = document.getElementById('realQrImg');
+    const toast = document.getElementById('qrSaveToast');
+
+    if (!imgEl) {
+      alert('QR Code image element not found.');
       return;
     }
 
-    const link = document.createElement('a');
-    link.download = 'Mantej_Portfolio_QR_Code.png';
-    link.href = dataUrl;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const response = await fetch(imgEl.src);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
 
-    const toast = document.getElementById('qrSaveToast');
-    if (toast) {
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 4000);
+      const link = document.createElement('a');
+      link.download = 'Mantej_Portfolio_QR_Code.png';
+      link.href = blobUrl;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
+
+      if (toast) {
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 4000);
+      }
+    } catch (err) {
+      const link = document.createElement('a');
+      link.download = 'Mantej_Portfolio_QR_Code.png';
+      link.href = imgEl.src;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      if (toast) {
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 4000);
+      }
     }
   };
 
