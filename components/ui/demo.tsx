@@ -1,18 +1,23 @@
-"use client"
+import LogoCloudSwap from "@/components/ui/logo-clouds";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls } from "@react-three/drei"
-import { ParticleSphere } from "./3d-orbit-gallery"
-
-export default function DemoOne() {
+export default function Default() {
   return (
-    <div className="w-full h-screen bg-black relative">
-      <Canvas camera={{ position: [-10, 1.5, 10], fov: 50 }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
-        <ParticleSphere />
-        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
-      </Canvas>
+    <div className="w-full bg-white dark:bg-neutral-950 flex flex-col gap-12">
+      <LogoCloudSwap />
+      <ContainerScroll
+        titleComponent={
+          <h1 className="text-4xl font-bold text-white">
+            3D Container Scroll Perspective
+          </h1>
+        }
+      >
+        <img
+          src="images/hustlesmith_denim_hero.png"
+          alt="HustleSmith Studio"
+          className="w-full h-full object-cover rounded-xl"
+        />
+      </ContainerScroll>
     </div>
-  )
+  );
 }
