@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Mantej Singh — Founder / Builder / Creator</title>
-<meta name="description" content="Mantej Singh - Founder of HustleSmith Studio, Full-Stack Engineer, AI Media Creator, and Tech Vlogger at LPU. Exploring luxury custom denim, AI reel cloning, and cybersecurity.">
+<meta name="description" content="Mantej Singh — BCA student and startup founder at LPU. Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -732,7 +732,7 @@
     --mod-accent-glow: rgba(217, 119, 6, 0.08);
     border-color: rgba(96, 165, 250, 0.3);
   }
-  #mod-ailabs {
+  #mod-applifynow {
     --mod-accent: var(--cloud-accent);
     --mod-accent-glow: rgba(37, 99, 235, 0.08);
     border-color: rgba(52, 211, 153, 0.3);
@@ -741,10 +741,42 @@
     --mod-accent: var(--ig);
     --mod-accent-glow: rgba(225, 48, 108, 0.08);
   }
-  .modules{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
+    .modules {
+    display: grid;
+    grid-template-columns: var(--col-spec, 1fr 1fr 1fr);
+    gap: 28px;
+    transition: grid-template-columns 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: grid-template-columns;
   }
-  @media (max-width:960px){ .modules{grid-template-columns:1fr;} }
+  @media (max-width: 960px) {
+    .modules {
+      grid-template-columns: 1fr !important;
+      transition: none !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .modules {
+      transition: none !important;
+    }
+  }
+  @media (max-width:960px){   .modules {
+    display: grid;
+    grid-template-columns: var(--col-spec, 1fr 1fr 1fr);
+    gap: 28px;
+    transition: grid-template-columns 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: grid-template-columns;
+  }
+  @media (max-width: 960px) {
+    .modules {
+      grid-template-columns: 1fr !important;
+      transition: none !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .modules {
+      transition: none !important;
+    }
+  } }
   .module{
     background: var(--bg-glass);
     backdrop-filter: blur(14px);
@@ -2142,6 +2174,129 @@
     .scroll-cue .bar{animation:none;}
     .flow-chapter,.flow-title,.flow-body,.flow-tag{opacity:1;transform:none;}
   }
+/* ---------- 3D FOUNDER DASH CSS ---------- */
+.game-container {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+  max-height: 600px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-light);
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
+  margin-top: 2rem;
+}
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+.game-overlay, .game-gameover {
+  position: absolute;
+  inset: 0;
+  background: rgba(27, 36, 56, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  color: var(--text-primary);
+  text-align: center;
+}
+.game-overlay h3, .game-gameover h3 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, var(--sky-blue), var(--accent-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.game-overlay p, .game-gameover p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+.game-overlay button, .game-gameover button {
+  background: transparent;
+  border: 1px solid var(--sky-blue);
+  color: var(--sky-blue);
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.game-overlay button:hover, .game-gameover button:hover {
+  background: rgba(126, 176, 240, 0.15);
+  box-shadow: 0 0 15px rgba(126, 176, 240, 0.3);
+}
+.game-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 5;
+  pointer-events: none;
+  font-family: var(--font-mono);
+}
+.hud-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.hud-score {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+.hud-high {
+  font-size: 0.8rem;
+  color: var(--text-subtle);
+}
+.hud-combo {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--accent-green);
+  text-shadow: 0 0 10px var(--neon-glow);
+  transition: opacity 0.3s, transform 0.1s;
+}
+.hud-notification {
+  position: absolute;
+  top: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--amber-soft);
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+@keyframes notifAnim {
+  0% { opacity: 0; transform: translate(-50%, 10px) scale(0.9); }
+  20% { opacity: 1; transform: translate(-50%, 0) scale(1.1); }
+  100% { opacity: 0; transform: translate(-50%, -20px) scale(1); }
+}
+.notif-anim {
+  animation: notifAnim 1s ease-out forwards;
+}
+
 </style>
 </head>
 <body>
@@ -2230,7 +2385,7 @@
             <span id="gooeyText2" class="gooey-text-span" style="opacity:0%;">Builder</span>
           </div>
         </div>
-        <span class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Founder, Vlogger, Freelancer, Full Stack Dev, Cybersecurity, HustleSmith</span>
+        <span class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">CEO & CTO at ApplifyNow</span>
       </div>
       <div class="hero-social-bar hero-cta-highlight" id="heroSocialBar">
         <!-- Prominent YouTube Subscriber CTA Card -->
@@ -2265,8 +2420,8 @@
 
         <!-- Secondary Links -->
         <div class="hero-secondary-links">
-          <a href="https://www.hustlesmith.studio" target="_blank" rel="noopener" class="h-social-btn hs magnet">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z"/></svg> HustleSmith Studio ↗
+          <a href="https://www.linkedin.com/in/mantej-singh-307134379/" target="_blank" rel="noopener" class="h-social-btn hs magnet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z"/></svg> ApplifyNow ↗
           </a>
           <a href="https://www.linkedin.com/in/mantej-singh-307134379/" target="_blank" rel="noopener" class="h-social-btn li magnet">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 10v7M7 7v.01M12 17v-4.5a2.5 2.5 0 015 0V17M12 10v7"/></svg> LinkedIn ↗
@@ -2338,15 +2493,15 @@
       </div>
     </div>
 
-    <div class="module" id="mod-ailabs" tabindex="0" role="article" aria-label="AI Media Labs venture card">
+    <div class="module" id="mod-applifynow" tabindex="0" role="article" aria-label="ApplifyNow venture card">
       <div>
-        <div class="mod-id">AI LABS // GENERATIVE MEDIA</div>
+        <div class="mod-id">SAAS // MOBILE PLATFORM</div>
         <span class="status live">ACTIVE</span>
-        <h3>AI Media &amp; Neural Labs</h3>
-        <p>Building neural video pipelines that synthesize and clone viral reels, custom AI video masterclasses, and visual generation models.</p>
+        <h3>ApplifyNow</h3>
+        <p>Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.</p>
       </div>
       
-      <!-- Video 2: AI Reel Replication Demo -->
+      <!-- Video 2: ApplifyNow Demo -->
       <div class="venture-video-container" data-video="applifynow">
         <video class="venture-video" id="video-applifynow" preload="none" muted loop playsinline poster="images/lpu_robo_park.jpg">
           <source src="assets/ai_reel_replica.mp4" type="video/mp4">
@@ -2355,12 +2510,12 @@
           <button class="video-play-btn" aria-label="Play/Pause Video">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </button>
-          <span class="video-tag">🤖 AI Reel Replica</span>
+          <span class="video-tag">⚡ ApplifyNow Platform</span>
         </div>
       </div>
 
       <div>
-        <span class="go-primary">EXPLORE AI LABS →</span>
+        <span class="go-primary">BUILDING LIVE →</span>
       </div>
     </div>
 
@@ -2393,41 +2548,7 @@
   </div>
 </section>
 
-<!-- ================= FOUNDER DASH MINI-GAME (SECTION 02) ================= -->
-<section id="game" class="sec-alt">
-  <div class="section-head" data-reveal>
-    <span class="idx">02</span><h2>Founder Dash</h2><div class="rule"></div>
-  </div>
-  <div class="game-wrapper" data-reveal>
-    <div class="game-hud">
-      <div class="game-hud-group">
-        <div class="game-score">SCORE: <span id="gameScore">0000</span></div>
-        <div class="game-best">BEST: <span id="gameBest">0000</span></div>
-        <div class="game-streak" id="gameStreak">STREAK: 1x</div>
-      </div>
-      <button class="game-sound-btn" id="gameSoundBtn" aria-label="Toggle Sound Effects">🔇 Sound: OFF</button>
-    </div>
-    <div class="canvas-container" id="canvasContainer">
-      <!-- Heximage ASCII Art Video Attract Mode Background -->
-      <div class="game-attract-bg" id="gameAttractBg">
-        <video class="game-ascii-video" id="gameAsciiVideo" poster="images/heximage-poster.webp" loop muted playsinline aria-hidden="true"></video>
-        <div class="game-scrim-overlay"></div>
-      </div>
-      <canvas id="runnerCanvas" width="800" height="320"></canvas>
-      <div class="game-overlay" id="gameOverlay">
-        <div class="game-msg-title" id="gameMsgTitle">FOUNDER DASH</div>
-        <div class="game-msg-sub" id="gameMsgSub">Dodge bugs, collect denim power-ups, &amp; build your streak!</div>
-        <div class="game-controls-hint">⌨️ Spacebar / W / Tap to Jump</div>
-        <button class="game-start-btn magnet" id="gameStartBtn">START DASH</button>
-        <div class="game-leaderboard" id="gameLeaderboard">
-          <div class="game-lb-title">Top Founders Leaderboard</div>
-          <div id="gameLbRows"></div>
-        </div>
-      </div>
-    </div>
-    <div class="game-credit">Founder Dash · High-Performance 60fps Canvas Engine</div>
-  </div>
-</section>
+
 
 <!-- ================= STORY — Vertical Scroll-Reveal Chapters (SECTION 03) ================= -->
 <section id="story" class="story-section sec-base">
@@ -2462,7 +2583,7 @@
     <div class="story-card" data-story-card>
       <div class="story-card-text">
         <div class="story-chapter">CHAPTER 02 — THE BRAND</div>
-        <h3 class="story-title">HustleSmith Studio:<br>Denim is our canvas.</h3>
+        <h3 class="story-title">ApplifyNow:<br>Building in public.</h3>
         <p class="story-body">Luxury custom denim — every jacket hand-painted and embroidered in collaboration with LPU’s Fine Arts talent. No factory lines, no mass production. Each piece is a one-of-one artifact that merges <span class="story-accent">streetwear edge with handcraft tradition.</span></p>
         <div class="story-tags">
           <span class="story-tag">LUXURY DENIM</span>
@@ -2486,7 +2607,7 @@
       <div class="story-card-text">
         <div class="story-chapter">CHAPTER 03 — CREATIVE ENGINE</div>
         <h3 class="story-title">Full-Stack Engineering &amp;<br>AI Creative Systems.</h3>
-        <p class="story-body">Architecting modern web applications and AI media engines. <span class="story-accent">From scalable full-stack web products to neural video synthesis</span>, every tool is engineered with high performance, sleek dark aesthetics, and security.</p>
+        <p class="story-body">Architecting modern web applications and mobile platforms. <span class="story-accent">From scalable full-stack web products to native iOS & Android apps</span>, every tool is engineered with high performance, sleek dark aesthetics, and security.</p>
         <div class="story-tags">
           <span class="story-tag">FULL STACK</span>
           <span class="story-tag">AI PIPELINES</span>
@@ -2501,11 +2622,11 @@
     <!-- Chapter 04: The Stack & AI Engineering -->
     <div class="story-card" data-story-card>
       <div class="story-card-text">
-        <div class="story-chapter">CHAPTER 04 — THE STACK &amp; AI LABS</div>
-        <h3 class="story-title">Full stack engineering,<br>AI reel replication.</h3>
+        <div class="story-chapter">CHAPTER 04 — THE STACK &amp; APPLIFYNOW</div>
+        <h3 class="story-title">Full stack engineering,<br>ApplifyNow platform.</h3>
         <p class="story-body">React, Node, Python, Postgres, Docker — plus custom generative AI pipelines. I build algorithms that can <span class="story-accent">replicate and clone any viral video style or reel on the internet</span> using neural motion &amp; visual synthesis engines, alongside red-team security audits.</p>
         <div class="story-tags">
-          <span class="story-tag">AI REEL REPLICATION</span>
+          <span class="story-tag">APPLIFYNOW ENGINE</span>
           <span class="story-tag">GENERATIVE MEDIA</span>
           <span class="story-tag">FULL STACK</span>
           <span class="story-tag">CYBERSECURITY</span>
@@ -2517,7 +2638,7 @@
           <video autoplay muted loop playsinline>
             <source src="assets/ai_reel_replica.mp4" type="video/mp4">
           </video>
-          <span class="story-video-label">🤖 AI REEL REPLICATION ENGINE</span>
+          <span class="story-video-label">🤖 APPLIFYNOW ENGINE ENGINE</span>
         </div>
       </div>
     </div>
@@ -2589,7 +2710,7 @@
         <div>
           <div class="mstack-op-tag">FOUNDER &amp; DEVELOPER</div>
           <h4>MANTEJ SINGH</h4>
-          <p>Building HustleSmith Studio &amp; AI Tech Labs</p>
+          <p>Building ApplifyNow</p>
         </div>
       </div>
       <a class="mstack-card" data-platform="instagram" href="https://www.instagram.com/hustler_mantej/" target="_blank" rel="noopener">
@@ -2609,7 +2730,7 @@
       </a>
       <div class="mstack-card" data-platform="hustlesmith" style="opacity:.65;">
         <div class="left"><div class="mstack-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z"/></svg></div>
-        <div><h4>HustleSmith Studio</h4><p>www.hustlesmith.studio — launching soon</p></div></div>
+        <div><h4>ApplifyNow</h4><p>www.hustlesmith.studio — launching soon</p></div></div>
       </div>
     </div>
 
@@ -2619,6 +2740,40 @@
     </div>
   </div>
 </section>
+
+<!-- ================= FOUNDER DASH 3D ================= -->
+<section id="game" class="sec-alt">
+  <div class="section-head" data-reveal>
+    <span class="idx">07</span><h2>Founder Dash 3D</h2><div class="rule"></div>
+  </div>
+  <div class="game-container" id="gameContainer" data-reveal>
+    <div class="game-overlay" id="gameOverlay">
+      <div class="game-overlay-content">
+        <h3>FOUNDER DASH</h3>
+        <p>Avoid glitches. Collect Ventures.</p>
+        <button class="magnet" id="startGameBtn">START ENGINE</button>
+      </div>
+    </div>
+    
+    <div class="game-hud" id="gameHud" style="display:none;">
+      <div class="hud-top">
+        <div class="hud-score">SCORE: <span id="gameScoreVal">0</span></div>
+        <div class="hud-high">HIGH: <span id="gameHighVal">0</span></div>
+      </div>
+      <div class="hud-combo" id="gameCombo" style="opacity:0;">COMBO x1</div>
+      <div class="hud-notification" id="gameNotif"></div>
+    </div>
+    
+    <div class="game-gameover" id="gameOverScreen" style="display:none;">
+      <h3>CRASHED</h3>
+      <p>Final Score: <span id="finalScoreVal">0</span></p>
+      <button class="magnet" id="restartGameBtn">REBOOT</button>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+  </div>
+</section>
+
 
 <!-- ================= JOURNEY & TIMELINE ================= -->
 <section id="journey" class="sec-base">
@@ -2650,7 +2805,7 @@
       <div class="timeline-dot"></div>
       <div class="timeline-card">
         <div class="timeline-year">2025</div>
-        <h3>Founded HustleSmith Studio</h3>
+        <h3>Founded ApplifyNow</h3>
         <p>Created luxury custom denim brand blending hand-painted art &amp; embroidery in collaboration with LPU Fine Arts talent.</p>
       </div>
     </div>
@@ -2660,7 +2815,7 @@
       <div class="timeline-card">
         <div class="timeline-year">2026</div>
         <h3>AI &amp; Full-Stack Expansion</h3>
-        <p>Building neural AI video replication pipelines and scaling HustleSmith Studio's custom denim collection.</p>
+        <p>Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.</p>
       </div>
     </div>
   </div>
@@ -2776,47 +2931,225 @@
   </div>
 
   <!-- LPU Campus Photo Mosaic Showcase -->
+        <!-- LPU Campus Photo Mosaic Showcase -->
   <div class="lpu-mosaic-head" data-reveal>
     <div>
-      <h3>Campus &amp; Architecture Spotlight</h3>
-      <p>Lovely Professional University — Phagwara, Punjab</p>
+      <h3>Campus, Culture &amp; One World Gallery</h3>
+      <p>Lovely Professional University — 16 Visually Verified Campus &amp; Cultural Moments</p>
+    </div>
+  </div>
+
+  <div class="lpu-gallery-grid" data-reveal>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_01.jpg" alt="School of Pharmaceutical Sciences" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">BUILDING 07</span>
+        <div class="lpu-gallery-title">School of Pharmaceutical Sciences</div>
+        <div class="lpu-gallery-sub">Ivy-Clad Brick Academic Facade</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_02.jpg" alt="School of Liberal & Creative Arts" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">FINE ARTS & DESIGN</span>
+        <div class="lpu-gallery-title">School of Liberal & Creative Arts</div>
+        <div class="lpu-gallery-sub">Building 08 — Fine Arts & Media Collaboration</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item span-2">
+      <img src="images/lpu/lpu_campus_03.jpg" alt="Tree-Lined Green Walkway" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">CAMPUS PROMENADE</span>
+        <div class="lpu-gallery-title">Tree-Lined Green Walkway</div>
+        <div class="lpu-gallery-sub">Pedestrian Campus Boulevard</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_04.jpg" alt="Central Uni Mall Atrium" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">UNI MALL</span>
+        <div class="lpu-gallery-title">Central Uni Mall Atrium</div>
+        <div class="lpu-gallery-sub">Multi-Level Student Hub & Escalators</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_05.jpg" alt="Care For Your Campus" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">GREEN CAMPUS</span>
+        <div class="lpu-gallery-title">Care For Your Campus</div>
+        <div class="lpu-gallery-sub">Eco & Sustainability Directives</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item span-2">
+      <img src="images/lpu/lpu_campus_06.jpg" alt="Mittal School of Business" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">BUSINESS SCHOOL</span>
+        <div class="lpu-gallery-title">Mittal School of Business</div>
+        <div class="lpu-gallery-sub">School of Management & Commerce</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_07.jpg" alt="Central Flag Plaza & Esplanade" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">FLAG PLAZA</span>
+        <div class="lpu-gallery-title">Central Flag Plaza & Esplanade</div>
+        <div class="lpu-gallery-sub">International Nations Flag Court</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_08.jpg" alt="Rainy Day Campus Cycling" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">MONSOON</span>
+        <div class="lpu-gallery-title">Rainy Day Campus Cycling</div>
+        <div class="lpu-gallery-sub">LPU Boulevard under Rain</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item span-2">
+      <img src="images/lpu/lpu_campus_09.jpg" alt="Monsoon Canopy & Hostels" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">SKYLINE</span>
+        <div class="lpu-gallery-title">Monsoon Canopy & Hostels</div>
+        <div class="lpu-gallery-sub">Green Grounds & Residential Blocks</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_10.jpg" alt="Tricolor Festival Drapes" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">FEST DECOR</span>
+        <div class="lpu-gallery-title">Tricolor Festival Drapes</div>
+        <div class="lpu-gallery-sub">Girls Hostel 4 & SDG Exhibition</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item span-2">
+      <img src="images/lpu/lpu_campus_11.jpg" alt="Snow Peaks Over LPU Campus" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">HIMALAYAN VIEW</span>
+        <div class="lpu-gallery-title">Snow Peaks Over LPU Campus</div>
+        <div class="lpu-gallery-sub">Panoramic Quad & Dhauladhar Mountain Backdrop</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_12.jpg" alt="One World Cultural Festival" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">ONE WORLD</span>
+        <div class="lpu-gallery-title">One World Cultural Festival</div>
+        <div class="lpu-gallery-sub">African Student Delegation with Mantej</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_13.jpg" alt="Canal & Birds in Flight" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">NATURE</span>
+        <div class="lpu-gallery-title">Canal & Birds in Flight</div>
+        <div class="lpu-gallery-sub">Ivy Towers & LPU Waterway</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item span-2">
+      <img src="images/lpu/lpu_campus_14.jpg" alt="Traditional Folk Artist Meet" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">SPECTRA ARTS</span>
+        <div class="lpu-gallery-title">Traditional Folk Artist Meet</div>
+        <div class="lpu-gallery-sub">Mantej at Cultural Performing Arts Fest</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/lpu/lpu_campus_15.jpg" alt="Yemen Cultural Pavilion" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">ONE WORLD</span>
+        <div class="lpu-gallery-title">Yemen Cultural Pavilion</div>
+        <div class="lpu-gallery-sub">Middle Eastern Delegation in Traditional Thobe</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item span-2">
+      <img src="images/lpu/lpu_campus_16.jpg" alt="Pacific Tribal Pavilion" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge">CULTURAL DELEGATION</span>
+        <div class="lpu-gallery-title">Pacific Tribal Pavilion</div>
+        <div class="lpu-gallery-sub">Traditional Headdress & Ceremonial Showcase</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minecraft 1:1 LPU Campus Build Showcase -->
+  <div class="lpu-mosaic-head" data-reveal style="margin-top:4rem;">
+    <div>
+      <span class="idx" style="color:var(--accent-green);">🎮 VIRTUAL BUILD</span>
+      <h3>1:1 Minecraft LPU Campus Replica</h3>
+      <p>Serious 1:1 Scale Recreation of Lovely Professional University Built in Minecraft</p>
     </div>
   </div>
 
   <div class="lpu-gallery-grid" data-reveal>
     <div class="lpu-gallery-item span-2">
-      <img src="images/lpu_admission.jpeg" alt="LPU Campus Skyline">
+      <img src="images/minecraft/mc_lpu_01.jpg" alt="Mittal School of Business (Building 14)" loading="lazy">
       <div class="lpu-gallery-overlay">
-        <span class="lpu-gallery-badge">CAMPUS SKYLINE</span>
-        <div class="lpu-gallery-title">Admission Block &amp; Central Esplanade</div>
-        <div class="lpu-gallery-sub">600+ Acres World-Class Academic Infrastructure</div>
+        <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">MINECRAFT 1:1</span>
+        <div class="lpu-gallery-title">Mittal School of Business (Building 14)</div>
+        <div class="lpu-gallery-sub">1:1 Scale Brick Texture & Shaders Build</div>
       </div>
     </div>
-
     <div class="lpu-gallery-item">
-      <img src="images/lpu_robot.jpg" alt="LPU Giant Mech Statue">
+      <img src="images/minecraft/mc_lpu_02.jpg" alt="LPU Boulevard & Amphitheatre" loading="lazy">
       <div class="lpu-gallery-overlay">
-        <span class="lpu-gallery-badge">INNOVATION</span>
-        <div class="lpu-gallery-title">LPU Robo Park Mech</div>
-        <div class="lpu-gallery-sub">Engineering &amp; Robotics Hub</div>
+        <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">VIRTUAL CAMPUS</span>
+        <div class="lpu-gallery-title">LPU Boulevard & Amphitheatre</div>
+        <div class="lpu-gallery-sub">Perspective View of Main Campus Road</div>
       </div>
     </div>
-
     <div class="lpu-gallery-item">
-      <img src="images/lpu_mall.jpg" alt="Uni Mall & ARC">
+      <img src="images/minecraft/mc_lpu_03.jpg" alt="Bird's Eye Campus Landscape" loading="lazy">
       <div class="lpu-gallery-overlay">
-        <span class="lpu-gallery-badge">STUDENT LIFE</span>
-        <div class="lpu-gallery-title">Academic Resource Center &amp; Uni Mall</div>
-        <div class="lpu-gallery-sub">Central Hub for Campus Life</div>
+        <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">AERIAL BUILD</span>
+        <div class="lpu-gallery-title">Bird's Eye Campus Landscape</div>
+        <div class="lpu-gallery-sub">Green Lawns & Academic Blocks</div>
       </div>
     </div>
-
     <div class="lpu-gallery-item span-2">
-      <img src="images/lpu_auditorium.jpg" alt="LPU Central Amphitheatre">
+      <img src="images/minecraft/mc_lpu_04.jpg" alt="Ivy Courtyard & Palm Plaza" loading="lazy">
       <div class="lpu-gallery-overlay">
-        <span class="lpu-gallery-badge">CULTURE &amp; FESTS</span>
-        <div class="lpu-gallery-title">Central Amphitheatre &amp; Open Auditorium</div>
-        <div class="lpu-gallery-sub">Home of YouthVibe, Spectra &amp; One India</div>
+        <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">MINECRAFT ARCHITECTURE</span>
+        <div class="lpu-gallery-title">Ivy Courtyard & Palm Plaza</div>
+        <div class="lpu-gallery-sub">Academic Quadrangle & Benches</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/minecraft/mc_lpu_05.jpg" alt="School of Fine Arts Wall Mural" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">FINE ARTS REPLICA</span>
+        <div class="lpu-gallery-title">School of Fine Arts Wall Mural</div>
+        <div class="lpu-gallery-sub">Detailed Custom Wall Art Recreation</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/minecraft/mc_lpu_06.jpg" alt="Curved Glass & Brick Tower" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">LANDMARK TOWER</span>
+        <div class="lpu-gallery-title">Curved Glass & Brick Tower</div>
+        <div class="lpu-gallery-sub">LPU Facade Architecture in Minecraft</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item span-2">
+      <img src="images/minecraft/mc_lpu_07.jpg" alt="LPU Mech Robo Park Statue" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">ROBO PARK 1:1</span>
+        <div class="lpu-gallery-title">LPU Mech Robo Park Statue</div>
+        <div class="lpu-gallery-sub">Giant Yellow Mech & Tile Pathways</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item">
+      <img src="images/minecraft/mc_lpu_08.jpg" alt="School of Computing (Building 28)" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">HOME DEPT</span>
+        <div class="lpu-gallery-title">School of Computing (Building 28)</div>
+        <div class="lpu-gallery-sub">Computer Science & Engineering Hub</div>
+      </div>
+    </div>
+    <div class="lpu-gallery-item span-2">
+      <img src="images/minecraft/mc_lpu_09.jpg" alt="Brutalist Innovation Center" loading="lazy">
+      <div class="lpu-gallery-overlay">
+        <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">RESEARCH CENTER</span>
+        <div class="lpu-gallery-title">Brutalist Innovation Center</div>
+        <div class="lpu-gallery-sub">Concrete Helipad & Research Complex</div>
       </div>
     </div>
   </div>
@@ -2879,90 +3212,9 @@
   </div>
 </section>
 
-<!-- ================= TESTIMONIALS SECTION ================= -->
-<section id="testimonials" class="sec-alt">
-  <div class="section-head" data-reveal>
-    <span class="idx">09</span><h2>Testimonials</h2><div class="rule"></div>
-  </div>
-  <div class="testimonials-wrapper" data-reveal>
-    <div class="testi-container">
-      <div class="testi-track" id="testiTrack">
-        <div class="testi-card">
-          <div class="testi-quote">“Mantej's technical vision on full-stack web architecture and AI media tools is inspiring. He builds web products and creative pipelines with incredible speed.”</div>
-          <div class="testi-author">
-            <div class="testi-avatar">R</div>
-            <div>
-              <div class="testi-name">Rahul Sharma</div>
-              <div class="testi-role">Tech Collaborator &amp; SaaS Founder</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="testi-card">
-          <div class="testi-quote">“The custom denim craftsmanship from HustleSmith Studio is top-notch. Working with Mantej on artistic apparel has been a standout experience.”</div>
-          <div class="testi-author">
-            <div class="testi-avatar">A</div>
-            <div>
-              <div class="testi-name">Ananya Kaur</div>
-              <div class="testi-role">Fine Arts Collaborator · LPU</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="testi-card">
-          <div class="testi-quote">“His YouTube tech vlogs give an authentic, unfiltered look into building startups and hardware. A must-watch for student founders.”</div>
-          <div class="testi-author">
-            <div class="testi-avatar">V</div>
-            <div>
-              <div class="testi-name">Vikramaditya</div>
-              <div class="testi-role">Tech Vlog Subscriber</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="testi-controls">
-      <button class="testi-btn magnet" id="testiPrev" aria-label="Previous testimonial">←</button>
-      <div class="testi-dots" id="testiDots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
-      <button class="testi-btn magnet" id="testiNext" aria-label="Next testimonial">→</button>
-    </div>
-  </div>
-</section>
-
-<!-- ================= GUESTBOOK SECTION ================= -->
-<section id="guestbook" class="sec-base">
-  <div class="section-head" data-reveal>
-    <span class="idx">10</span><h2>Guestbook</h2><div class="rule"></div>
-  </div>
-  <div class="guestbook-container" data-reveal>
-    <div class="guestbook-form-card">
-      <h3>Leave a Message</h3>
-      <p>Sign the public guestbook! Leave your name and a short note for Mantej.</p>
-      <form id="gbForm">
-        <div class="gb-input-group">
-          <input type="text" id="gbName" placeholder="Your Name" required maxlength="40" autocomplete="off">
-        </div>
-        <div class="gb-input-group">
-          <textarea id="gbMsg" placeholder="Your Message (max 280 chars, no links)" required maxlength="280" rows="3"></textarea>
-        </div>
-        <div class="gb-form-footer">
-          <span class="gb-char-count" id="gbCharCount">280 left</span>
-          <button type="submit" class="gb-submit-btn magnet" id="gbSubmitBtn">Sign Guestbook →</button>
-        </div>
-        <div class="gb-status-msg" id="gbStatus"></div>
-      </form>
-    </div>
-
-    <div class="guestbook-list" id="gbList">
-      <!-- Populated via JS -->
-    </div>
-  </div>
-</section>
 
 <!-- ================= QR ================= -->
 <section id="qr" class="sec-alt">
@@ -3443,7 +3695,7 @@ document.querySelectorAll('.module').forEach(m=>{
   });
 });
 const modHustle = document.getElementById('mod-hustlesmith');
-const modAiLabs = document.getElementById('mod-ailabs');
+const modApplify = document.getElementById('mod-applifynow');
 const modVlogs   = document.getElementById('mod-vlogs');
 
 if (modHustle) modHustle.addEventListener('click', ()=>{ location.href = 'https://www.hustlesmith.studio'; });
@@ -3460,13 +3712,13 @@ const platformData = {
   youtube: {
     eyebrow: 'LONG FORM',
     title: 'YouTube',
-    hook: 'Startups, AI video tutorials, hardware, tech vlogs — weekly videos',
+    hook: 'Startups, hardware, tech vlogs — weekly videos',
     link: 'https://www.youtube.com/@mantejtechvlogs'
   },
   linkedin: {
     eyebrow: 'PROFESSIONAL',
     title: 'LinkedIn',
-    hook: 'Follow the AI & startup build in public',
+    hook: 'Follow the ApplifyNow build in public',
     link: 'https://www.linkedin.com/in/mantej-singh-307134379/'
   }
 };
@@ -3498,9 +3750,10 @@ const platformData = {
     cta.textContent = 'Follow →';
     cta.onclick = (e)=>{ e.stopPropagation(); launch(p.link); };
     
-    panel.style.borderColor = 'var(--cloud-accent)';
-    panel.style.boxShadow = `var(--shadow-hover)`;
-    eyebrow.style.color = 'var(--cloud-accent)';
+    const brandColor = orb.key === 'instagram' ? '#E1306C' : orb.key === 'youtube' ? '#FF0000' : '#0A66C2';
+    panel.style.borderColor = brandColor;
+    panel.style.boxShadow = `0 0 25px ${brandColor}40`;
+    eyebrow.style.color = brandColor;
 
     const x = parseFloat(orb.el.style.left) || 0;
     const y = parseFloat(orb.el.style.top) || 0;
@@ -3539,8 +3792,9 @@ const platformData = {
       orb.el.style.opacity = 0.65 + depth*0.35;
       
       if(orb.frozen){
-        orb.el.style.borderColor = 'var(--cloud-accent)';
-        orb.el.querySelector('svg').style.stroke = 'var(--cloud-accent)';
+        const brandColor = orb.key === 'instagram' ? '#E1306C' : orb.key === 'youtube' ? '#FF0000' : '#0A66C2';
+        orb.el.style.borderColor = brandColor;
+        orb.el.querySelector('svg').style.stroke = brandColor;
         orb.el.querySelector('svg').style.opacity = '1';
       } else {
         orb.el.style.borderColor = 'var(--border-light)';
@@ -3601,810 +3855,6 @@ const platformData = {
   });
 })();
 
-/* ---------------- REBUILT "FOUNDER DASH" 60FPS GAME ENGINE ---------------- */
-(function(){
-  const canvas = document.getElementById('runnerCanvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const overlay = document.getElementById('gameOverlay');
-  const msgTitle = document.getElementById('gameMsgTitle');
-  const msgSub = document.getElementById('gameMsgSub');
-  const startBtn = document.getElementById('gameStartBtn');
-  const scoreEl = document.getElementById('gameScore');
-  const bestEl = document.getElementById('gameBest');
-  const streakEl = document.getElementById('gameStreak');
-  const soundBtn = document.getElementById('gameSoundBtn');
-  const lbRowsEl = document.getElementById('gameLbRows');
-
-  // --- Web Audio API Synth Sound System ---
-  let audioCtx = null;
-  let isMuted = true;
-
-  function initAudio() {
-    if (!audioCtx) {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (AudioContextClass) audioCtx = new AudioContextClass();
-    }
-  }
-
-  function playTone(freq, type, duration, endFreq) {
-    if (isMuted || !audioCtx) return;
-    try {
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = type || 'sine';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      if (endFreq) {
-        osc.frequency.exponentialRampToValueAtTime(endFreq, audioCtx.currentTime + duration);
-      }
-      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + duration);
-    } catch(e) {}
-  }
-
-  function soundJump() { playTone(180, 'sine', 0.15, 520); }
-  function soundCollect() { playTone(523, 'triangle', 0.1, 784); setTimeout(()=> playTone(784, 'triangle', 0.12, 1046), 60); }
-  function soundCrash() { playTone(240, 'sawtooth', 0.25, 60); }
-
-  if (soundBtn) {
-    soundBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      initAudio();
-      isMuted = !isMuted;
-      soundBtn.textContent = isMuted ? '🔇 Sound: OFF' : '🔊 Sound: ON';
-      soundBtn.style.color = isMuted ? 'var(--text-main)' : 'var(--neon-accent)';
-    });
-  }
-
-  // --- Arcade Leaderboard (localStorage) ---
-  const DEFAULT_LB = [
-    { name: 'MSI', score: 320 },
-    { name: 'DEV', score: 240 },
-    { name: 'LPU', score: 180 },
-    { name: 'APP', score: 120 },
-    { name: 'HSM', score: 80 }
-  ];
-
-  function getLeaderboard() {
-    try {
-      const stored = localStorage.getItem('founder_dash_leaderboard');
-      return stored ? JSON.parse(stored) : DEFAULT_LB;
-    } catch(e) {
-      return DEFAULT_LB;
-    }
-  }
-
-  function saveLeaderboard(lb) {
-    try {
-      localStorage.setItem('founder_dash_leaderboard', JSON.stringify(lb));
-    } catch(e) {}
-  }
-
-  function renderLeaderboard() {
-    const lb = getLeaderboard();
-    if (!lbRowsEl) return;
-    lbRowsEl.innerHTML = lb.slice(0, 4).map(item => `
-      <div class="game-lb-row">
-        <span class="name">${item.name}</span>
-        <span class="score">${String(item.score).padStart(4, '0')}</span>
-      </div>
-    `).join('');
-
-    const bestScore = lb.length > 0 ? lb[0].score : 0;
-    bestEl.textContent = String(bestScore).padStart(4, '0');
-  }
-
-  renderLeaderboard();
-
-  // --- Game Core State (Mutable Object, NO Per-Frame React/DOM Mutates) ---
-  const groundY = 250;
-  const G = {
-    state: 'IDLE', // IDLE, RUNNING, GAMEOVER
-    score: 0,
-    speed: 6.0,
-    streak: 1,
-    shieldTimer: 0,
-    shake: 0,
-    frame: 0,
-    lastDomScoreUpdate: 0,
-    isVisible: false
-  };
-
-  // Lightweight 2D Sprite Character
-  const player = {
-    x: 80,
-    y: groundY - 48,
-    w: 32,
-    h: 48,
-    vy: 0,
-    gravity: 0.72,
-    jumpPower: -13.2,
-    isJumping: false,
-    squashY: 1,
-    draw() {
-      ctx.save();
-      ctx.translate(this.x + this.w / 2, this.y + this.h);
-      ctx.scale(1 / this.squashY, this.squashY);
-
-      // Shield Aura
-      if (G.shieldTimer > 0) {
-        ctx.beginPath();
-        ctx.arc(0, -this.h / 2, 28, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(52, 211, 153, 0.25)';
-        ctx.fill();
-        ctx.strokeStyle = '#34D399';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
-
-      // Main 2D Founder Body (Slate navy + sky blue)
-      ctx.fillStyle = '#0F172A';
-      ctx.beginPath();
-      ctx.roundRect(-this.w / 2, -this.h, this.w, this.h, 8);
-      ctx.fill();
-
-      // Cyber Visor
-      ctx.fillStyle = '#60A5FA';
-      ctx.fillRect(-this.w / 2 + 8, -this.h + 10, 18, 7);
-
-      // Hoodie Accent Patch (Denim Blue)
-      ctx.fillStyle = '#2563EB';
-      ctx.fillRect(-this.w / 2 + 6, -this.h + 24, 20, 14);
-
-      // Running Legs Animation
-      if (!this.isJumping && G.state === 'RUNNING') {
-        const legSwing = Math.sin(G.frame * 0.35) * 8;
-        ctx.fillStyle = '#475569';
-        ctx.fillRect(-8, -10, 5, 10 + legSwing);
-        ctx.fillRect(3, -10, 5, 10 - legSwing);
-      }
-
-      ctx.restore();
-    },
-    update() {
-      this.y += this.vy;
-      this.vy += this.gravity;
-      
-      // Squash & Stretch physics
-      if (this.vy < 0) this.squashY = 1.15; // stretch on up
-      else if (this.vy > 0) this.squashY = 0.9; // squash on down
-      else this.squashY = 1.0;
-
-      if (this.y >= groundY - this.h) {
-        this.y = groundY - this.h;
-        this.vy = 0;
-        this.isJumping = false;
-        this.squashY = 1.0;
-      }
-    },
-    jump() {
-      if (!this.isJumping) {
-        this.vy = this.jumpPower;
-        this.isJumping = true;
-        soundJump();
-        // Dust particles
-        spawnParticles(this.x + 16, groundY, '#60A5FA', 4);
-      }
-    }
-  };
-
-  // --- Object Pools for Zero GC Stutter ---
-  const MAX_OBSTACLES = 10;
-  const obstaclePool = [];
-  for (let i = 0; i < MAX_OBSTACLES; i++) {
-    obstaclePool.push({ active: false, x: 0, y: 0, w: 26, h: 36, label: 'BUG' });
-  }
-
-  const MAX_POWERUPS = 5;
-  const powerupPool = [];
-  for (let i = 0; i < MAX_POWERUPS; i++) {
-    powerupPool.push({ active: false, x: 0, y: 0, w: 22, h: 22 });
-  }
-
-  const MAX_PARTICLES = 30;
-  const particlePool = [];
-  for (let i = 0; i < MAX_PARTICLES; i++) {
-    particlePool.push({ active: false, x: 0, y: 0, vx: 0, vy: 0, color: '#34D399', life: 0 });
-  }
-
-  function spawnParticles(x, y, color, count) {
-    let spawned = 0;
-    for (let p of particlePool) {
-      if (!p.active) {
-        p.active = true;
-        p.x = x;
-        p.y = y;
-        p.vx = (Math.random() - 0.5) * 6;
-        p.vy = (Math.random() - 0.8) * 5;
-        p.color = color;
-        p.life = 1.0;
-        spawned++;
-        if (spawned >= count) break;
-      }
-    }
-  }
-
-  function updateParticles() {
-    for (let p of particlePool) {
-      if (p.active) {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life -= 0.04;
-        if (p.life <= 0) p.active = false;
-        else {
-          ctx.fillStyle = p.color;
-          ctx.globalAlpha = p.life;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.globalAlpha = 1.0;
-        }
-      }
-    }
-  }
-
-  function spawnObstacle() {
-    if (G.frame % 75 === 0 && Math.random() > 0.25) {
-      const freeObs = obstaclePool.find(o => !o.active);
-      if (freeObs) {
-        const bugLabels = ['BUG', '404', 'SYNTAX', 'NULL'];
-        const label = bugLabels[Math.floor(Math.random() * bugLabels.length)];
-        freeObs.active = true;
-        freeObs.x = canvas.width + 20;
-        freeObs.y = groundY - 38;
-        freeObs.w = 28;
-        freeObs.h = 38;
-        freeObs.label = label;
-      }
-    }
-  }
-
-  function spawnPowerup() {
-    if (G.frame % 240 === 0 && Math.random() > 0.4) {
-      const freeP = powerupPool.find(p => !p.active);
-      if (freeP) {
-        freeP.active = true;
-        freeP.x = canvas.width + 40;
-        freeP.y = groundY - 80 - Math.random() * 40;
-        freeP.w = 22;
-        freeP.h = 22;
-      }
-    }
-  }
-
-  function drawEnvironment() {
-    // Milestone shifts
-    let bgGrad;
-    if (G.score > 500) {
-      bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      bgGrad.addColorStop(0, '#1E1B4B');
-      bgGrad.addColorStop(1, '#312E81');
-    } else if (G.score > 250) {
-      bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      bgGrad.addColorStop(0, '#1B2438');
-      bgGrad.addColorStop(1, '#232B3D');
-    } else {
-      bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      bgGrad.addColorStop(0, '#161D2E');
-      bgGrad.addColorStop(1, '#1B2438');
-    }
-
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Ground line
-    ctx.strokeStyle = G.score > 250 ? '#60A5FA' : '#3B82F6';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(0, groundY);
-    ctx.lineTo(canvas.width, groundY);
-    ctx.stroke();
-  }
-
-  function resetGame() {
-    G.score = 0;
-    G.speed = 6.0;
-    G.streak = 1;
-    G.shieldTimer = 0;
-    G.shake = 0;
-    G.frame = 0;
-
-    player.y = groundY - player.h;
-    player.vy = 0;
-    player.isJumping = false;
-
-    obstaclePool.forEach(o => o.active = false);
-    powerupPool.forEach(p => p.active = false);
-    particlePool.forEach(p => p.active = false);
-
-    scoreEl.textContent = '0000';
-    if (streakEl) streakEl.textContent = 'STREAK: 1x';
-  }
-
-  function startGame() {
-    initAudio();
-    resetGame();
-    G.state = 'RUNNING';
-    if (window.onFounderDashStateChange) window.onFounderDashStateChange('RUNNING');
-    overlay.classList.add('hidden');
-    loop();
-  }
-
-  function gameOver() {
-    G.state = 'GAMEOVER';
-    if (window.onFounderDashStateChange) window.onFounderDashStateChange('GAMEOVER');
-    G.shake = 15;
-    soundCrash();
-    spawnParticles(player.x + 16, player.y + 24, '#EF4444', 15);
-
-    const lb = getLeaderboard();
-    const currentScore = Math.floor(G.score);
-
-    // Check if high score
-    if (currentScore > (lb.length > 0 ? lb[lb.length - 1].score : 0) || lb.length < 5) {
-      setTimeout(() => {
-        const initials = (prompt('NEW HIGH SCORE! Enter your initials (3 letters):', 'MSI') || 'FOUNDER').toUpperCase().slice(0, 3);
-        lb.push({ name: initials, score: currentScore });
-        lb.sort((a, b) => b.score - a.score);
-        saveLeaderboard(lb.slice(0, 5));
-        renderLeaderboard();
-      }, 200);
-    }
-
-    msgTitle.textContent = 'RUN COMPLETE';
-    msgSub.textContent = `Score: ${currentScore} · Max Streak: ${G.streak}x`;
-    startBtn.textContent = 'DASH AGAIN';
-    overlay.classList.remove('hidden');
-  }
-
-  // --- Main 60FPS Game Loop ---
-  function loop() {
-    if (G.state !== 'RUNNING' || !G.isVisible) return;
-    G.frame++;
-
-    // Screen Shake juice
-    ctx.save();
-    if (G.shake > 0) {
-      const sx = (Math.random() - 0.5) * G.shake;
-      const sy = (Math.random() - 0.5) * G.shake;
-      ctx.translate(sx, sy);
-      G.shake *= 0.85;
-      if (G.shake < 0.5) G.shake = 0;
-    }
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawEnvironment();
-
-    // Player update & draw
-    player.update();
-    player.draw();
-
-    if (G.shieldTimer > 0) G.shieldTimer--;
-
-    // Spawns
-    spawnObstacle();
-    spawnPowerup();
-
-    // Obstacles loop
-    for (let obs of obstaclePool) {
-      if (obs.active) {
-        obs.x -= G.speed;
-
-        // Draw Glitch/Bug Obstacle
-        ctx.fillStyle = G.score > 250 ? '#EF4444' : '#2563EB';
-        ctx.beginPath();
-        ctx.roundRect(obs.x, obs.y, obs.w, obs.h, 6);
-        ctx.fill();
-
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 9px var(--font-display)';
-        ctx.textAlign = 'center';
-        ctx.fillText(obs.label, obs.x + obs.w / 2, obs.y + 22);
-
-        // AABB Collision
-        if (
-          player.x < obs.x + obs.w &&
-          player.x + player.w > obs.x &&
-          player.y < obs.y + obs.h &&
-          player.y + player.h > obs.y
-        ) {
-          if (G.shieldTimer > 0) {
-            // Shield absorbs hit
-            obs.active = false;
-            G.shieldTimer = 0;
-            spawnParticles(obs.x, obs.y, '#34D399', 8);
-          } else {
-            gameOver();
-            ctx.restore();
-            return;
-          }
-        }
-
-        if (obs.x + obs.w < 0) {
-          obs.active = false;
-          G.streak = Math.min(G.streak + 1, 5);
-          if (streakEl) streakEl.textContent = `STREAK: ${G.streak}x`;
-        }
-      }
-    }
-
-    // Powerups loop (Neon Green Denim / App Icon Patches)
-    for (let p of powerupPool) {
-      if (p.active) {
-        p.x -= G.speed;
-
-        // Render Neon Green glowing patch
-        ctx.fillStyle = '#34D399';
-        ctx.shadowColor = '#34D399';
-        ctx.shadowBlur = 10;
-        ctx.beginPath();
-        ctx.roundRect(p.x, p.y, p.w, p.h, 5);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        ctx.fillStyle = '#0F172A';
-        ctx.font = 'bold 12px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('⚡', p.x + p.w / 2, p.y + 16);
-
-        // Pickup collision
-        if (
-          player.x < p.x + p.w &&
-          player.x + player.w > p.x &&
-          player.y < p.y + p.h &&
-          player.y + player.h > p.y
-        ) {
-          p.active = false;
-          G.score += 50;
-          G.shieldTimer = 180; // 3 sec shield
-          soundCollect();
-          spawnParticles(p.x, p.y, '#34D399', 12);
-        }
-
-        if (p.x + p.w < 0) p.active = false;
-      }
-    }
-
-    updateParticles();
-    ctx.restore();
-
-    // Score & Speed update
-    G.score += 0.15 * G.streak;
-    G.speed += 0.0006;
-
-    // Throttled DOM Score Update (~10 FPS to prevent DOM layout thrashing)
-    if (G.frame - G.lastDomScoreUpdate > 6) {
-      scoreEl.textContent = String(Math.floor(G.score)).padStart(4, '0');
-      G.lastDomScoreUpdate = G.frame;
-    }
-
-    requestAnimationFrame(loop);
-  }
-
-  // --- Controls & Handlers ---
-  function handleJumpInput(e) {
-    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
-      if (G.state === 'RUNNING') {
-        e.preventDefault();
-        player.jump();
-      } else if (G.state === 'IDLE' || G.state === 'GAMEOVER') {
-        e.preventDefault();
-        startGame();
-      }
-    }
-  }
-
-  window.addEventListener('keydown', handleJumpInput);
-  startBtn.addEventListener('click', startGame);
-
-  canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    if (G.state === 'RUNNING') player.jump();
-    else startGame();
-  }, { passive: false });
-
-  // IntersectionObserver to pause loop when scrolled out of view
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      G.isVisible = entry.isIntersecting;
-      if (G.isVisible && G.state === 'RUNNING') loop();
-    });
-  }, { threshold: 0.1 });
-  io.observe(canvas);
-
-  // Visibility API to pause loop on tab change
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) G.isVisible = false;
-    else {
-      G.isVisible = true;
-      if (G.state === 'RUNNING') loop();
-    }
-  });
-
-  // Initial render
-  drawEnvironment();
-  player.draw();
-})();
-
-/* Heximage ASCII Art Attract Mode Video Controller for Founder Dash */
-(function(){
-  const videoEl = document.getElementById('gameAsciiVideo');
-  const bgEl = document.getElementById('gameAttractBg');
-  const gameSec = document.getElementById('game');
-  if (!videoEl || !bgEl || !gameSec) return;
-
-  let isLoaded = false;
-  const localVideoSrc = "videos/heximage-attract.mp4";
-
-  function syncAttractMode(state) {
-    if (reduceMotion) {
-      bgEl.style.opacity = '1';
-      videoEl.pause();
-      return;
-    }
-
-    if (state === 'RUNNING') {
-      videoEl.pause();
-      bgEl.style.opacity = '0';
-    } else {
-      bgEl.style.opacity = '1';
-      if (isLoaded && document.visibilityState === 'visible') {
-        videoEl.play().catch(() => {});
-      }
-    }
-  }
-
-  window.onFounderDashStateChange = syncAttractMode;
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        if (!isLoaded && !reduceMotion) {
-          videoEl.src = localVideoSrc;
-          isLoaded = true;
-        }
-        syncAttractMode(window.G ? window.G.state : 'IDLE');
-      } else {
-        videoEl.pause();
-      }
-    });
-  }, { threshold: 0.15 });
-
-  observer.observe(gameSec);
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      videoEl.pause();
-    } else if (window.G && window.G.state !== 'RUNNING') {
-      syncAttractMode(window.G.state);
-    }
-  });
-})();
-
-/* ---------------- TESTIMONIALS CAROUSEL ---------------- */
-(function(){
-  const track = document.getElementById('testiTrack');
-  const prevBtn = document.getElementById('testiPrev');
-  const nextBtn = document.getElementById('testiNext');
-  const dots = document.querySelectorAll('#testiDots .dot');
-  if(!track || !prevBtn || !nextBtn) return;
-
-  let index = 0;
-  const count = dots.length;
-
-  function update() {
-    track.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === index));
-  }
-
-  prevBtn.addEventListener('click', () => {
-    index = (index - 1 + count) % count;
-    update();
-  });
-
-  nextBtn.addEventListener('click', () => {
-    index = (index + 1) % count;
-    update();
-  });
-
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      index = i;
-      update();
-    });
-  });
-
-  // Auto-slide every 6s
-  let autoTimer = setInterval(() => {
-    index = (index + 1) % count;
-    update();
-  }, 6000);
-
-  const wrapper = document.querySelector('.testimonials-wrapper');
-  if (wrapper) {
-    wrapper.addEventListener('mouseenter', () => clearInterval(autoTimer));
-    wrapper.addEventListener('mouseleave', () => {
-      autoTimer = setInterval(() => {
-        index = (index + 1) % count;
-        update();
-      }, 6000);
-    });
-  }
-})();
-
-/* ---------------- GUESTBOOK LOGIC & SPAM PROTECTION ---------------- */
-(function(){
-  const form = document.getElementById('gbForm');
-  const nameInput = document.getElementById('gbName');
-  const msgInput = document.getElementById('gbMsg');
-  const charCount = document.getElementById('gbCharCount');
-  const submitBtn = document.getElementById('gbSubmitBtn');
-  const statusEl = document.getElementById('gbStatus');
-  const listEl = document.getElementById('gbList');
-
-  if(!form || !listEl) return;
-
-  // Default sample guestbook entries
-  const defaultEntries = [
-    { name: 'Siddharth Rao', msg: 'Awesome website Mantej! Excited to see your AI builds and HustleSmith Studio in action.', date: 'July 2026' },
-    { name: 'Priya Sharma', msg: 'The custom denim concepts for HustleSmith Studio look super premium. Great work!', date: 'July 18, 2026' },
-    { name: 'Amanpreet Singh', msg: 'Been following your YouTube tech vlogs since day 1. Keep building!', date: 'July 15, 2026' }
-  ];
-
-  function getEntries() {
-    const stored = localStorage.getItem('mantej_guestbook_entries');
-    return stored ? JSON.parse(stored) : defaultEntries;
-  }
-
-  function renderEntries() {
-    const entries = getEntries();
-    listEl.innerHTML = entries.map(e => `
-      <div class="gb-entry-card">
-        <div class="gb-entry-header">
-          <span class="gb-entry-name">${escapeHtml(e.name)}</span>
-          <span class="gb-entry-date">${escapeHtml(e.date)}</span>
-        </div>
-        <div class="gb-entry-msg">${escapeHtml(e.msg)}</div>
-      </div>
-    `).join('');
-  }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  // Character counter
-  msgInput.addEventListener('input', () => {
-    const remaining = 280 - msgInput.value.length;
-    charCount.textContent = `${remaining} left`;
-  });
-
-  // Spam & Moderation Filter
-  let lastSubmitTime = 0;
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    statusEl.textContent = '';
-    statusEl.className = 'gb-status-msg';
-
-    const name = nameInput.value.trim();
-    const msg = msgInput.value.trim();
-
-    // 1. Rate limiting (30s delay per session)
-    const now = Date.now();
-    if (now - lastSubmitTime < 30000) {
-      statusEl.textContent = 'Please wait 30 seconds before submitting another note.';
-      statusEl.classList.add('error');
-      return;
-    }
-
-    // 2. Link blocking regex
-    const linkRegex = /(http:\/\/|https:\/\/|www\.|\.com|\.net|\.org|\.io)/i;
-    if (linkRegex.test(msg) || linkRegex.test(name)) {
-      statusEl.textContent = 'Links are not permitted in guestbook messages to prevent spam.';
-      statusEl.classList.add('error');
-      return;
-    }
-
-    // 3. Length validation
-    if (name.length < 2 || msg.length < 3) {
-      statusEl.textContent = 'Please enter a valid name and message.';
-      statusEl.classList.add('error');
-      return;
-    }
-
-    // Create entry
-    const newEntry = {
-      name,
-      msg,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    };
-
-    const entries = getEntries();
-    entries.unshift(newEntry);
-    localStorage.setItem('mantej_guestbook_entries', JSON.stringify(entries));
-
-    lastSubmitTime = now;
-    renderEntries();
-
-    form.reset();
-    charCount.textContent = '280 left';
-    statusEl.textContent = 'Thank you for signing the guestbook!';
-    statusEl.classList.add('success');
-
-    setTimeout(() => { statusEl.textContent = ''; }, 4000);
-  });
-
-  renderEntries();
-})();
-
-/* ---------------- QR & Clock ---------------- */
-const SITE_URL = (location.href.startsWith('file:')) ? 'https://mantejsingh.dev' : location.href;
-new QRCode(document.getElementById('qrcode'), {
-  text: SITE_URL, width: 168, height: 168,
-  colorDark: '#0F172A', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H
-});
-ScrollTrigger.create({
-  trigger: '#qrFrame', start: 'top 80%', once: true,
-  onEnter: ()=> document.getElementById('qrFrame').classList.add('sweep')
-});
-
-function updateClock() {
-  const now = new Date();
-  const h = String(now.getHours()).padStart(2, '0');
-  const m = String(now.getMinutes()).padStart(2, '0');
-  const s = String(now.getSeconds()).padStart(2, '0');
-  const clockEl = document.getElementById('clock');
-  if (clockEl) clockEl.textContent = `${h}:${m}:${s}`;
-}
-setInterval(updateClock, 1000);
-updateClock();
-
-/* ============== Story Section — Vertical Scroll-Reveal Cards ============== */
-(function(){
-  const cards = document.querySelectorAll('[data-story-card]');
-  if (!cards.length) return;
-
-  cards.forEach((card, idx) => {
-    const text    = card.querySelector('.story-card-text');
-    const visual  = card.querySelector('.story-card-visual');
-    const fromDir = idx % 2 === 0 ? -60 : 60;
-
-    gsap.set(text, { opacity: 0, x: fromDir * -1 });
-    if (visual) gsap.set(visual, { opacity: 0, x: fromDir });
-
-    ScrollTrigger.create({
-      trigger: card,
-      start: 'top 78%',
-      once: true,
-      onEnter: () => {
-        gsap.to(text, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' });
-        if (visual) gsap.to(visual, { opacity: 1, x: 0, duration: 0.9, delay: 0.15, ease: 'power3.out' });
-      }
-    });
-  });
-
-  /* Lazy-load story videos when visible */
-  const storyVideos = document.querySelectorAll('.story-video-wrap video');
-  storyVideos.forEach(vid => {
-    ScrollTrigger.create({
-      trigger: vid.closest('.story-card'),
-      start: 'top 90%',
-      once: true,
-      onEnter: () => {
-        vid.play().catch(() => {});
-      }
-    });
-  });
-})();
-
-/* --------------- Global Config --------------- */
 const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officially launches drop
 
 (function syncHustlesmithStatus() {
@@ -4448,5 +3898,623 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     "layout": "month_view"
   });
 </script>
+<script>
+/* ---------- 3D FOUNDER DASH JS (UPGRADED STATE MACHINE & FOG) ---------- */
+(function() {
+  const container = document.getElementById('gameContainer');
+  const canvas = document.getElementById('gameCanvas');
+  const overlay = document.getElementById('gameOverlay');
+  const startBtn = document.getElementById('startGameBtn');
+  const hud = document.getElementById('gameHud');
+  const gameOverScreen = document.getElementById('gameOverScreen');
+  const restartBtn = document.getElementById('restartGameBtn');
+  
+  const scoreVal = document.getElementById('gameScoreVal');
+  const highVal = document.getElementById('gameHighVal');
+  const comboVal = document.getElementById('gameCombo');
+  const notif = document.getElementById('gameNotif');
+  const finalScoreVal = document.getElementById('finalScoreVal');
+
+  if (!container || !canvas || typeof THREE === 'undefined') return;
+
+  // -- SCENE SETUP --
+  const scene = new THREE.Scene();
+  const baseFogColor = new THREE.Color(0x0a0a14);
+  scene.fog = new THREE.FogExp2(baseFogColor, 0.03);
+
+  const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(0, 3.8, 10);
+  camera.lookAt(0, 0, 0);
+  const baseCameraY = camera.position.y;
+  const baseFov = camera.fov;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+  const setPixelRatio = () => {
+    renderer.setPixelRatio(window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 2));
+  };
+  setPixelRatio();
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  
+  // Lighting
+  const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+  scene.add(ambient);
+  const dirLight = new THREE.DirectionalLight(0x38bdf8, 1.0);
+  dirLight.position.set(10, 20, 10);
+  scene.add(dirLight);
+
+  // Ground Grid
+  const gridHelper = new THREE.GridHelper(100, 50, 0x818cf8, 0x1e1b4b);
+  gridHelper.position.y = -0.5;
+  scene.add(gridHelper);
+
+  // -- GAME ENTITIES --
+  // Player
+  const playerGeo = new THREE.IcosahedronGeometry(0.5, 0);
+  const playerMat = new THREE.MeshLambertMaterial({ color: 0x6366f1, emissive: 0x1e1b4b });
+  const player = new THREE.Mesh(playerGeo, playerMat);
+  
+  const playerWireMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true });
+  const playerWire = new THREE.Mesh(playerGeo, playerWireMat);
+  playerWire.scale.set(1.1, 1.1, 1.1);
+  player.add(playerWire);
+
+  // Blob Shadow
+  const shadowGeo = new THREE.PlaneGeometry(1.5, 1.5);
+  const shadowMat = new THREE.MeshBasicMaterial({
+    color: 0x000000,
+    transparent: true,
+    opacity: 0.5,
+    depthWrite: false
+  });
+  const shadow = new THREE.Mesh(shadowGeo, shadowMat);
+  shadow.rotation.x = -Math.PI / 2;
+  shadow.position.y = -0.49;
+  scene.add(shadow);
+  
+  scene.add(player);
+
+  // Instanced Side Pillars (Visual Richness - 0 Extra Draw Calls)
+  const PILLAR_COUNT = 24;
+  const pillarGeo = new THREE.BoxGeometry(0.3, 3, 0.3);
+  const pillarMat = new THREE.MeshLambertMaterial({ color: 0xffffff });
+  const pillars = new THREE.InstancedMesh(pillarGeo, pillarMat, PILLAR_COUNT);
+  const pillarColors = [0x818cf8, 0x2dd4bf, 0xe879f9, 0xf59e0b];
+  const dummy = new THREE.Object3D();
+  const colorObj = new THREE.Color();
+
+  let pillarData = [];
+  for(let i=0; i<PILLAR_COUNT; i++) {
+    let side = (i % 2 === 0) ? -4 : 4;
+    let zPos = - (i * 4);
+    pillarData.push({ x: side, z: zPos, color: pillarColors[i % 4] });
+    colorObj.setHex(pillarColors[i % 4]);
+    pillars.setColorAt(i, colorObj);
+  }
+  scene.add(pillars);
+
+  // Instanced Obstacles
+  const OBSTACLE_COUNT = 20;
+  const obsGeo = new THREE.BoxGeometry(1, 1, 1);
+  const obsMat = new THREE.MeshLambertMaterial({ color: 0x1e1b4b, emissive: 0x0f172a });
+  const obstacles = new THREE.InstancedMesh(obsGeo, obsMat, OBSTACLE_COUNT);
+  
+  let obsData = [];
+  for(let i=0; i<OBSTACLE_COUNT; i++) {
+    obsData.push({ active: false, z: 0, x: 0 });
+    dummy.position.set(0, -100, 0);
+    dummy.updateMatrix();
+    obstacles.setMatrixAt(i, dummy.matrix);
+  }
+  scene.add(obstacles);
+
+  // Instanced Pickups
+  const PICKUP_COUNT = 10;
+  const pickupGeo = new THREE.OctahedronGeometry(0.4, 0);
+  const pickups = new THREE.InstancedMesh(pickupGeo, new THREE.MeshLambertMaterial({color:0xffffff}), PICKUP_COUNT);
+  const pickupNames = ["HustleSmith Studio", "ApplifyNow", "Tech Vlogs"];
+  let pickupData = [];
+  
+  for(let i=0; i<PICKUP_COUNT; i++) {
+    pickupData.push({ active: false, z: 0, x: 0, type: 0, rotY: 0 });
+    dummy.position.set(0, -100, 0);
+    dummy.updateMatrix();
+    pickups.setMatrixAt(i, dummy.matrix);
+  }
+  scene.add(pickups);
+
+  // Instanced Particles
+  const PARTICLE_COUNT = 40;
+  const partGeo = new THREE.TetrahedronGeometry(0.1, 0);
+  const partMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+  const particles = new THREE.InstancedMesh(partGeo, partMat, PARTICLE_COUNT);
+  let partData = [];
+  for(let i=0; i<PARTICLE_COUNT; i++) {
+    partData.push({ active: false, pos: new THREE.Vector3(), vel: new THREE.Vector3(), life: 0 });
+    dummy.position.set(0, -100, 0);
+    dummy.updateMatrix();
+    particles.setMatrixAt(i, dummy.matrix);
+  }
+  scene.add(particles);
+
+  // -- STATE MACHINE --
+  // States: 'IDLE', 'PLAYING', 'GAME_OVER'
+  let gameState = 'IDLE';
+  let isPlaying = false;
+  let isPaused = true;
+  let speed = 15;
+  let score = 0;
+  let combo = 1;
+  let highScore = localStorage.getItem('founderDashHigh') || 0;
+  highVal.textContent = highScore;
+  
+  let playerVY = 0;
+  const gravity = -30;
+  const jumpForce = 12;
+  let isGrounded = true;
+  let lane = 0;
+  let targetX = 0;
+
+  let spawnTimer = 0;
+  let clock = new THREE.Clock();
+  let animFrameId = null;
+  let shakeTime = 0;
+
+  function setGameState(newState) {
+    gameState = newState;
+    if (newState === 'IDLE') {
+      isPlaying = false;
+      isPaused = true;
+      overlay.style.display = 'flex';
+      hud.style.display = 'none';
+      gameOverScreen.style.display = 'none';
+      if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+      }
+      // Single render to show background
+      renderer.render(scene, camera);
+    } else if (newState === 'PLAYING') {
+      isPlaying = true;
+      isPaused = false;
+      overlay.style.display = 'none';
+      gameOverScreen.style.display = 'none';
+      hud.style.display = 'block';
+      resetGame();
+      clock.start();
+      if (!animFrameId) {
+        animFrameId = requestAnimationFrame(gameLoop);
+      }
+    } else if (newState === 'GAME_OVER') {
+      isPlaying = false;
+      isPaused = true;
+      hud.style.display = 'none';
+      gameOverScreen.style.display = 'flex';
+      finalScoreVal.textContent = score;
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('founderDashHigh', highScore);
+        highVal.textContent = highScore;
+      }
+      spawnExplosion(player.position.x, player.position.y, player.position.z, 0xffffff);
+      shakeTime = 0.5;
+    }
+  }
+
+  function spawnObstacle(z) {
+    let inactiveIdx = obsData.findIndex(o => !o.active);
+    if (inactiveIdx !== -1) {
+      obsData[inactiveIdx] = { active: true, z: z, x: (Math.floor(Math.random() * 3) - 1) * 2 };
+    }
+  }
+
+  function spawnPickup(z) {
+    let inactiveIdx = pickupData.findIndex(p => !p.active);
+    if (inactiveIdx !== -1) {
+      pickupData[inactiveIdx] = { 
+        active: true, 
+        z: z, 
+        x: (Math.floor(Math.random() * 3) - 1) * 2,
+        type: Math.floor(Math.random() * 3),
+        rotY: 0
+      };
+      if (pickupData[inactiveIdx].type === 0) colorObj.setHex(0xf59e0b);
+      else if (pickupData[inactiveIdx].type === 1) colorObj.setHex(0xd946ef);
+      else colorObj.setHex(0xef4444);
+      pickups.setColorAt(inactiveIdx, colorObj);
+      pickups.instanceColor.needsUpdate = true;
+    }
+  }
+
+  function spawnExplosion(x, y, z, colorHex) {
+    let spawned = 0;
+    colorObj.setHex(colorHex);
+    for(let i=0; i<PARTICLE_COUNT && spawned < 10; i++) {
+      if(!partData[i].active) {
+        partData[i].active = true;
+        partData[i].pos.set(x, y, z);
+        partData[i].vel.set((Math.random()-0.5)*10, Math.random()*10, (Math.random()-0.5)*10);
+        partData[i].life = 1.0;
+        particles.setColorAt(i, colorObj);
+        spawned++;
+      }
+    }
+    particles.instanceColor.needsUpdate = true;
+  }
+
+  function resetGame() {
+    score = 0;
+    combo = 1;
+    speed = 15;
+    scoreVal.textContent = score;
+    comboVal.textContent = `COMBO x${combo}`;
+    comboVal.style.opacity = 0;
+    
+    player.position.set(0, 0, 0);
+    playerVY = 0;
+    lane = 0;
+    targetX = 0;
+    isGrounded = true;
+
+    obsData.forEach(o => o.active = false);
+    pickupData.forEach(p => p.active = false);
+    partData.forEach(p => p.active = false);
+    
+    updateInstancedMeshes();
+  }
+
+  function updateInstancedMeshes() {
+    // Update Pillars
+    for(let i=0; i<PILLAR_COUNT; i++) {
+      dummy.position.set(pillarData[i].x, 1, pillarData[i].z);
+      dummy.rotation.set(0,0,0);
+      dummy.scale.set(1,1,1);
+      dummy.updateMatrix();
+      pillars.setMatrixAt(i, dummy.matrix);
+    }
+    pillars.instanceMatrix.needsUpdate = true;
+
+    // Update Obstacles
+    for(let i=0; i<OBSTACLE_COUNT; i++) {
+      if (obsData[i].active) {
+        dummy.position.set(obsData[i].x, 0, obsData[i].z);
+        dummy.rotation.set(0,0,0);
+        dummy.scale.set(1.5, 1, 1);
+      } else {
+        dummy.position.set(0, -100, 0);
+      }
+      dummy.updateMatrix();
+      obstacles.setMatrixAt(i, dummy.matrix);
+    }
+    obstacles.instanceMatrix.needsUpdate = true;
+
+    // Update Pickups
+    for(let i=0; i<PICKUP_COUNT; i++) {
+      if (pickupData[i].active) {
+        dummy.position.set(pickupData[i].x, Math.sin(Date.now()*0.005 + i)*0.2 + 0.5, pickupData[i].z);
+        dummy.rotation.set(0, pickupData[i].rotY, 0);
+        dummy.scale.set(1,1,1);
+      } else {
+        dummy.position.set(0, -100, 0);
+      }
+      dummy.updateMatrix();
+      pickups.setMatrixAt(i, dummy.matrix);
+    }
+    pickups.instanceMatrix.needsUpdate = true;
+
+    // Update Particles
+    for(let i=0; i<PARTICLE_COUNT; i++) {
+      if(partData[i].active) {
+        dummy.position.copy(partData[i].pos);
+        dummy.scale.setScalar(partData[i].life);
+      } else {
+        dummy.position.set(0, -100, 0);
+      }
+      dummy.updateMatrix();
+      particles.setMatrixAt(i, dummy.matrix);
+    }
+    particles.instanceMatrix.needsUpdate = true;
+  }
+
+  function showNotif(text) {
+    notif.textContent = text;
+    notif.classList.remove('notif-anim');
+    void notif.offsetWidth;
+    notif.classList.add('notif-anim');
+  }
+
+  function gameLoop() {
+    if (gameState !== 'PLAYING' || isPaused) {
+      animFrameId = null;
+      return;
+    }
+
+    animFrameId = requestAnimationFrame(gameLoop);
+
+    const dt = Math.min(clock.getDelta(), 0.1);
+    
+    // Player movement
+    targetX = lane * 2;
+    player.position.x += (targetX - player.position.x) * 10 * dt;
+    
+    // Jump physics
+    if (!isGrounded) {
+      playerVY += gravity * dt;
+      player.position.y += playerVY * dt;
+      if (player.position.y <= 0) {
+        player.position.y = 0;
+        isGrounded = true;
+        playerVY = 0;
+        player.scale.set(1.3, 0.7, 1.3);
+      }
+    }
+    player.scale.lerp(new THREE.Vector3(1,1,1), 10 * dt);
+    
+    // Player rotation
+    player.rotation.x -= speed * dt * 0.5;
+    player.rotation.y += dt;
+
+    // Shadow tracking
+    shadow.position.x = player.position.x;
+    shadow.scale.setScalar(1 - (player.position.y * 0.2));
+    shadow.material.opacity = Math.max(0, 0.5 - (player.position.y * 0.1));
+
+    // World moving
+    const moveDist = speed * dt;
+    gridHelper.position.z = (gridHelper.position.z + moveDist) % 10;
+    
+    // Move side pillars for continuous scrolling
+    for(let i=0; i<PILLAR_COUNT; i++) {
+      pillarData[i].z += moveDist;
+      if (pillarData[i].z > 5) {
+        pillarData[i].z -= PILLAR_COUNT * 4;
+      }
+    }
+
+    // Dynamic FOV & Speed Camera Tilt
+    let speedRatio = (speed - 15) / 20;
+    camera.fov = baseFov + Math.min(speedRatio * 12, 12);
+    camera.rotation.x = - Math.min(speedRatio * 0.05, 0.05);
+    camera.updateProjectionMatrix();
+
+    // Fog Hue Shift (Milestone Color Shift)
+    if (score > 1000) {
+      scene.fog.color.lerp(new THREE.Color(0x1a0018), dt * 2);
+    } else if (score > 500) {
+      scene.fog.color.lerp(new THREE.Color(0x001a18), dt * 2);
+    } else {
+      scene.fog.color.lerp(baseFogColor, dt * 2);
+    }
+
+    // Score & Speed
+    score += Math.floor(moveDist * combo);
+    scoreVal.textContent = score;
+    speed += dt * 0.15;
+
+    // Spawning
+    spawnTimer -= dt;
+    if (spawnTimer <= 0) {
+      spawnTimer = (Math.random() * 0.5 + 0.5) * (15/speed);
+      if (Math.random() > 0.3) spawnObstacle(-40);
+      if (Math.random() > 0.6) spawnPickup(-40);
+    }
+
+    // Obstacle Collision
+    for(let i=0; i<OBSTACLE_COUNT; i++) {
+      if (obsData[i].active) {
+        obsData[i].z += moveDist;
+        if (obsData[i].z > 5) {
+          obsData[i].active = false;
+        } else {
+          if (Math.abs(obsData[i].z - player.position.z) < 0.8 &&
+              Math.abs(obsData[i].x - player.position.x) < 0.8 &&
+              player.position.y < 0.8) {
+            setGameState('GAME_OVER');
+          }
+        }
+      }
+    }
+
+    // Pickup Collision
+    for(let i=0; i<PICKUP_COUNT; i++) {
+      if (pickupData[i].active) {
+        pickupData[i].z += moveDist;
+        pickupData[i].rotY += dt * 2;
+        if (pickupData[i].z > 5) {
+          pickupData[i].active = false;
+          combo = 1;
+          comboVal.style.opacity = 0;
+        } else {
+          if (Math.abs(pickupData[i].z - player.position.z) < 1.0 &&
+              Math.abs(pickupData[i].x - player.position.x) < 1.0 &&
+              player.position.y < 1.5) {
+            pickupData[i].active = false;
+            score += 100 * combo;
+            combo++;
+            comboVal.textContent = `COMBO x${combo}`;
+            comboVal.style.opacity = 1;
+            showNotif(pickupNames[pickupData[i].type]);
+            
+            let hex = pickupData[i].type === 0 ? 0xf59e0b : pickupData[i].type === 1 ? 0xd946ef : 0xef4444;
+            spawnExplosion(pickupData[i].x, 1, pickupData[i].z, hex);
+          }
+        }
+      }
+    }
+
+    // Particle update
+    for(let i=0; i<PARTICLE_COUNT; i++) {
+      if(partData[i].active) {
+        partData[i].pos.addScaledVector(partData[i].vel, dt);
+        partData[i].life -= dt * 2;
+        if(partData[i].life <= 0) partData[i].active = false;
+      }
+    }
+
+    updateInstancedMeshes();
+
+    // Camera Shake
+    if (shakeTime > 0) {
+      shakeTime -= dt;
+      camera.position.x = (Math.random() - 0.5) * 0.5;
+      camera.position.y = baseCameraY + (Math.random() - 0.5) * 0.5;
+    } else {
+      camera.position.x = 0;
+      camera.position.y = baseCameraY;
+    }
+
+    renderer.render(scene, camera);
+  }
+
+  // Culling / Pause when out of view
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !document.hidden) {
+      if (gameState === 'PLAYING') {
+        isPaused = false;
+        clock.start();
+        if (!animFrameId) animFrameId = requestAnimationFrame(gameLoop);
+      }
+    } else {
+      isPaused = true;
+    }
+  }, { threshold: 0.1 });
+  observer.observe(container);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      isPaused = true;
+    } else if (gameState === 'PLAYING') {
+      isPaused = false;
+      clock.start();
+      if (!animFrameId) animFrameId = requestAnimationFrame(gameLoop);
+    }
+  });
+
+  // Controls
+  function jump() {
+    if (isGrounded && gameState === 'PLAYING' && !isPaused) {
+      playerVY = jumpForce;
+      isGrounded = false;
+      player.scale.set(0.7, 1.4, 0.7);
+    }
+  }
+  function moveLeft() { if (lane > -1 && gameState === 'PLAYING' && !isPaused) lane--; }
+  function moveRight() { if (lane < 1 && gameState === 'PLAYING' && !isPaused) lane++; }
+
+  window.addEventListener('keydown', (e) => {
+    if (gameState === 'IDLE' && (e.code === 'Space' || e.code === 'Enter')) {
+      setGameState('PLAYING');
+      return;
+    }
+    if (gameState === 'GAME_OVER' && (e.code === 'Space' || e.code === 'Enter')) {
+      setGameState('PLAYING');
+      return;
+    }
+    if(e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') jump();
+    if(e.code === 'ArrowLeft' || e.code === 'KeyA') moveLeft();
+    if(e.code === 'ArrowRight' || e.code === 'KeyD') moveRight();
+  });
+  
+  // Touch controls
+  let touchStartX = 0;
+  let touchStartY = 0;
+  container.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, {passive:true});
+  
+  container.addEventListener('touchend', (e) => {
+    if (gameState !== 'PLAYING') return;
+    let dx = e.changedTouches[0].clientX - touchStartX;
+    let dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (dx > 30) moveRight();
+      else if (dx < -30) moveLeft();
+    } else {
+      if (dy < -30) jump();
+    }
+  });
+
+  // Start & Restart Buttons
+  if (startBtn) {
+    startBtn.addEventListener('click', () => setGameState('PLAYING'));
+  }
+  if (restartBtn) {
+    restartBtn.addEventListener('click', () => setGameState('PLAYING'));
+  }
+
+  // Initialize in IDLE state
+  setGameState('IDLE');
+})();
+
+
+</script>
+
+<!-- Cal.com Floating Booking Widget -->
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document;
+    C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments;
+      if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || [];
+        d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+      if (ar[0] === L) { const api = function () { p(api, arguments); };
+        const namespace = ar[1]; api.q = api.q || [];
+        if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api;
+          p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar);
+        return; } p(cal, ar); };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+
+  Cal("init", "30min", {origin:"https://cal.com"});
+
+  Cal.ns["30min"]("floatingButton", {
+    calLink: "mantej-singh/30min",
+    buttonText: "Book a Meeting 📅",
+    buttonColor: "#3B82F6",
+    buttonTextColor: "#FFFFFF",
+    buttonPosition: "bottom-right"
+  });
+  Cal.ns["30min"]("ui", {
+    theme: "dark",
+    styles: { branding: { brandColor: "#3B82F6" } },
+    hideEventTypeDetails: false,
+    layout: "month_view"
+  });
+</script>
+
+
+  // Bento Hover Grid Engine for Ventures
+  (function() {
+    const container = document.querySelector('.modules');
+    if (!container) return;
+    const cards = container.querySelectorAll('.module');
+    if (cards.length < 3) return;
+
+    cards.forEach((card, idx) => {
+      const video = card.querySelector('video');
+      
+      card.addEventListener('mouseenter', () => {
+        if (window.innerWidth <= 960) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        
+        let colSpec = '1fr 1fr 1fr';
+        if (idx === 0) colSpec = '2fr 0.8fr 0.8fr';
+        else if (idx === 1) colSpec = '0.8fr 2fr 0.8fr';
+        else if (idx === 2) colSpec = '0.8fr 0.8fr 2fr';
+        
+        container.style.setProperty('--col-spec', colSpec);
+
+        if (video) {
+          video.play().catch(() => {});
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (window.innerWidth <= 960) return;
+        container.style.setProperty('--col-spec', '1fr 1fr 1fr');
+        if (video) {
+          video.pause();
+        }
+      });
+    });
+  })();
+
 </body>
 </html>
