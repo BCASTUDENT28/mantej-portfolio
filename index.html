@@ -2744,12 +2744,18 @@
 <!-- ================= FOUNDER DASH 3D ================= -->
 <section id="game" class="sec-alt">
   <div class="section-head" data-reveal>
-    <span class="idx">07</span><h2>Founder Dash 3D</h2><div class="rule"></div>
+    <span class="idx">07</span><h2>Play Game 3D</h2><div class="rule"></div>
   </div>
   <div class="game-container" id="gameContainer" data-reveal>
+    <button class="game-fullscreen-btn" id="gameFullscreenBtn" aria-label="Toggle Fullscreen" title="Maximise Game">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M8 3H5a2 2 0 00-2 2v3m18-5h-3a2 2 0 00-2 2v3M3 16v3a2 2 0 002 2h3m13 0h-3a2 2 0 01-2-2v-3"/>
+      </svg>
+      <span id="fullscreenBtnText">MAXIMISE</span>
+    </button>
     <div class="game-overlay" id="gameOverlay">
       <div class="game-overlay-content">
-        <h3>FOUNDER DASH</h3>
+        <h3>PLAY GAME 3D</h3>
         <p>Avoid glitches. Collect Ventures.</p>
         <button class="magnet" id="startGameBtn">START ENGINE</button>
       </div>
@@ -3899,6 +3905,52 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
   });
 </script>
 <script>
+
+  /* Game Fullscreen & Touch Scroll Fix */
+  .game-container {
+    position: relative;
+    touch-action: none !important;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+  .game-container.fullscreen-mode {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 999999 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .game-fullscreen-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #e2e8f0;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+  }
+  .game-fullscreen-btn:hover {
+    background: rgba(56, 189, 248, 0.25);
+    border-color: #38bdf8;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+  }
+
 /* ---------- 3D FOUNDER DASH JS (UPGRADED STATE MACHINE & FOG) ---------- */
 (function() {
   const container = document.getElementById('gameContainer');
@@ -4441,6 +4493,62 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
   if (restartBtn) {
     restartBtn.addEventListener('click', () => setGameState('PLAYING'));
   }
+
+  
+  // Fullscreen & Touch-Scroll Lock Handlers
+  const fsBtn = document.getElementById('gameFullscreenBtn');
+  const fsBtnText = document.getElementById('fullscreenBtnText');
+  let isFullscreen = false;
+
+  function toggleGameFullscreen() {
+    isFullscreen = !isFullscreen;
+    if (isFullscreen) {
+      container.classList.add('fullscreen-mode');
+      document.body.style.overflow = 'hidden';
+      if (fsBtnText) fsBtnText.textContent = 'EXIT';
+      if (container.requestFullscreen) {
+        container.requestFullscreen().catch(() => {});
+      }
+    } else {
+      container.classList.remove('fullscreen-mode');
+      document.body.style.overflow = '';
+      if (fsBtnText) fsBtnText.textContent = 'MAXIMISE';
+      if (document.exitFullscreen && document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+    onResize();
+  }
+
+  function onResize() {
+    const w = isFullscreen ? window.innerWidth : container.clientWidth;
+    const h = isFullscreen ? window.innerHeight : container.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+
+  if (fsBtn) {
+    fsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleGameFullscreen();
+    });
+  }
+
+  window.addEventListener('resize', onResize);
+
+  // Prevent Mobile Page Scroll during Touch Swipe on Game Canvas
+  container.addEventListener('touchmove', (e) => {
+    if (gameState === 'PLAYING') {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  container.addEventListener('touchstart', (e) => {
+    if (gameState === 'PLAYING') {
+      e.preventDefault();
+    }
+  }, { passive: false });
 
   // Initialize in IDLE state
   setGameState('IDLE');
