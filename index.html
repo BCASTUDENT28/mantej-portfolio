@@ -1144,20 +1144,45 @@
     height: 320px;
     border-radius: 18px;
     overflow: hidden;
-    background: linear-gradient(180deg, #E0F2FE 0%, #EFF6FF 70%, #DBEAFE 100%);
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    background: #161D2E;
+    border: 1px solid var(--border-subtle);
     touch-action: none;
+  }
+  .game-attract-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    transition: opacity 0.4s ease;
+    opacity: 1;
+    pointer-events: none;
+  }
+  .game-ascii-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    mix-blend-mode: luminosity;
+    opacity: 0.6;
+  }
+  .game-scrim-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(27, 36, 56, 0.75);
+    z-index: 2;
   }
   #runnerCanvas {
     width: 100%;
     height: 100%;
     display: block;
     cursor: pointer;
+    position: relative;
+    z-index: 3;
   }
   .game-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(15, 23, 42, 0.68);
+    background: rgba(23, 30, 46, 0.55);
     backdrop-filter: blur(8px);
     display: flex;
     flex-direction: column;
@@ -1166,7 +1191,7 @@
     color: #FFFFFF;
     text-align: center;
     padding: 20px;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.35s ease;
     z-index: 10;
   }
   .game-overlay.hidden {
@@ -2353,7 +2378,12 @@
       </div>
       <button class="game-sound-btn" id="gameSoundBtn" aria-label="Toggle Sound Effects">🔇 Sound: OFF</button>
     </div>
-    <div class="canvas-container">
+    <div class="canvas-container" id="canvasContainer">
+      <!-- Heximage ASCII Art Video Attract Mode Background -->
+      <div class="game-attract-bg" id="gameAttractBg">
+        <video class="game-ascii-video" id="gameAsciiVideo" poster="images/heximage-poster.webp" loop muted playsinline aria-hidden="true"></video>
+        <div class="game-scrim-overlay"></div>
+      </div>
       <canvas id="runnerCanvas" width="800" height="320"></canvas>
       <div class="game-overlay" id="gameOverlay">
         <div class="game-msg-title" id="gameMsgTitle">FOUNDER DASH</div>
@@ -3489,12 +3519,14 @@ document.getElementById('mod-vlogs').addEventListener('click', ()=>{
     initAudio();
     resetGame();
     G.state = 'RUNNING';
+    if (window.onFounderDashStateChange) window.onFounderDashStateChange('RUNNING');
     overlay.classList.add('hidden');
     loop();
   }
 
   function gameOver() {
     G.state = 'GAMEOVER';
+    if (window.onFounderDashStateChange) window.onFounderDashStateChange('GAMEOVER');
     G.shake = 15;
     soundCrash();
     spawnParticles(player.x + 16, player.y + 24, '#EF4444', 15);
@@ -3686,6 +3718,61 @@ document.getElementById('mod-vlogs').addEventListener('click', ()=>{
   // Initial render
   drawEnvironment();
   player.draw();
+})();
+
+/* Heximage ASCII Art Attract Mode Video Controller for Founder Dash */
+(function(){
+  const videoEl = document.getElementById('gameAsciiVideo');
+  const bgEl = document.getElementById('gameAttractBg');
+  const gameSec = document.getElementById('game');
+  if (!videoEl || !bgEl || !gameSec) return;
+
+  let isLoaded = false;
+  const localVideoSrc = "videos/heximage-attract.mp4";
+
+  function syncAttractMode(state) {
+    if (reduceMotion) {
+      bgEl.style.opacity = '1';
+      videoEl.pause();
+      return;
+    }
+
+    if (state === 'RUNNING') {
+      videoEl.pause();
+      bgEl.style.opacity = '0';
+    } else {
+      bgEl.style.opacity = '1';
+      if (isLoaded && document.visibilityState === 'visible') {
+        videoEl.play().catch(() => {});
+      }
+    }
+  }
+
+  window.onFounderDashStateChange = syncAttractMode;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (!isLoaded && !reduceMotion) {
+          videoEl.src = localVideoSrc;
+          isLoaded = true;
+        }
+        syncAttractMode(window.G ? window.G.state : 'IDLE');
+      } else {
+        videoEl.pause();
+      }
+    });
+  }, { threshold: 0.15 });
+
+  observer.observe(gameSec);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      videoEl.pause();
+    } else if (window.G && window.G.state !== 'RUNNING') {
+      syncAttractMode(window.G.state);
+    }
+  });
 })();
 
 /* ---------------- TESTIMONIALS CAROUSEL ---------------- */
