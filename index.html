@@ -5,11 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Mantej Singh — Founder / Builder / Creator</title>
 <meta name="description" content="Mantej Singh — BCA student and startup founder at LPU. Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.">
+<link rel="canonical" href="https://mantej.vercel.app">
+
+<!-- Open Graph / Facebook / WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mantej Singh Portfolio">
+<meta property="og:url" content="https://mantej.vercel.app">
+<meta property="og:title" content="Mantej Singh — Founder / Builder / Creator">
+<meta property="og:description" content="Mantej Singh — BCA student and startup founder at LPU. Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.">
+<meta property="og:image" content="https://mantej.vercel.app/images/og_image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://mantej.vercel.app">
+<meta name="twitter:title" content="Mantej Singh — Founder / Builder / Creator">
+<meta name="twitter:description" content="Mantej Singh — BCA student and startup founder at LPU. Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.">
+<meta name="twitter:image" content="https://mantej.vercel.app/images/og_image.jpg">
+
+<!-- JSON-LD Structured Data (Person Schema) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mantej Singh",
+  "jobTitle": "Founder / Full-Stack Engineer",
+  "url": "https://mantej.vercel.app",
+  "image": "https://mantej.vercel.app/images/og_image.jpg",
+  "affiliation": {
+    "@type": "Organization",
+    "name": "Lovely Professional University",
+    "alternateName": "LPU"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/mantej-singh-307134379",
+    "https://www.instagram.com/mantejtechvlogs",
+    "https://www.youtube.com/@mantejtechvlogs"
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="preload" as="image" href="images/hustlesmith_denim_hero.webp" type="image/webp">
+<link rel="stylesheet" href="tailwind.css">
+<script type="module">
+  // Lazy-load heavy Spline 3D WebGL engine on user scroll or touch to keep initial paint sub-second
+  const loadSpline = () => {
+    if (!window.__splineLoaded) {
+      window.__splineLoaded = true;
+      import('https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js');
+    }
+  };
+  ['touchstart', 'scroll', 'pointerdown'].forEach(evt => {
+    window.addEventListener(evt, loadSpline, { once: true, passive: true });
+  });
+  // Fallback trigger after 4s idle
+  setTimeout(loadSpline, 4000);
+</script>
 <style>
   :root{
     /* Soft Moody Navy/Charcoal Dark Theme Palette */
@@ -581,6 +637,21 @@
     border-color: #60A5FA;
     box-shadow: 0 10px 30px rgba(43, 78, 255, 0.25);
   }
+  .h-social-btn.lpu:hover {
+    border-color: #F97316;
+    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+  }
+  .h-btn-logo {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  .h-social-btn:hover .h-btn-logo {
+    transform: scale(1.15);
+  }
 
   /* 3D Robot Container on Right Side */
   .hero-robot-container {
@@ -1009,9 +1080,9 @@
     transition:box-shadow .3s ease,border-color .3s ease,background .3s ease,background-image .3s ease;
     background-size: cover; background-position: center; background-repeat: no-repeat;
   }
-  #orb-ig { background-image: url('assets/instagram.png'); }
-  #orb-yt { background-image: url('assets/youtube.png'); }
-  #orb-li { background-image: url('assets/linkedin.jpg'); }
+  #orb-ig { background-image: url('assets/instagram.webp'); }
+  #orb-yt { background-image: url('assets/youtube.webp'); }
+  #orb-li { background-image: url('assets/linkedin.webp'); }
   .orbit-orb svg{width:22px;height:22px;stroke:var(--text-main);transition:stroke .3s ease,filter .3s ease,opacity .3s ease; opacity: 0;}
   
   .orbit-panel{
@@ -1063,9 +1134,9 @@
     transition:all .3s ease;
     background-size: cover; background-position: center; background-repeat: no-repeat;
   }
-  .mstack-card[data-platform="instagram"] .mstack-icon { background-image: url('assets/instagram.png'); }
-  .mstack-card[data-platform="youtube"] .mstack-icon { background-image: url('assets/youtube.png'); }
-  .mstack-card[data-platform="linkedin"] .mstack-icon { background-image: url('assets/linkedin.jpg'); }
+  .mstack-card[data-platform="instagram"] .mstack-icon { background-image: url('assets/instagram.webp'); }
+  .mstack-card[data-platform="youtube"] .mstack-icon { background-image: url('assets/youtube.webp'); }
+  .mstack-card[data-platform="linkedin"] .mstack-icon { background-image: url('assets/linkedin.webp'); }
   .mstack-icon svg{width:22px;height:22px;stroke:var(--text-main);transition:stroke .3s ease, opacity .3s ease; opacity: 0;}
   .mstack-card h4{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:4px;color:var(--text-main);}
   .mstack-card p{font-family:var(--font-body);font-size:13px;color:var(--text-muted);}
@@ -2308,8 +2379,12 @@
           <a href="#story" target="_blank" rel="noopener" class="h-social-btn hs magnet">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z"/></svg> Stealth SaaS ↗
           </a>
-          <a href="#story" target="_blank" rel="noopener" class="h-social-btn li magnet">
+          <a href="https://www.linkedin.com/in/mantej-singh-307134379/" target="_blank" rel="noopener" class="h-social-btn li magnet">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 10v7M7 7v.01M12 17v-4.5a2.5 2.5 0 015 0V17M12 10v7"/></svg> LinkedIn ↗
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.lpu.lputouch" onclick="openLPUTouch(event)" target="_blank" rel="noopener" class="h-social-btn lpu magnet" aria-label="LPU Touch App">
+            <img src="assets/lpu_touch_logo.webp" alt="LPU Touch" class="h-btn-logo">
+            <span>LPU Touch App</span> ↗
           </a>
         </div>
       </div>
@@ -2368,7 +2443,7 @@
       <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
         <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">01</span>
         <div class="story-video-wrap" style="width:100%; height:100%;">
-          <img src="images/hustlesmith_denim_hero.png" alt="HustleSmith Custom Denim Craftsmanship" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
+          <img src="images/hustlesmith_denim_hero.webp" alt="HustleSmith Custom Denim Craftsmanship" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
         </div>
       </div>
     </div>
@@ -2389,7 +2464,7 @@
       <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
         <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">02</span>
         <div class="story-video-wrap" style="width:100%; height:100%;">
-          <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
+          <video autoplay muted loop playsinline preload="none" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
             <source src="assets/hustlesmith_promo.mp4" type="video/mp4">
           </video>
         </div>
@@ -2410,7 +2485,7 @@
       <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
         <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">03</span>
         <div class="story-video-wrap" style="width:100%; height:100%;">
-          <img src="images/lpu_auditorium.jpg" alt="LPU Tech Engine" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
+          <img src="images/lpu_auditorium.webp" alt="LPU Tech Engine" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
         </div>
       </div>
     </div>
@@ -2429,7 +2504,7 @@
       <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
         <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">04</span>
         <div class="story-video-wrap" style="width:100%; height:100%;">
-          <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
+          <video autoplay muted loop playsinline preload="none" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
             <source src="assets/ai_reel_replica.mp4" type="video/mp4">
           </video>
         </div>
@@ -2451,7 +2526,7 @@
       <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
         <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">05</span>
         <div class="story-video-wrap" style="width:100%; height:100%;">
-          <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
+          <video autoplay muted loop playsinline preload="none" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
             <source src="assets/mantej_mountain_reel.mp4" type="video/mp4">
           </video>
         </div>
@@ -2480,7 +2555,7 @@
         <!-- Video / Image card -->
         <div class="venture-video-container">
           <img
-            src="images/hustlesmith_denim_hero.png"
+            src="images/hustlesmith_denim_hero.webp"
             alt="HustleSmith Custom Denim"
             class="venture-video"
             loading="lazy"
@@ -2573,7 +2648,7 @@
       <div class="orbit-core" tabindex="0" role="img" aria-label="Mantej Singh — Founder">
         <div class="orbit-core-radar"></div>
         <div class="orbit-core-avatar">
-          <img src="assets/linkedin.jpg" alt="Mantej Singh" class="orbit-core-img" loading="lazy">
+          <img src="assets/linkedin.webp" alt="Mantej Singh" class="orbit-core-img" loading="lazy">
         </div>
         <div class="orbit-core-label">MANTEJ SINGH · FOUNDER</div>
       </div>
@@ -2597,7 +2672,7 @@
     <div class="orbit-mobile-stack">
       <div class="mstack-operator-card">
         <div class="mstack-operator-avatar">
-          <img src="assets/linkedin.jpg" alt="Mantej Singh" class="orbit-core-img">
+          <img src="assets/linkedin.webp" alt="Mantej Singh" class="orbit-core-img">
         </div>
         <div>
           <div class="mstack-op-tag">FOUNDER &amp; DEVELOPER</div>
@@ -2615,9 +2690,14 @@
         <div><h4>YouTube</h4><p>Startups, hardware, tech — weekly</p></div></div>
         <span class="mstack-arrow">↗</span>
       </a>
-      <a class="mstack-card" data-platform="linkedin" href="#story" target="_blank" rel="noopener">
+      <a class="mstack-card" data-platform="linkedin" href="https://www.linkedin.com/in/mantej-singh-307134379/" target="_blank" rel="noopener">
         <div class="left"><div class="mstack-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 10v7M7 7v.01M12 17v-4.5a2.5 2.5 0 015 0V17M12 10v7"/></svg></div>
         <div><h4>LinkedIn</h4><p>Follow the AI &amp; startup build in public</p></div></div>
+        <span class="mstack-arrow">↗</span>
+      </a>
+      <a class="mstack-card" data-platform="lputouch" href="https://play.google.com/store/apps/details?id=com.lpu.lputouch" onclick="openLPUTouch(event)" target="_blank" rel="noopener">
+        <div class="left"><div class="mstack-icon" style="padding:0;overflow:hidden;"><img src="assets/lpu_touch_logo.webp" alt="LPU Touch" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"></div>
+        <div><h4>LPU Touch App</h4><p>Official University Management App</p></div></div>
         <span class="mstack-arrow">↗</span>
       </a>
       <a class="mstack-card" data-platform="hustlesmith" href="https://www.hustlesmith.studio" target="_blank" rel="noopener">
@@ -2642,8 +2722,13 @@
   </div>
   <div class="game-container" id="gameContainer" style="position:relative;width:100%;max-width:900px;height:320px;margin:0 auto;background:#0f172a;border:1px solid rgba(56,189,248,0.3);border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4);">
     <button class="game-fullscreen-btn" id="gameFullscreenBtn" aria-label="Toggle Fullscreen" title="Maximise Game">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M8 3H5a2 2 0 0 0-2 2v3m18-5h-3a2 2 0 0 1-2 2v3M3 16v3a2 2 0 0 02 2h3m13 0h-3a2 2 0 01-2-2v-3"/>
+      <!-- Expand icon (shown when NOT fullscreen) -->
+      <svg id="fsIconExpand" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"/>
+      </svg>
+      <!-- Compress icon (shown when fullscreen) -->
+      <svg id="fsIconCompress" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+        <path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3m8 0v-3a2 2 0 0 1 2-2h3"/>
       </svg>
       <span id="fullscreenBtnText">MAXIMISE</span>
     </button>
@@ -2704,7 +2789,7 @@
       <div class="timeline-dot"></div>
       <div class="timeline-card">
         <div class="timeline-year">2025</div>
-        <h3>Founded ApplifyNow</h3>
+        <h3>Founded HustleSmith</h3>
         <p>Created luxury custom denim brand blending hand-painted art &amp; embroidery in collaboration with LPU Fine Arts talent.</p>
       </div>
     </div>
@@ -2713,7 +2798,7 @@
       <div class="timeline-dot"></div>
       <div class="timeline-card">
         <div class="timeline-year">2026</div>
-        <h3>AI &amp; Full-Stack Expansion</h3>
+        <h3>Founded ApplifyNow</h3>
         <p>Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.</p>
       </div>
     </div>
@@ -2798,7 +2883,7 @@
         <p>Documenting LPU's flagship festivals and freshers celebrations — experiencing campus culture firsthand with thousands of students.</p>
 
         <div class="campus-media-slot" style="height:160px;">
-          <video autoplay muted loop playsinline poster="images/lpu_auditorium.jpg" style="width:100%;height:100%;object-fit:cover;">
+          <video autoplay muted loop playsinline preload="none" poster="images/lpu_auditorium.webp" style="width:100%;height:100%;object-fit:cover;">
             <source src="assets/freshers_event_vlog.mp4" type="video/mp4">
           </video>
           <div class="campus-media-caption">🎉 Freshers Event &amp; Mega Fest Reel</div>
@@ -2811,7 +2896,7 @@
         <p>Showcasing 28 states, 8 UTs, and 33 countries through folk dance, Gidha, Bhangra, and fine arts exhibitions — inspiring HustleSmith Studio's geometric denim art.</p>
 
         <div class="campus-media-slot">
-          <img src="images/lpu_main_gate.webp" alt="LPU Main Gate Landmark">
+          <img src="images/lpu_main_gate.webp" alt="LPU Main Gate Landmark" loading="lazy">
           <div class="campus-media-caption">🏛️ LPU Main Gate &amp; Cultural Landmark</div>
         </div>
       </div>
@@ -2822,7 +2907,7 @@
         <p>Hosting classical sangeet sammelans alongside LPU's national-level student hip-hop squad, No Name Crew.</p>
 
         <div class="campus-media-slot">
-          <img src="images/lpu_robo_park.jpg" alt="LPU Academic Complex">
+          <img src="images/lpu_robo_park.webp" alt="LPU Academic Complex" loading="lazy">
           <div class="campus-media-caption">🏢 Academic Complex &amp; Creative Labs</div>
         </div>
       </div>
@@ -2840,7 +2925,7 @@
 
   <div class="lpu-gallery-grid" data-reveal>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_01.jpg" alt="School of Pharmaceutical Sciences" loading="lazy">
+      <img src="images/lpu/lpu_campus_01.webp" alt="School of Pharmaceutical Sciences" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">BUILDING 07</span>
         <div class="lpu-gallery-title">School of Pharmaceutical Sciences</div>
@@ -2848,7 +2933,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_02.jpg" alt="School of Liberal & Creative Arts" loading="lazy">
+      <img src="images/lpu/lpu_campus_02.webp" alt="School of Liberal & Creative Arts" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">FINE ARTS & DESIGN</span>
         <div class="lpu-gallery-title">School of Liberal & Creative Arts</div>
@@ -2856,7 +2941,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item span-2">
-      <img src="images/lpu/lpu_campus_03.jpg" alt="Tree-Lined Green Walkway" loading="lazy">
+      <img src="images/lpu/lpu_campus_03.webp" alt="Tree-Lined Green Walkway" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">CAMPUS PROMENADE</span>
         <div class="lpu-gallery-title">Tree-Lined Green Walkway</div>
@@ -2864,7 +2949,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_04.jpg" alt="Central Uni Mall Atrium" loading="lazy">
+      <img src="images/lpu/lpu_campus_04.webp" alt="Central Uni Mall Atrium" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">UNI MALL</span>
         <div class="lpu-gallery-title">Central Uni Mall Atrium</div>
@@ -2872,7 +2957,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_05.jpg" alt="Care For Your Campus" loading="lazy">
+      <img src="images/lpu/lpu_campus_05.webp" alt="Care For Your Campus" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">GREEN CAMPUS</span>
         <div class="lpu-gallery-title">Care For Your Campus</div>
@@ -2880,7 +2965,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item span-2">
-      <img src="images/lpu/lpu_campus_06.jpg" alt="Mittal School of Business" loading="lazy">
+      <img src="images/lpu/lpu_campus_06.webp" alt="Mittal School of Business" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">BUSINESS SCHOOL</span>
         <div class="lpu-gallery-title">Mittal School of Business</div>
@@ -2888,7 +2973,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_07.jpg" alt="Central Flag Plaza & Esplanade" loading="lazy">
+      <img src="images/lpu/lpu_campus_07.webp" alt="Central Flag Plaza & Esplanade" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">FLAG PLAZA</span>
         <div class="lpu-gallery-title">Central Flag Plaza & Esplanade</div>
@@ -2896,7 +2981,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_08.jpg" alt="Rainy Day Campus Cycling" loading="lazy">
+      <img src="images/lpu/lpu_campus_08.webp" alt="Rainy Day Campus Cycling" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">MONSOON</span>
         <div class="lpu-gallery-title">Rainy Day Campus Cycling</div>
@@ -2904,7 +2989,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item span-2">
-      <img src="images/lpu/lpu_campus_09.jpg" alt="Monsoon Canopy & Hostels" loading="lazy">
+      <img src="images/lpu/lpu_campus_09.webp" alt="Monsoon Canopy & Hostels" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">SKYLINE</span>
         <div class="lpu-gallery-title">Monsoon Canopy & Hostels</div>
@@ -2912,7 +2997,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_10.jpg" alt="Tricolor Festival Drapes" loading="lazy">
+      <img src="images/lpu/lpu_campus_10.webp" alt="Tricolor Festival Drapes" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">FEST DECOR</span>
         <div class="lpu-gallery-title">Tricolor Festival Drapes</div>
@@ -2920,7 +3005,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item span-2">
-      <img src="images/lpu/lpu_campus_11.jpg" alt="Snow Peaks Over LPU Campus" loading="lazy">
+      <img src="images/lpu/lpu_campus_11.webp" alt="Snow Peaks Over LPU Campus" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">HIMALAYAN VIEW</span>
         <div class="lpu-gallery-title">Snow Peaks Over LPU Campus</div>
@@ -2928,7 +3013,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_12.jpg" alt="One World Cultural Festival" loading="lazy">
+      <img src="images/lpu/lpu_campus_12.webp" alt="One World Cultural Festival" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">ONE WORLD</span>
         <div class="lpu-gallery-title">One World Cultural Festival</div>
@@ -2936,7 +3021,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_13.jpg" alt="Canal & Birds in Flight" loading="lazy">
+      <img src="images/lpu/lpu_campus_13.webp" alt="Canal & Birds in Flight" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">NATURE</span>
         <div class="lpu-gallery-title">Canal & Birds in Flight</div>
@@ -2944,7 +3029,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item span-2">
-      <img src="images/lpu/lpu_campus_14.jpg" alt="Traditional Folk Artist Meet" loading="lazy">
+      <img src="images/lpu/lpu_campus_14.webp" alt="Traditional Folk Artist Meet" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">SPECTRA ARTS</span>
         <div class="lpu-gallery-title">Traditional Folk Artist Meet</div>
@@ -2952,7 +3037,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/lpu/lpu_campus_15.jpg" alt="Yemen Cultural Pavilion" loading="lazy">
+      <img src="images/lpu/lpu_campus_15.webp" alt="Yemen Cultural Pavilion" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">ONE WORLD</span>
         <div class="lpu-gallery-title">Yemen Cultural Pavilion</div>
@@ -2960,7 +3045,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item span-2">
-      <img src="images/lpu/lpu_campus_16.jpg" alt="Pacific Tribal Pavilion" loading="lazy">
+      <img src="images/lpu/lpu_campus_16.webp" alt="Pacific Tribal Pavilion" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge">CULTURAL DELEGATION</span>
         <div class="lpu-gallery-title">Pacific Tribal Pavilion</div>
@@ -2980,7 +3065,7 @@
 
   <div class="lpu-gallery-grid" data-reveal>
     <div class="lpu-gallery-item span-2">
-      <img src="images/minecraft/mc_lpu_01.jpg" alt="Mittal School of Business (Building 14)" loading="lazy">
+      <img src="images/minecraft/mc_lpu_01.webp" alt="Mittal School of Business (Building 14)" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">MINECRAFT 1:1</span>
         <div class="lpu-gallery-title">Mittal School of Business (Building 14)</div>
@@ -2988,7 +3073,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/minecraft/mc_lpu_02.jpg" alt="LPU Boulevard & Amphitheatre" loading="lazy">
+      <img src="images/minecraft/mc_lpu_02.webp" alt="LPU Boulevard & Amphitheatre" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">VIRTUAL CAMPUS</span>
         <div class="lpu-gallery-title">LPU Boulevard & Amphitheatre</div>
@@ -2996,7 +3081,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/minecraft/mc_lpu_03.jpg" alt="Bird's Eye Campus Landscape" loading="lazy">
+      <img src="images/minecraft/mc_lpu_03.webp" alt="Bird's Eye Campus Landscape" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">AERIAL BUILD</span>
         <div class="lpu-gallery-title">Bird's Eye Campus Landscape</div>
@@ -3004,7 +3089,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item span-2">
-      <img src="images/minecraft/mc_lpu_04.jpg" alt="Ivy Courtyard & Palm Plaza" loading="lazy">
+      <img src="images/minecraft/mc_lpu_04.webp" alt="Ivy Courtyard & Palm Plaza" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">MINECRAFT ARCHITECTURE</span>
         <div class="lpu-gallery-title">Ivy Courtyard & Palm Plaza</div>
@@ -3012,7 +3097,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/minecraft/mc_lpu_05.jpg" alt="School of Fine Arts Wall Mural" loading="lazy">
+      <img src="images/minecraft/mc_lpu_05.webp" alt="School of Fine Arts Wall Mural" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">FINE ARTS REPLICA</span>
         <div class="lpu-gallery-title">School of Fine Arts Wall Mural</div>
@@ -3020,7 +3105,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/minecraft/mc_lpu_06.jpg" alt="Curved Glass & Brick Tower" loading="lazy">
+      <img src="images/minecraft/mc_lpu_06.webp" alt="Curved Glass & Brick Tower" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">LANDMARK TOWER</span>
         <div class="lpu-gallery-title">Curved Glass & Brick Tower</div>
@@ -3028,7 +3113,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item span-2">
-      <img src="images/minecraft/mc_lpu_07.jpg" alt="LPU Mech Robo Park Statue" loading="lazy">
+      <img src="images/minecraft/mc_lpu_07.webp" alt="LPU Mech Robo Park Statue" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">ROBO PARK 1:1</span>
         <div class="lpu-gallery-title">LPU Mech Robo Park Statue</div>
@@ -3036,7 +3121,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item">
-      <img src="images/minecraft/mc_lpu_08.jpg" alt="School of Computing (Building 28)" loading="lazy">
+      <img src="images/minecraft/mc_lpu_08.webp" alt="School of Computing (Building 28)" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">HOME DEPT</span>
         <div class="lpu-gallery-title">School of Computing (Building 28)</div>
@@ -3044,7 +3129,7 @@
       </div>
     </div>
     <div class="lpu-gallery-item span-2">
-      <img src="images/minecraft/mc_lpu_09.jpg" alt="Brutalist Innovation Center" loading="lazy">
+      <img src="images/minecraft/mc_lpu_09.webp" alt="Brutalist Innovation Center" loading="lazy">
       <div class="lpu-gallery-overlay">
         <span class="lpu-gallery-badge" style="background:var(--accent-green);color:#000;">RESEARCH CENTER</span>
         <div class="lpu-gallery-title">Brutalist Innovation Center</div>
@@ -3096,87 +3181,87 @@
     <div class="skills-category-title">⚡ DEVELOPMENT LANGUAGES &amp; CORE STACK</div>
     <div class="skills-logos-grid">
       <div class="skill-logo-card magnet" title="JavaScript (JS)">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="JavaScript" loading="lazy">
         <span class="skill-name">JavaScript</span>
       </div>
       <div class="skill-logo-card magnet" title="TypeScript (TS)">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="TypeScript" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="TypeScript" loading="lazy">
         <span class="skill-name">TypeScript</span>
       </div>
       <div class="skill-logo-card magnet" title="React.js">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="React" loading="lazy">
         <span class="skill-name">React.js</span>
       </div>
       <div class="skill-logo-card magnet" title="Next.js">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="Next.js" loading="lazy" style="filter:invert(1);">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-original.svg" alt="Next.js" loading="lazy" style="filter:invert(1);">
         <span class="skill-name">Next.js</span>
       </div>
       <div class="skill-logo-card magnet" title="HTML5">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/html5/html5-original.svg" alt="HTML5" loading="lazy">
         <span class="skill-name">HTML5</span>
       </div>
       <div class="skill-logo-card magnet" title="CSS3">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/css3/css3-original.svg" alt="CSS3" loading="lazy">
         <span class="skill-name">CSS3</span>
       </div>
       <div class="skill-logo-card magnet" title="Tailwind CSS">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" loading="lazy">
         <span class="skill-name">Tailwind</span>
       </div>
       <div class="skill-logo-card magnet" title="Three.js 3D">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/threejs/threejs-original.svg" alt="Three.js" loading="lazy" style="filter:invert(1);">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/threejs/threejs-original.svg" alt="Three.js" loading="lazy" style="filter:invert(1);">
         <span class="skill-name">Three.js</span>
       </div>
       <div class="skill-logo-card magnet" title="Node.js">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nodejs/nodejs-original.svg" alt="Node.js" loading="lazy">
         <span class="skill-name">Node.js</span>
       </div>
       <div class="skill-logo-card magnet" title="Python">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="Python" loading="lazy">
         <span class="skill-name">Python</span>
       </div>
       <div class="skill-logo-card magnet" title="C / C++">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/cplusplus/cplusplus-original.svg" alt="C++" loading="lazy">
         <span class="skill-name">C / C++</span>
       </div>
       <div class="skill-logo-card magnet" title="PostgreSQL">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" loading="lazy">
         <span class="skill-name">PostgreSQL</span>
       </div>
       <div class="skill-logo-card magnet" title="MongoDB">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="MongoDB" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/mongodb/mongodb-original.svg" alt="MongoDB" loading="lazy">
         <span class="skill-name">MongoDB</span>
       </div>
       <div class="skill-logo-card magnet" title="Docker">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="Docker" loading="lazy">
         <span class="skill-name">Docker</span>
       </div>
       <div class="skill-logo-card magnet" title="Git">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg" alt="Git" loading="lazy">
         <span class="skill-name">Git</span>
       </div>
       <div class="skill-logo-card magnet" title="GitHub">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" loading="lazy" style="filter:invert(1);">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/github/github-original.svg" alt="GitHub" loading="lazy" style="filter:invert(1);">
         <span class="skill-name">GitHub</span>
       </div>
       <div class="skill-logo-card magnet" title="Arduino">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" alt="Arduino" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/arduino/arduino-original.svg" alt="Arduino" loading="lazy">
         <span class="skill-name">Arduino</span>
       </div>
       <div class="skill-logo-card magnet" title="VS Code">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy">
         <span class="skill-name">VS Code</span>
       </div>
       <div class="skill-logo-card magnet" title="Figma">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/figma/figma-original.svg" alt="Figma" loading="lazy">
         <span class="skill-name">Figma</span>
       </div>
       <div class="skill-logo-card magnet" title="Vercel">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" alt="Vercel" loading="lazy" style="filter:invert(1);">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/vercel/vercel-original.svg" alt="Vercel" loading="lazy" style="filter:invert(1);">
         <span class="skill-name">Vercel</span>
       </div>
       <div class="skill-logo-card magnet" title="Linux">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" loading="lazy">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linux/linux-original.svg" alt="Linux" loading="lazy">
         <span class="skill-name">Linux</span>
       </div>
     </div>
@@ -3216,7 +3301,7 @@
   <div class="qr-wrap" data-reveal style="max-width:800px;margin:0 auto;background:rgba(30,41,59,0.7);border:1px solid rgba(56,189,248,0.3);border-radius:24px;padding:36px;text-align:center;backdrop-filter:blur(16px);box-shadow:0 12px 40px rgba(0,0,0,0.5);display:flex;flex-direction:column;align-items:center;">
     <div class="qr-frame" id="qrFrame" style="margin-bottom:24px;">
       <div id="qrcode">
-        <img id="realQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https%3A%2F%2Fbcastudent28.github.io%2Fmantej-portfolio%2F&color=0f172a&bgcolor=ffffff" alt="Mantej Singh Portfolio QR Code" width="200" height="200" style="display:block; border-radius:12px; background:#ffffff; padding:12px; box-shadow:0 0 30px rgba(56,189,248,0.4);">
+        <img id="realQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https%3A%2F%2Fmantej.vercel.app&color=0f172a&bgcolor=ffffff" alt="Mantej Singh Portfolio QR Code" width="200" height="200" loading="lazy" style="display:block; border-radius:12px; background:#ffffff; padding:12px; box-shadow:0 0 30px rgba(56,189,248,0.4);">
       </div>
       <div class="qr-beam"></div>
     </div>
@@ -3242,10 +3327,10 @@
   <div id="clock">00:00:00</div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -3469,27 +3554,31 @@ if(!isTouch){
   });
 })();
 
-/* Hero Intro Animation & Scroll-linked Reveal */
-const tl = gsap.timeline({defaults:{ease:'power3.out'}});
-tl.to('#eyebrow', {opacity:1, duration:.6}, .1)
-  .from('#nameHeading', {opacity:0, y:18, duration:0.8}, .2)
-  .to('#roleLine', {opacity:1, duration:.5}, .5)
-  .to('#heroSocialBar', {opacity:1, duration:.7}, .7)
-  .to('#scrollCue', {opacity:1, duration:.6}, .9);
+/* Hero Intro Animation & Scroll-linked Reveal (Deferred after first paint) */
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => {
+    const tl = gsap.timeline({defaults:{ease:'power3.out'}});
+    tl.to('#eyebrow', {opacity:1, duration:.6}, .1)
+      .from('#nameHeading', {opacity:0, y:18, duration:0.8}, .2)
+      .to('#roleLine', {opacity:1, duration:.5}, .5)
+      .to('#heroSocialBar', {opacity:1, duration:.7}, .7)
+      .to('#scrollCue', {opacity:1, duration:.6}, .9);
 
-if (!reduceMotion) {
-  gsap.to('#hero', {
-    scale: 0.96,
-    opacity: 0.25,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'bottom 90%',
-      end: 'bottom 10%',
-      scrub: true
+    if (!reduceMotion) {
+      gsap.to('#hero', {
+        scale: 0.96,
+        opacity: 0.25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'bottom 90%',
+          end: 'bottom 10%',
+          scrub: true
+        }
+      });
     }
   });
-}
+});
 
 /* Gooey Text Morphing Engine for Hero Tagline */
 (function(){
@@ -3578,93 +3667,113 @@ if (!reduceMotion) {
   animate();
 })();
 
-/* Scroll Reveals */
-document.querySelectorAll('[data-reveal]').forEach(el=>{
-  gsap.to(el, {opacity:1, y:0, duration:.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%' }});
-});
-
-/* Campus Stat Counters (GSAP Number Tween) */
-document.querySelectorAll('.campus-counter').forEach(counter => {
-  const target = parseFloat(counter.getAttribute('data-target'));
-  gsap.to(counter, {
-    innerText: target,
-    duration: 2,
-    snap: { innerText: 1 },
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: counter,
-      start: 'top 85%',
-      once: true
-    }
-  });
-});
-
-/* Campus 3D Stage (Rotating Translucent Ring Panels + Parallax) */
-(function initCampus3D(){
-  const container = document.getElementById('campus3dContainer');
-  const canvas = document.getElementById('campusThreeCanvas');
-  if(!container || !canvas || typeof THREE === 'undefined') return;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-  camera.position.z = 18;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  const group = new THREE.Group();
-  scene.add(group);
-
-  const panelCount = 6;
-  const radius = 6.5;
-  const panelGeo = new THREE.PlaneGeometry(2.4, 3.4);
-
-  for (let i = 0; i < panelCount; i++) {
-    const angle = (i / panelCount) * Math.PI * 2;
-    const mat = new THREE.MeshBasicMaterial({
-      color: i % 2 === 0 ? 0x3B82F6 : 0x34D399,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.45,
-      side: THREE.DoubleSide
+/* Defer GSAP ScrollTrigger & Three.js initialization until after first paint */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    /* Scroll Reveals */
+    document.querySelectorAll('[data-reveal]').forEach(el=>{
+      gsap.to(el, {opacity:1, y:0, duration:.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%' }});
     });
-    const mesh = new THREE.Mesh(panelGeo, mat);
-    mesh.position.x = Math.cos(angle) * radius;
-    mesh.position.z = Math.sin(angle) * radius;
-    mesh.rotation.y = -angle + Math.PI / 2;
-    group.add(mesh);
-  }
 
-  let mouseX = 0, mouseY = 0;
-  window.addEventListener('mousemove', (e) => {
-    mouseX = (e.clientX / window.innerWidth - 0.5) * 0.4;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 0.4;
-  });
+    /* Campus Stat Counters (GSAP Number Tween) */
+    document.querySelectorAll('.campus-counter').forEach(counter => {
+      const target = parseFloat(counter.getAttribute('data-target'));
+      gsap.to(counter, {
+        innerText: target,
+        duration: 2,
+        snap: { innerText: 1 },
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: counter,
+          start: 'top 85%',
+          once: true
+        }
+      });
+    });
 
-  window.addEventListener('resize', () => {
-    if (!container) return;
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
-  });
+    /* Campus 3D Stage (Lazy-initialized on Intersection) */
+    (function setupCampus3DObserver(){
+      const container = document.getElementById('campus3dContainer');
+      const canvas = document.getElementById('campusThreeCanvas');
+      if(!container || !canvas) return;
 
-  let isVisible = true;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { isVisible = entry.isIntersecting; });
-  }, { threshold: 0.1 });
-  io.observe(container);
+      let initialized = false;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !initialized) {
+            initialized = true;
+            initCampus3D(container, canvas);
+          }
+        });
+      }, { rootMargin: '200px' });
+      io.observe(container);
 
-  function animate() {
-    requestAnimationFrame(animate);
-    if (!isVisible || reduceMotion) return;
-    group.rotation.y += 0.005;
-    group.rotation.x += (mouseY - group.rotation.x) * 0.05;
-    group.rotation.z += (mouseX - group.rotation.z) * 0.05;
-    renderer.render(scene, camera);
-  }
-  animate();
-})();
+      function initCampus3D(container, canvas){
+        if(typeof THREE === 'undefined') return;
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.z = 18;
+
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const group = new THREE.Group();
+        scene.add(group);
+
+        const panelCount = 6;
+        const radius = 6.5;
+        const panelGeo = new THREE.PlaneGeometry(2.4, 3.4);
+
+        for (let i = 0; i < panelCount; i++) {
+          const angle = (i / panelCount) * Math.PI * 2;
+          const mat = new THREE.MeshBasicMaterial({
+            color: i % 2 === 0 ? 0x3B82F6 : 0x34D399,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.45,
+            side: THREE.DoubleSide
+          });
+          const mesh = new THREE.Mesh(panelGeo, mat);
+          mesh.position.x = Math.cos(angle) * radius;
+          mesh.position.z = Math.sin(angle) * radius;
+          mesh.rotation.y = -angle + Math.PI / 2;
+          group.add(mesh);
+        }
+
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+          mouseX = (e.clientX / window.innerWidth - 0.5) * 0.4;
+          mouseY = (e.clientY / window.innerHeight - 0.5) * 0.4;
+        });
+
+        window.addEventListener('resize', () => {
+          if (!container) return;
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        let isVisible = true;
+        const visIo = new IntersectionObserver((entries) => {
+          entries.forEach(entry => { isVisible = entry.isIntersecting; });
+        }, { threshold: 0.1 });
+        visIo.observe(container);
+
+        function animate() {
+          requestAnimationFrame(animate);
+          if (!isVisible || reduceMotion) return;
+          group.rotation.y += 0.005;
+          group.rotation.x += (mouseY - group.rotation.x) * 0.05;
+          group.rotation.z += (mouseX - group.rotation.z) * 0.05;
+          renderer.render(scene, camera);
+        }
+        animate();
+      }
+    })();
+  }, 100);
+});
 
 /* Circuit Trace Line */
 (function(){
@@ -3900,7 +4009,7 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     "layout": "month_view"
   });
 </script>
-<script>
+<style>
 
   /* Game Fullscreen & Touch Scroll Fix */
   .game-container {
@@ -3946,7 +4055,8 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     border-color: #38bdf8;
     box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
   }
-
+</style>
+<script>
 /* ---------- T-REX RUNNER ENGINE (GOOGLE DINO) ---------- */
 (function() {
   'use strict';
@@ -4266,23 +4376,43 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
   }, { passive: false });
 
   // ── Fullscreen toggle ─────────────────────────────────────────────────
-  const fsBtn     = document.getElementById('gameFullscreenBtn');
-  const fsBtnText = document.getElementById('fullscreenBtnText');
+  const fsBtn         = document.getElementById('gameFullscreenBtn');
+  const fsBtnText     = document.getElementById('fullscreenBtnText');
+  const fsIconExpand  = document.getElementById('fsIconExpand');
+  const fsIconCompress= document.getElementById('fsIconCompress');
   let isFs = false;
+
+  function enterFullscreen() {
+    isFs = true;
+    container.classList.add('fullscreen-mode');
+    document.body.style.overflow = 'hidden';
+    if (fsBtnText)      fsBtnText.textContent  = 'MINIMISE';
+    if (fsIconExpand)   fsIconExpand.style.display   = 'none';
+    if (fsIconCompress) fsIconCompress.style.display = 'inline';
+    setTimeout(resizeCanvas, 80);
+  }
+
+  function exitFullscreen() {
+    isFs = false;
+    container.classList.remove('fullscreen-mode');
+    document.body.style.overflow = '';
+    if (fsBtnText)      fsBtnText.textContent  = 'MAXIMISE';
+    if (fsIconExpand)   fsIconExpand.style.display   = 'inline';
+    if (fsIconCompress) fsIconCompress.style.display = 'none';
+    setTimeout(resizeCanvas, 80);
+  }
+
   if (fsBtn) {
     fsBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      isFs = !isFs;
-      if (isFs) {
-        container.style.cssText += ';position:fixed!important;inset:0!important;z-index:999999!important;max-width:100vw!important;height:100vh!important;border-radius:0!important;';
-        if (fsBtnText) fsBtnText.textContent = 'EXIT';
-      } else {
-        container.style.cssText = 'position:relative;width:100%;max-width:900px;height:320px;margin:0 auto;background:#0f172a;border:1px solid rgba(56,189,248,0.3);border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4);';
-        if (fsBtnText) fsBtnText.textContent = 'MAXIMISE';
-      }
-      setTimeout(resizeCanvas, 100);
+      if (isFs) exitFullscreen(); else enterFullscreen();
     });
   }
+
+  // Press Escape to exit fullscreen
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isFs) exitFullscreen();
+  });
 
   // show initial overlay
   overlay.style.display = 'flex';
@@ -4424,7 +4554,7 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
       if (qrel && !qrel.querySelector('canvas')) {
         qrel.innerHTML = '';
         new QRCode(qrel, {
-          text: window.location.href,
+          text: "https://mantej.vercel.app",
           width: 180,
           height: 180,
           colorDark: "#0f172a",
@@ -4441,7 +4571,7 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     const toast = document.getElementById('qrSaveToast');
 
     // Draw QR image via canvas to bypass CORS (crossOrigin hack)
-    const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=' + encodeURIComponent(window.location.href);
+    const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=' + encodeURIComponent('https://mantej.vercel.app');
 
     function showToast() {
       if (toast) {
@@ -4549,6 +4679,30 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
       });
     }
   })();
+
+<script>
+function openLPUTouch(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  var ua = navigator.userAgent || navigator.vendor || window.opera;
+  var isiOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isAndroid = /android/i.test(ua);
+  
+  var appStoreUrl = 'https://apps.apple.com/in/app/lputouch/id516805085';
+  var playStoreUrl = 'https://play.google.com/store/apps/details?id=com.lpu.lputouch';
+  
+  if (isiOS) {
+    window.open(appStoreUrl, '_blank', 'noopener');
+  } else if (isAndroid) {
+    window.open(playStoreUrl, '_blank', 'noopener');
+  } else {
+    if (/Macintosh|Mac OS X/.test(ua)) {
+      window.open(appStoreUrl, '_blank', 'noopener');
+    } else {
+      window.open(playStoreUrl, '_blank', 'noopener');
+    }
+  }
+}
+</script>
 
 
 <!-- Interactive Share Modal -->
