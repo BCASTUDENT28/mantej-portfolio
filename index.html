@@ -2672,17 +2672,6 @@
     <span class="idx">04</span><h2>T-Rex Runner (No Internet Game)</h2><div class="rule"></div>
   </div>
   <div class="game-container" id="gameContainer" style="position:relative;width:100%;max-width:900px;height:320px;margin:0 auto;background:#0f172a;border:1px solid rgba(56,189,248,0.3);border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4);">
-    <button class="game-fullscreen-btn" id="gameFullscreenBtn" aria-label="Toggle Fullscreen" title="Maximise Game">
-      <!-- Expand icon (shown when NOT fullscreen) -->
-      <svg id="fsIconExpand" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"/>
-      </svg>
-      <!-- Compress icon (shown when fullscreen) -->
-      <svg id="fsIconCompress" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
-        <path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3m8 0v-3a2 2 0 0 1 2-2h3"/>
-      </svg>
-      <span id="fullscreenBtnText">MAXIMISE</span>
-    </button>
     
     <div class="game-overlay" id="gameOverlay" style="position:absolute;inset:0;background:rgba(15,23,42,0.85);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;cursor:pointer;">
       <div class="game-overlay-content" style="text-align:center;">
@@ -3938,49 +3927,13 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
 </script>
 <style>
 
-  /* Game Fullscreen & Touch Scroll Fix */
+  /* Game Touch Scroll & Pointer Fix */
   .game-container {
     position: relative;
     touch-action: none !important;
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
-  }
-  .game-container.fullscreen-mode {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: 999999 !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .game-fullscreen-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    z-index: 100;
-    background: rgba(15, 23, 42, 0.85);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    color: #e2e8f0;
-    font-family: var(--font-mono, monospace);
-    font-size: 0.72rem;
-    letter-spacing: 0.05em;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-  }
-  .game-fullscreen-btn:hover {
-    background: rgba(56, 189, 248, 0.25);
-    border-color: #38bdf8;
-    box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
   }
 </style>
 <script>
@@ -4302,43 +4255,8 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     if (!isPlaying) { startGame(); } else { dino.jump(); }
   }, { passive: false });
 
-  // ── Fullscreen toggle ─────────────────────────────────────────────────
-  const fsBtn         = document.getElementById('gameFullscreenBtn');
-  const fsBtnText     = document.getElementById('fullscreenBtnText');
-  const fsIconExpand  = document.getElementById('fsIconExpand');
-  const fsIconCompress= document.getElementById('fsIconCompress');
-  let isFs = false;
-
-  function enterFullscreen() {
-    isFs = true;
-    container.classList.add('fullscreen-mode');
-    document.body.style.overflow = 'hidden';
-    if (fsBtnText)      fsBtnText.textContent  = 'MINIMISE';
-    if (fsIconExpand)   fsIconExpand.style.display   = 'none';
-    if (fsIconCompress) fsIconCompress.style.display = 'inline';
-    setTimeout(resizeCanvas, 80);
-  }
-
-  function exitFullscreen() {
-    isFs = false;
-    container.classList.remove('fullscreen-mode');
-    document.body.style.overflow = '';
-    if (fsBtnText)      fsBtnText.textContent  = 'MAXIMISE';
-    if (fsIconExpand)   fsIconExpand.style.display   = 'inline';
-    if (fsIconCompress) fsIconCompress.style.display = 'none';
-    setTimeout(resizeCanvas, 80);
-  }
-
-  if (fsBtn) {
-    fsBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (isFs) exitFullscreen(); else enterFullscreen();
-    });
-  }
-
-  // Press Escape to exit fullscreen
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isFs) exitFullscreen();
+  canvas.addEventListener('click', (e) => {
+    if (isPlaying) dino.jump();
   });
 
   // show initial overlay
