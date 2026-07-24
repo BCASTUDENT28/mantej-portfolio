@@ -28,6 +28,223 @@
 })();
 </script>
 <style>
+  /* ---------- COMMAND PALETTE (CMD + K) ---------- */
+  .cmd-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .cmd-trigger:hover {
+    border-color: #38bdf8;
+    color: #f8fafc;
+    background: rgba(56, 189, 248, 0.1);
+  }
+  .cmd-badge {
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: #38bdf8;
+    font-weight: 700;
+  }
+
+  .cmd-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 7, 13, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 999999;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .cmd-modal-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .cmd-modal-box {
+    width: 90%;
+    max-width: 640px;
+    background: #0f172a;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15);
+    overflow: hidden;
+    transform: translateY(-12px) scale(0.98);
+    transition: transform 0.25s ease;
+  }
+  .cmd-modal-backdrop.open .cmd-modal-box {
+    transform: translateY(0) scale(1);
+  }
+  .cmd-input-wrap {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 12px;
+  }
+  .cmd-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: #f8fafc;
+  }
+  .cmd-input::placeholder {
+    color: #64748b;
+  }
+  .cmd-list {
+    max-height: 360px;
+    overflow-y: auto;
+    padding: 8px;
+  }
+  .cmd-group-title {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    color: #64748b;
+    padding: 8px 12px 4px;
+    letter-spacing: 0.1em;
+  }
+  .cmd-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .cmd-item:hover, .cmd-item.selected {
+    background: rgba(56, 189, 248, 0.15);
+    color: #f8fafc;
+  }
+  .cmd-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cmd-shortcut {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    color: #64748b;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  /* ---------- HIGH CONVERSION GROWTH PILLS ---------- */
+  .growth-pill-yt {
+    background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
+    color: #FFFFFF !important;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    box-shadow: 0 4px 18px rgba(255, 0, 0, 0.4);
+    transition: all 0.25s ease;
+  }
+  .growth-pill-yt:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 24px rgba(255, 0, 0, 0.6);
+  }
+  .growth-pill-ig {
+    background: linear-gradient(135deg, #E1306C 0%, #833AB4 100%);
+    color: #FFFFFF !important;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    box-shadow: 0 4px 18px rgba(225, 48, 108, 0.4);
+    transition: all 0.25s ease;
+  }
+  .growth-pill-ig:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 24px rgba(225, 48, 108, 0.6);
+  }
+
+  /* ---------- ENGINEERING TELEMETRY DASHBOARD ---------- */
+  .telemetry-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (max-width: 900px) {
+    .telemetry-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .telemetry-grid { grid-template-columns: 1fr; }
+  }
+  .telemetry-card {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .telemetry-val {
+    font-family: var(--font-mono, monospace);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #38bdf8;
+    margin: 8px 0 4px;
+  }
+  .telemetry-lbl {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .build-log-item {
+    border-left: 2px solid rgba(56, 189, 248, 0.3);
+    padding-left: 20px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .build-log-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 10px #38bdf8;
+  }
+
   /* ---------- TERMINAL BOOT SEQUENCE INTRO ---------- */
   .boot-overlay {
     position: fixed;
@@ -2833,6 +3050,58 @@
 <div class="cursor-dot"></div>
 <div class="cursor-reticle" id="reticle"></div>
 
+<!-- Command Palette (Cmd + K / Ctrl + K) Modal -->
+<div id="cmdModalBackdrop" class="cmd-modal-backdrop">
+  <div class="cmd-modal-box">
+    <div class="cmd-input-wrap">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="cmdInput" class="cmd-input" placeholder="Type a command or search sections..." autocomplete="off">
+      <span class="cmd-badge">ESC to close</span>
+    </div>
+    <div class="cmd-list" id="cmdList">
+      <div class="cmd-group-title">NAVIGATION &amp; SECTIONS</div>
+      <div class="cmd-item" data-action="goto" data-target="#hero">
+        <div class="cmd-item-left">⚡ <span>Hero Space &amp; Overview</span></div>
+        <span class="cmd-shortcut">Jump</span>
+      </div>
+      <div class="cmd-item" data-action="goto" data-target="#hardware-lab">
+        <div class="cmd-item-left">🔬 <span>Hardware Lab &amp; Workstation Specs</span></div>
+        <span class="cmd-shortcut">Jump</span>
+      </div>
+      <div class="cmd-item" data-action="goto" data-target="#engineering-projects">
+        <div class="cmd-item-left">🛠️ <span>Engineering Projects (Blink Stick &amp; Pill Reminder)</span></div>
+        <span class="cmd-shortcut">Jump</span>
+      </div>
+      <div class="cmd-item" data-action="goto" data-target="#founder-journey">
+        <div class="cmd-item-left">🚀 <span>Founder Journey (HustleSmith &amp; Applify)</span></div>
+        <span class="cmd-shortcut">Jump</span>
+      </div>
+      <div class="cmd-item" data-action="goto" data-target="#campus">
+        <div class="cmd-item-left">🎓 <span>Campus, Culture &amp; 1:1 Minecraft Build</span></div>
+        <span class="cmd-shortcut">Jump</span>
+      </div>
+      <div class="cmd-item" data-action="goto" data-target="#connect">
+        <div class="cmd-item-left">🌐 <span>Connect &amp; Social Orbit Stage</span></div>
+        <span class="cmd-shortcut">Jump</span>
+      </div>
+
+      <div class="cmd-group-title">EXTERNAL CHANNELS &amp; CONVERSION</div>
+      <div class="cmd-item" data-action="url" data-target="https://www.youtube.com/@mantejtechvlogs">
+        <div class="cmd-item-left">📹 <span>Subscribe to MantejTech Vlogs on YouTube</span></div>
+        <span class="cmd-shortcut">YouTube ↗</span>
+      </div>
+      <div class="cmd-item" data-action="url" data-target="https://www.instagram.com/hustler_mantej/">
+        <div class="cmd-item-left">📸 <span>Follow @hustler_mantej on Instagram</span></div>
+        <span class="cmd-shortcut">Instagram ↗</span>
+      </div>
+      <div class="cmd-item" data-action="url" data-target="https://www.hustlesmith.studio">
+        <div class="cmd-item-left">🧵 <span>Shop HustleSmith Custom Denim Studio</span></div>
+        <span class="cmd-shortcut">Store ↗</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <nav id="navbar">
   <div class="tag">MANTEJ SINGH</div>
   <div class="links">
@@ -2847,7 +3116,12 @@
     <a href="#uses" class="magnet">Uses</a>
     <a href="#qr" class="magnet">Scan</a>
   </div>
-  <a href="#connect" class="liquid-glass-book-btn" style="margin-left:auto; margin-right:12px;">
+  <button class="cmd-trigger magnet" id="cmdTriggerBtn" title="Search Portfolio (Ctrl + K)" style="margin-left:auto; margin-right:10px;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <span>Search</span>
+    <span class="cmd-badge">⌘K</span>
+  </button>
+  <a href="#connect" class="liquid-glass-book-btn" style="margin-right:12px;">
     <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#ffffff" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
     <span>Book a Meeting</span>
     <span class="btn-emoji">🗓️</span>
@@ -3137,6 +3411,86 @@
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ================= ENGINEERING TELEMETRY & ACTIVITY DASHBOARD ================= -->
+<section id="engineering-telemetry" class="sec-base">
+  <div class="section-head" data-reveal>
+    <span class="idx">04</span><h2>Live Engineering Telemetry</h2><div class="rule"></div>
+  </div>
+
+  <div style="max-width:1100px; margin:0 auto;" data-reveal>
+    <div style="text-align:center; margin-bottom:32px;">
+      <span class="monospace-tag">[ SYSTEM_TELEMETRY: ONLINE ]</span>
+      <h3 style="font-family:var(--font-display); font-size:2rem; font-weight:800; color:#f8fafc; margin-top:8px;">Live Developer Activity &amp; Build Health</h3>
+      <p style="color:#94a3b8; font-size:0.95rem; max-width:600px; margin:8px auto 0;">Real-time engineering metrics, code throughput, system uptime, and hardware bus protocol logs.</p>
+    </div>
+
+    <div class="telemetry-grid">
+      <div class="telemetry-card">
+        <span class="telemetry-lbl">GitHub Commit Velocity</span>
+        <div class="telemetry-val" id="telemetryCommits">1,480+</div>
+        <p style="font-size:0.75rem; color:#64748b;">Pushed across 28 repositories</p>
+      </div>
+
+      <div class="telemetry-card">
+        <span class="telemetry-lbl">Production Uptime</span>
+        <div class="telemetry-val" style="color:#34d399;">99.98%</div>
+        <p style="font-size:0.75rem; color:#64748b;">Serverless &amp; IoT Edge Node Mesh</p>
+      </div>
+
+      <div class="telemetry-card">
+        <span class="telemetry-lbl">Hardware Latency</span>
+        <div class="telemetry-val" style="color:#f59e0b;">&lt; 2.4 ms</div>
+        <p style="font-size:0.75rem; color:#64748b;">UART Serial / I2C Bus Interrupts</p>
+      </div>
+
+      <div class="telemetry-card">
+        <span class="telemetry-lbl">Active Code Base</span>
+        <div class="telemetry-val" style="color:#ec4899;">120K+ LOC</div>
+        <p style="font-size:0.75rem; color:#64748b;">TypeScript, C++, Python, Rust</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ENGINEERING BUILD LOGS & DEV JOURNAL ================= -->
+<section id="build-logs" class="sec-alt">
+  <div class="section-head" data-reveal>
+    <span class="idx">05</span><h2>Engineering Build Logs</h2><div class="rule"></div>
+  </div>
+
+  <div style="max-width:900px; margin:0 auto;" data-reveal>
+    <div style="margin-bottom:36px;">
+      <span class="monospace-tag">[ CHRONOLOGICAL_LOGS ]</span>
+      <h3 style="font-family:var(--font-display); font-size:2rem; font-weight:800; color:#f8fafc; margin-top:8px;">Dev Ledger &amp; Architecture Notes</h3>
+      <p style="color:#94a3b8; font-size:0.95rem; margin-top:6px;">Milestone logs from building high-scale full-stack applications and low-level hardware devices.</p>
+    </div>
+
+    <div class="build-log-item">
+      <span class="monospace-tag" style="color:#38bdf8; font-size:0.75rem;">JULY 2026 — LOG #004</span>
+      <h4 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:#f8fafc; margin:6px 0;">Portfolio OS 4.8 Architecture &amp; Telemetry Engine</h4>
+      <p style="color:#94a3b8; font-size:0.9rem; line-height:1.6;">Integrated global command palette (`Cmd + K`), live session scan API counters, Spline 3D hardware canvas fallback posters, and safe-area notch layout bounds.</p>
+    </div>
+
+    <div class="build-log-item">
+      <span class="monospace-tag" style="color:#34d399; font-size:0.75rem;">MAY 2026 — LOG #003</span>
+      <h4 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:#f8fafc; margin:6px 0;">HustleSmith E-Commerce &amp; Studio System</h4>
+      <p style="color:#94a3b8; font-size:0.9rem; line-height:1.6;">Launched full-stack custom apparel storefront with Next.js App Router, Tailwind CSS, PostgreSQL inventory mapping, and automated order processing pipelines.</p>
+    </div>
+
+    <div class="build-log-item">
+      <span class="monospace-tag" style="color:#f59e0b; font-size:0.75rem;">FEBRUARY 2026 — LOG #002</span>
+      <h4 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:#f8fafc; margin:6px 0;">Dual-Core ESP32-S3 Firmware &amp; OLED Framebuffer Driver</h4>
+      <p style="color:#94a3b8; font-size:0.9rem; line-height:1.6;">Engineered non-blocking C++ RTOS task scheduler for 128x64 SSD1306 displays over I2C bus, reducing frame buffer swap latency to sub-2 milliseconds.</p>
+    </div>
+
+    <div class="build-log-item">
+      <span class="monospace-tag" style="color:#ec4899; font-size:0.75rem;">NOVEMBER 2025 — LOG #001</span>
+      <h4 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:#f8fafc; margin:6px 0;">Applify Mobile &amp; AI Studio Launch</h4>
+      <p style="color:#94a3b8; font-size:0.9rem; line-height:1.6;">Founded Applify software agency specializing in cross-platform mobile software, custom AI API integrations, and low-latency cloud infrastructure.</p>
+    </div>
   </div>
 </section>
 
@@ -5640,6 +5994,76 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     }
     textEl.textContent = `${count.toLocaleString()} freshers connected`;
   }
+})();
+/* ---------- COMMAND PALETTE (CMD + K) ENGINE ---------- */
+(function(){
+  const backdrop = document.getElementById('cmdModalBackdrop');
+  const triggerBtn = document.getElementById('cmdTriggerBtn');
+  const input = document.getElementById('cmdInput');
+  const cmdList = document.getElementById('cmdList');
+  if (!backdrop || !input || !cmdList) return;
+
+  function openCmd() {
+    backdrop.classList.add('open');
+    input.value = '';
+    filterItems('');
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function closeCmd() {
+    backdrop.classList.remove('open');
+  }
+
+  if (triggerBtn) triggerBtn.addEventListener('click', openCmd);
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (backdrop.classList.contains('open')) closeCmd();
+      else openCmd();
+    }
+    if (e.key === 'Escape' && backdrop.classList.contains('open')) {
+      closeCmd();
+    }
+  });
+
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) closeCmd();
+  });
+
+  function filterItems(query) {
+    const items = cmdList.querySelectorAll('.cmd-item');
+    const q = query.toLowerCase().trim();
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      if (!q || text.includes(q)) {
+        item.style.display = 'flex';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  input.addEventListener('input', (e) => {
+    filterItems(e.target.value);
+  });
+
+  cmdList.addEventListener('click', (e) => {
+    const item = e.target.closest('.cmd-item');
+    if (!item) return;
+    const action = item.dataset.action;
+    const target = item.dataset.target;
+    closeCmd();
+
+    if (action === 'goto' && target) {
+      const targetEl = document.querySelector(target);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (action === 'url' && target) {
+      window.open(target, '_blank', 'noopener,noreferrer');
+    }
+  });
 })();
 </script>
 
