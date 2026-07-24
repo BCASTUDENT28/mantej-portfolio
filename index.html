@@ -1994,6 +1994,67 @@
     }
   }
 
+  /* ---------- CONTINUOUS MOVING LIQUID GLASS BOOK MEETING BUTTON ---------- */
+  @keyframes liquidGlassFloat {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+      box-shadow: 
+        0 0 12px rgba(56, 189, 248, 0.35),
+        inset 2px 2px 1px -1px rgba(255, 255, 255, 0.6),
+        inset -2px -2px 1px -1px rgba(0, 0, 0, 0.5),
+        0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+      transform: translateY(-8px) rotate(1.2deg);
+      box-shadow: 
+        0 0 24px rgba(56, 189, 248, 0.65),
+        inset 3px 3px 1.5px -1px rgba(255, 255, 255, 0.85),
+        inset -3px -3px 1.5px -1px rgba(0, 0, 0, 0.6),
+        0 12px 28px rgba(56, 189, 248, 0.45);
+    }
+  }
+
+  .liquid-glass-book-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #ffffff !important;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-radius: 100px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    cursor: pointer;
+    animation: liquidGlassFloat 3s ease-in-out infinite;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none !important;
+    z-index: 99;
+    white-space: nowrap;
+  }
+
+  .liquid-glass-book-btn:hover {
+    background: rgba(56, 189, 248, 0.3) !important;
+    border-color: #38bdf8 !important;
+    color: #38bdf8 !important;
+    transform: translateY(-4px) scale(1.06) !important;
+    box-shadow: 0 0 32px rgba(56, 189, 248, 0.75) !important;
+  }
+
+  .liquid-glass-book-btn .btn-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 10px #34d399;
+    display: inline-block;
+  }
+
   /* ---------- Sticky Stacking Parallax Cards Showcase ---------- */
   .parallax-cards-container {
     position: relative;
@@ -2523,6 +2584,9 @@
     <a href="#uses" class="magnet">Uses</a>
     <a href="#qr" class="magnet">Scan</a>
   </div>
+  <a href="#connect" class="liquid-glass-book-btn" style="margin-left:auto; margin-right:12px;">
+    📅 BOOK MEETING <span class="btn-dot"></span>
+  </a>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu">
     <span></span><span></span><span></span>
   </button>
@@ -2935,6 +2999,11 @@
     <div class="orbit-copy">
       <h2>One ecosystem.<br>Three channels.</h2>
       <p>Instagram, YouTube, and LinkedIn — orbiting live. Click any channel to connect and follow the journey.</p>
+      <div style="margin-top:20px;">
+        <a href="https://calendly.com" target="_blank" rel="noopener" class="liquid-glass-book-btn" style="font-size:0.85rem; padding:10px 22px;">
+          📅 BOOK A MEETING WITH MANTEJ ↗ <span class="btn-dot"></span>
+        </a>
+      </div>
     </div>
   </div>
 </section>
