@@ -3311,14 +3311,6 @@
         <span class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Founder & Software Engineer</span>
       </div>
 
-      <!-- Prominent Hero Book a Meeting Button -->
-      <div style="margin: 16px 0 20px;">
-        <a href="#connect" class="liquid-glass-book-btn">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#ffffff" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span>Book a Meeting</span>
-          <span class="btn-emoji">🗓️</span>
-        </a>
-      </div>
       <div class="hero-social-bar hero-cta-highlight" id="heroSocialBar">
         <!-- Prominent YouTube Subscriber CTA Card -->
         <a href="https://www.youtube.com/@mantejtechvlogs" target="_blank" rel="noopener" class="hero-featured-cta yt-cta magnet" aria-label="Subscribe to Mantej Tech Vlogs on YouTube">
@@ -5345,33 +5337,6 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
 })();
 </script>
 
-<!-- Book a Meeting — Cal.com floating widget -->
-<script type="text/javascript">
-  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document;
-    C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments;
-      if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || [];
-        d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
-      if (ar[0] === L) { const api = function () { p(api, arguments); };
-        const namespace = ar[1]; api.q = api.q || [];
-        if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api;
-          p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar);
-        return; } p(cal, ar); };
-  })(window, "https://app.cal.com/embed/embed.js", "init");
-
-  Cal("init", "30min", {origin:"https://cal.com"});
-
-  Cal.ns["30min"]("floatingButton", {
-    calLink: "REPLACE_ME/30min",   // ← replace with real Cal.com username
-    buttonText: "BOOK A MEETING",
-    buttonColor: "#FF5FA2",        // magenta accent
-    buttonTextColor: "#05060A"
-  });
-
-  Cal.ns["30min"]("ui", {
-    "cssVarsPerTheme": { "dark": { "cal-brand": "#FF5FA2" } },
-    "layout": "month_view"
-  });
-</script>
 <style>
 
   /* Game Touch Scroll & Pointer Fix */
@@ -5713,35 +5678,6 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
 
 </script>
 
-<!-- Cal.com Floating Booking Widget -->
-<script type="text/javascript">
-  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document;
-    C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments;
-      if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || [];
-        d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
-      if (ar[0] === L) { const api = function () { p(api, arguments); };
-        const namespace = ar[1]; api.q = api.q || [];
-        if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api;
-          p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar);
-        return; } p(cal, ar); };
-  })(window, "https://app.cal.com/embed/embed.js", "init");
-
-  Cal("init", "30min", {origin:"https://cal.com"});
-
-  Cal.ns["30min"]("floatingButton", {
-    calLink: "bca-student-fod3gh/30min",
-    buttonText: "Book a Meeting 📅",
-    buttonColor: "#3B82F6",
-    buttonTextColor: "#FFFFFF",
-    buttonPosition: "bottom-right"
-  });
-  Cal.ns["30min"]("ui", {
-    theme: "dark",
-    styles: { branding: { brandColor: "#3B82F6" } },
-    hideEventTypeDetails: false,
-    layout: "month_view"
-  });
-</script>
 <script>
 
 
