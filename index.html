@@ -8,8 +8,25 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
+<link rel="stylesheet" href="tailwind.css">
+<!-- Spline 3D viewer deferred until user scrolls near it -->
+<script>
+(function(){
+  var loaded=false;
+  function loadSpline(){
+    if(loaded)return;loaded=true;
+    var s=document.createElement('script');
+    s.type='module';
+    s.src='https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js';
+    document.head.appendChild(s);
+  }
+  // Load on first scroll/touch or after 5s idle
+  ['scroll','touchstart','mousemove','keydown'].forEach(function(e){
+    window.addEventListener(e,loadSpline,{once:true,passive:true});
+  });
+  setTimeout(loadSpline,5000);
+})();
+</script>
 <style>
   :root{
     /* Soft Moody Navy/Charcoal Dark Theme Palette */
@@ -2642,8 +2659,13 @@
   </div>
   <div class="game-container" id="gameContainer" style="position:relative;width:100%;max-width:900px;height:320px;margin:0 auto;background:#0f172a;border:1px solid rgba(56,189,248,0.3);border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4);">
     <button class="game-fullscreen-btn" id="gameFullscreenBtn" aria-label="Toggle Fullscreen" title="Maximise Game">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M8 3H5a2 2 0 0 0-2 2v3m18-5h-3a2 2 0 0 1-2 2v3M3 16v3a2 2 0 0 02 2h3m13 0h-3a2 2 0 01-2-2v-3"/>
+      <!-- Expand icon (shown when NOT fullscreen) -->
+      <svg id="fsIconExpand" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"/>
+      </svg>
+      <!-- Compress icon (shown when fullscreen) -->
+      <svg id="fsIconCompress" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+        <path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3m8 0v-3a2 2 0 0 1 2-2h3"/>
       </svg>
       <span id="fullscreenBtnText">MAXIMISE</span>
     </button>
@@ -3900,7 +3922,7 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     "layout": "month_view"
   });
 </script>
-<script>
+<style>
 
   /* Game Fullscreen & Touch Scroll Fix */
   .game-container {
@@ -3946,7 +3968,8 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     border-color: #38bdf8;
     box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
   }
-
+</style>
+<script>
 /* ---------- T-REX RUNNER ENGINE (GOOGLE DINO) ---------- */
 (function() {
   'use strict';
@@ -4266,23 +4289,43 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
   }, { passive: false });
 
   // ── Fullscreen toggle ─────────────────────────────────────────────────
-  const fsBtn     = document.getElementById('gameFullscreenBtn');
-  const fsBtnText = document.getElementById('fullscreenBtnText');
+  const fsBtn         = document.getElementById('gameFullscreenBtn');
+  const fsBtnText     = document.getElementById('fullscreenBtnText');
+  const fsIconExpand  = document.getElementById('fsIconExpand');
+  const fsIconCompress= document.getElementById('fsIconCompress');
   let isFs = false;
+
+  function enterFullscreen() {
+    isFs = true;
+    container.classList.add('fullscreen-mode');
+    document.body.style.overflow = 'hidden';
+    if (fsBtnText)      fsBtnText.textContent  = 'MINIMISE';
+    if (fsIconExpand)   fsIconExpand.style.display   = 'none';
+    if (fsIconCompress) fsIconCompress.style.display = 'inline';
+    setTimeout(resizeCanvas, 80);
+  }
+
+  function exitFullscreen() {
+    isFs = false;
+    container.classList.remove('fullscreen-mode');
+    document.body.style.overflow = '';
+    if (fsBtnText)      fsBtnText.textContent  = 'MAXIMISE';
+    if (fsIconExpand)   fsIconExpand.style.display   = 'inline';
+    if (fsIconCompress) fsIconCompress.style.display = 'none';
+    setTimeout(resizeCanvas, 80);
+  }
+
   if (fsBtn) {
     fsBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      isFs = !isFs;
-      if (isFs) {
-        container.style.cssText += ';position:fixed!important;inset:0!important;z-index:999999!important;max-width:100vw!important;height:100vh!important;border-radius:0!important;';
-        if (fsBtnText) fsBtnText.textContent = 'EXIT';
-      } else {
-        container.style.cssText = 'position:relative;width:100%;max-width:900px;height:320px;margin:0 auto;background:#0f172a;border:1px solid rgba(56,189,248,0.3);border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4);';
-        if (fsBtnText) fsBtnText.textContent = 'MAXIMISE';
-      }
-      setTimeout(resizeCanvas, 100);
+      if (isFs) exitFullscreen(); else enterFullscreen();
     });
   }
+
+  // Press Escape to exit fullscreen
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isFs) exitFullscreen();
+  });
 
   // show initial overlay
   overlay.style.display = 'flex';
@@ -4320,6 +4363,7 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     layout: "month_view"
   });
 </script>
+<script>
 
 
   // Bento Hover Grid Engine for Ventures
@@ -4549,7 +4593,8 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
       });
     }
   })();
-
+})();
+</script>
 
 <!-- Interactive Share Modal -->
 <div class="share-modal-backdrop" id="shareModal" style="display:none;">
