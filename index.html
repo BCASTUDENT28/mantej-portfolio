@@ -4813,7 +4813,7 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
 </div>
 
 <script>
-/* ---------- FULLSCREEN PHOTO LIGHTBOX GALLERY ENGINE ---------- */
+/* ---------- FULLSCREEN PHOTO LIGHTBOX GALLERY ENGINE (NON-BLOCKING) ---------- */
 (function() {
   let galleryItems = [];
   let currentIndex = 0;
@@ -4838,17 +4838,17 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
 
   function collectGalleryItems() {
     galleryItems = [];
-    
-    // 1. Collect LPU Mosaic Gallery Items
-    const mosaicItems = document.querySelectorAll('.lpu-gallery-item');
-    mosaicItems.forEach((item, idx) => {
-      const img = item.querySelector('img');
-      const badge = item.querySelector('.lpu-gallery-badge');
-      const title = item.querySelector('.lpu-gallery-title');
-      const sub = item.querySelector('.lpu-gallery-sub');
-      if (img && img.src) {
+
+    // 1. LPU Campus Mosaic Images
+    const mosaicImgs = document.querySelectorAll('.lpu-gallery-item img');
+    mosaicImgs.forEach((img) => {
+      const parent = img.closest('.lpu-gallery-item');
+      const badge = parent ? parent.querySelector('.lpu-gallery-badge') : null;
+      const title = parent ? parent.querySelector('.lpu-gallery-title') : null;
+      const sub = parent ? parent.querySelector('.lpu-gallery-sub') : null;
+      if (img.src) {
         galleryItems.push({
-          element: item,
+          imgElement: img,
           src: img.src,
           badge: badge ? badge.textContent.trim() : 'CAMPUS GALLERY',
           title: title ? title.textContent.trim() : (img.alt || 'LPU Campus'),
@@ -4857,16 +4857,16 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
       }
     });
 
-    // 2. Collect Story Visual Items
-    const storyVisuals = document.querySelectorAll('.story-card');
-    storyVisuals.forEach((item, idx) => {
-      const img = item.querySelector('.story-video-wrap img');
-      const chapter = item.querySelector('.story-chapter');
-      const title = item.querySelector('.story-title');
-      const body = item.querySelector('.story-body');
-      if (img && img.src) {
+    // 2. Story Card Images
+    const storyImgs = document.querySelectorAll('.story-card .story-video-wrap img');
+    storyImgs.forEach((img) => {
+      const parent = img.closest('.story-card');
+      const chapter = parent ? parent.querySelector('.story-chapter') : null;
+      const title = parent ? parent.querySelector('.story-title') : null;
+      const body = parent ? parent.querySelector('.story-body') : null;
+      if (img.src) {
         galleryItems.push({
-          element: item,
+          imgElement: img,
           src: img.src,
           badge: chapter ? chapter.textContent.trim() : 'STORY CHAPTER',
           title: title ? title.textContent.trim() : 'Founder Journey',
@@ -4875,15 +4875,15 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
       }
     });
 
-    // 3. Collect Venture Images
-    const ventureImages = document.querySelectorAll('.venture-video-container img');
-    ventureImages.forEach((img) => {
-      if (img && img.src) {
-        const parentMod = img.closest('.module');
-        const title = parentMod ? parentMod.querySelector('h3') : null;
-        const desc = parentMod ? parentMod.querySelector('p') : null;
+    // 3. Venture Images
+    const ventureImgs = document.querySelectorAll('.venture-video-container img');
+    ventureImgs.forEach((img) => {
+      const parentMod = img.closest('.module');
+      const title = parentMod ? parentMod.querySelector('h3') : null;
+      const desc = parentMod ? parentMod.querySelector('p') : null;
+      if (img.src) {
         galleryItems.push({
-          element: img.parentElement,
+          imgElement: img,
           src: img.src,
           badge: 'VENTURE ART',
           title: title ? title.textContent.trim() : 'HustleSmith Studio',
@@ -4892,11 +4892,21 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
       }
     });
 
-    // Attach click listeners to all items
+    // Attach drag-protected click handlers ONLY to actual img elements
     galleryItems.forEach((itemData, index) => {
-      itemData.element.addEventListener('click', (e) => {
-        // Prevent opening if clicking an interactive sub-link
-        if (e.target.closest('a') || e.target.closest('button')) return;
+      let startX = 0, startY = 0;
+
+      itemData.imgElement.style.cursor = 'pointer';
+
+      itemData.imgElement.addEventListener('pointerdown', (e) => {
+        startX = e.clientX;
+        startY = e.clientY;
+      });
+
+      itemData.imgElement.addEventListener('click', (e) => {
+        // Calculate movement distance to prevent false triggers during scroll/swipe
+        const dist = Math.hypot(e.clientX - startX, e.clientY - startY);
+        if (dist > 8) return; // Ignore drag/scroll gestures
         openLightbox(index);
       });
     });
@@ -4921,7 +4931,7 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     setTimeout(() => {
       modal.style.display = 'none';
       document.body.style.overflow = '';
-    }, 300);
+    }, 250);
   }
 
   function updateStage() {
@@ -4943,7 +4953,7 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
         counterEl.textContent = `${currentStr} / ${totalStr}`;
       }
       activeImg.classList.remove('changing');
-    }, 120);
+    }, 100);
   }
 
   function nextImage() {
@@ -4998,8 +5008,6 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
 
   // Mobile Touch Swipe Navigation
   let touchStartX = 0;
-  let touchEndX = 0;
-
   modal.addEventListener('touchstart', (e) => {
     touchStartX = e.changedTouches[0].screenX;
   }, { passive: true });
