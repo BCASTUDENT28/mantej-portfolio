@@ -1942,31 +1942,34 @@
     align-items: center;
     justify-content: center;
     min-height: 220px;
-  }
   .story-ghost {
     font-family: var(--font-display);
-    font-size: clamp(8rem, 14vw, 16rem);
+    font-size: clamp(3rem, 6vw, 4.5rem);
     font-weight: 900;
-    color: rgba(126, 176, 240, 0.04);
+    color: #38bdf8;
+    opacity: 0.45;
     line-height: 1;
     position: absolute;
+    top: 20px;
+    right: 24px;
     user-select: none;
     pointer-events: none;
-    z-index: 0;
+    z-index: 10;
+    text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
   }
   .story-video-wrap {
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 240px;
-    height: 320px;
-    border-radius: 18px;
+    max-width: 100%;
+    height: 440px;
+    border-radius: 20px;
     overflow: hidden;
-    border: 1px solid var(--border-subtle);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.45);
     background: #0D1117;
   }
-  .story-video-wrap video {
+  .story-video-wrap video, .story-video-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -1991,18 +1994,29 @@
   /* Card-only ghost (no video) — centered */
   .story-card-visual.no-video .story-ghost {
     position: relative;
-    font-size: clamp(10rem, 18vw, 22rem);
+    font-size: clamp(8rem, 14vw, 16rem);
   }
   @media (max-width: 800px) {
     .story-card {
-      grid-template-columns: 1fr;
-      gap: 28px;
-      padding: 48px 0;
+      grid-template-columns: 1fr !important;
+      gap: 20px !important;
+      padding: 24px !important;
     }
     .story-card:nth-child(even) { direction: ltr; }
-    .story-card-visual { min-height: 160px; }
-    .story-video-wrap { max-width: 320px; margin: 0 auto; }
-    .story-card-visual.no-video .story-ghost { font-size: 7rem; }
+    .story-card-visual { min-height: 280px; }
+    .story-ghost {
+      top: 14px;
+      right: 16px;
+      font-size: 3.2rem;
+      opacity: 0.55;
+    }
+    .story-video-wrap {
+      width: 100%;
+      max-width: 100%;
+      height: 380px;
+      margin: 0 auto;
+    }
+    .story-card-visual.no-video .story-ghost { font-size: 5rem; }
   }
 
   /* prefers-reduced-motion fallback */
@@ -2371,31 +2385,32 @@
   <div class="story-cards-container" data-reveal style="display:flex; flex-direction:column; gap:36px; max-width:1100px; margin:0 auto;">
     
     <!-- Chapter 01: Origin -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3); position:relative;">
+      <span class="story-ghost">01</span>
       <div class="story-card-text">
         <div class="story-chapter" style="color:var(--accent-blue); font-size:0.85rem; font-weight:800; letter-spacing:0.08em; margin-bottom:8px;">CHAPTER 01 — ORIGIN</div>
         <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">I don’t just study tech.<br>I build with it.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:1rem; line-height:1.65; margin-bottom:20px;">Started at LPU with a soldering iron and a secondhand Arduino. While everyone else was memorizing theory, I was flashing firmware onto microcontrollers at 2 AM — debugging signal noise by ear. That restlessness became a compass: <span style="color:var(--accent-cyan); font-weight:600;">if it can be built, it should be built tonight.</span></p>
+        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.6; margin-bottom:16px;">Started at LPU with a soldering iron &amp; Arduino. Flashing firmware at 2 AM turned restlessness into a compass: <span style="color:var(--accent-cyan); font-weight:600;">if it can be built, build it tonight.</span></p>
         <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">HARDWARE</span>
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">EMBEDDED SYSTEMS</span>
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">LPU</span>
         </div>
       </div>
-      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
-        <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">01</span>
-        <div class="story-video-wrap" style="width:100%; height:100%;">
+      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:280px; position:relative;">
+        <div class="story-video-wrap">
           <img src="images/hustlesmith_denim_hero.png" alt="HustleSmith Custom Denim Craftsmanship" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
         </div>
       </div>
     </div>
 
     <!-- Chapter 02: Clothing Brand Startup -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3); position:relative;">
+      <span class="story-ghost">02</span>
       <div class="story-card-text">
         <div class="story-chapter" style="color:var(--accent-blue); font-size:0.85rem; font-weight:800; letter-spacing:0.08em; margin-bottom:8px;">CHAPTER 02 — THE CLOTHING BRAND STARTUP</div>
-        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">HustleSmith — Clothing Brand Startup Started at LPU.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:1rem; line-height:1.65; margin-bottom:20px;">HustleSmith is my luxury custom denim clothing brand startup that I launched at LPU (Lovely Professional University). Every jacket is hand-painted and embroidered in collaboration with LPU’s Fine Arts talent. No factory lines — each piece is a one-of-one artifact that merges <span style="color:var(--accent-cyan); font-weight:600;">streetwear edge with handcraft tradition.</span></p>
+        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">HustleSmith — Denim Startup at LPU.</h3>
+        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.6; margin-bottom:16px;">Luxury custom denim brand launched at LPU. Hand-painted &amp; embroidered in collaboration with Fine Arts talent: <span style="color:var(--accent-cyan); font-weight:600;">1-of-1 streetwear artifacts.</span></p>
         <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">HUSTLESMITH</span>
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">CLOTHING BRAND</span>
@@ -2403,9 +2418,8 @@
           <span class="story-tag" style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#34D399; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">LIVE STORE</span>
         </div>
       </div>
-      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
-        <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">02</span>
-        <div class="story-video-wrap" style="width:100%; height:100%;">
+      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:280px; position:relative;">
+        <div class="story-video-wrap">
           <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
             <source src="assets/hustlesmith_promo.mp4" type="video/mp4">
           </video>
@@ -2414,38 +2428,38 @@
     </div>
 
     <!-- Chapter 03: Full-Stack Systems -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3); position:relative;">
+      <span class="story-ghost">03</span>
       <div class="story-card-text">
         <div class="story-chapter" style="color:var(--accent-blue); font-size:0.85rem; font-weight:800; letter-spacing:0.08em; margin-bottom:8px;">CHAPTER 03 — FULL-STACK SYSTEMS</div>
-        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">Full-Stack Engineering &amp;<br>AI Creative Systems.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:1rem; line-height:1.65; margin-bottom:20px;">Architecting modern web applications and mobile platforms. <span style="color:var(--accent-cyan); font-weight:600;">From scalable full-stack web products to native iOS & Android apps</span>, every tool is engineered with high performance, sleek dark aesthetics, and security.</p>
+        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">Full-Stack Engineering &amp; AI Systems.</h3>
+        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.6; margin-bottom:16px;">Architecting web applications &amp; mobile platforms. <span style="color:var(--accent-cyan); font-weight:600;">Full-stack web products to native iOS &amp; Android apps</span> engineered for high performance and sleek aesthetics.</p>
         <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">FULL STACK</span>
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">AI PIPELINES</span>
         </div>
       </div>
-      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
-        <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">03</span>
-        <div class="story-video-wrap" style="width:100%; height:100%;">
+      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:280px; position:relative;">
+        <div class="story-video-wrap">
           <img src="images/lpu_auditorium.jpg" alt="LPU Tech Engine" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
         </div>
       </div>
     </div>
 
     <!-- Chapter 04: AI Systems -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3); position:relative;">
+      <span class="story-ghost">04</span>
       <div class="story-card-text">
         <div class="story-chapter" style="color:var(--accent-blue); font-size:0.85rem; font-weight:800; letter-spacing:0.08em; margin-bottom:8px;">CHAPTER 04 — AI &amp; SYSTEM ENGINE</div>
-        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">Full-stack engineering,<br>scalable web systems.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:1rem; line-height:1.65; margin-bottom:20px;">React, Node, Python, Postgres, Docker — plus custom generative AI pipelines. I build algorithms that can <span style="color:var(--accent-cyan); font-weight:600;">replicate and clone any viral video style or reel on the internet</span> using neural motion &amp; visual synthesis engines, alongside red-team security audits.</p>
+        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">Generative Media &amp; Neural Pipelines.</h3>
+        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.6; margin-bottom:16px;">React, Node, Python &amp; Postgres with custom generative AI to <span style="color:var(--accent-cyan); font-weight:600;">replicate video styles &amp; reels</span> using neural motion synthesis.</p>
         <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">SYSTEM ENGINE</span>
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">GENERATIVE MEDIA</span>
         </div>
       </div>
-      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
-        <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">04</span>
-        <div class="story-video-wrap" style="width:100%; height:100%;">
+      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:280px; position:relative;">
+        <div class="story-video-wrap">
           <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
             <source src="assets/ai_reel_replica.mp4" type="video/mp4">
           </video>
@@ -2454,20 +2468,20 @@
     </div>
 
     <!-- Chapter 05: The Creator -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:32px; background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:36px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.3); position:relative;">
+      <span class="story-ghost">05</span>
       <div class="story-card-text">
         <div class="story-chapter" style="color:var(--accent-blue); font-size:0.85rem; font-weight:800; letter-spacing:0.08em; margin-bottom:8px;">CHAPTER 05 — THE CREATOR</div>
-        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">Building in public.<br>Every single day.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:1rem; line-height:1.65; margin-bottom:20px;">Tech vlogs on YouTube documenting the real startup grind — not the highlight reel. From soldering station demos to app launch countdowns, <span style="color:var(--accent-cyan); font-weight:600;">the camera rolls while the code compiles.</span> Instagram for the culture, YouTube for the craft.</p>
+        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">Building in public daily.</h3>
+        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.6; margin-bottom:16px;">Documenting the startup journey on YouTube &amp; Instagram. From soldering station demos to app launches — <span style="color:var(--accent-cyan); font-weight:600;">the camera rolls as code compiles.</span></p>
         <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">HUSTLER MAN OF LPU</span>
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">VLOGGER</span>
           <span class="story-tag" style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:8px;">YOUTUBE</span>
         </div>
       </div>
-      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:240px; position:relative;">
-        <span class="story-ghost" style="position:absolute; top:12px; right:16px; font-size:3rem; font-weight:900; opacity:0.15; color:#FFF;">05</span>
-        <div class="story-video-wrap" style="width:100%; height:100%;">
+      <div class="story-card-visual" style="border-radius:16px; overflow:hidden; min-height:280px; position:relative;">
+        <div class="story-video-wrap">
           <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
             <source src="assets/mantej_mountain_reel.mp4" type="video/mp4">
           </video>
@@ -2492,7 +2506,7 @@
         <div class="mod-id">VENTURE · 01</div>
         <span class="status live">● LIVE STORE</span>
         <h3>HustleSmith Studio</h3>
-        <p>Luxury custom denim clothing brand launched at LPU. Every jacket is hand-painted &amp; embroidered in collaboration with LPU's Fine Arts talent — one-of-one artifacts where streetwear meets handcraft tradition.</p>
+        <p>Custom denim clothing brand at LPU. Hand-painted 1-of-1 streetwear artifacts.</p>
 
         <!-- Video / Image card -->
         <div class="venture-video-container">
@@ -2526,7 +2540,7 @@
         <div class="mod-id">VENTURE · 02</div>
         <span class="status pending">⚡ IN BUILD</span>
         <h3>Stealth SaaS</h3>
-        <p>A full-stack AI-powered product currently in development — architecting scalable web systems with custom generative AI pipelines. React · Node · Python · Postgres · Docker. Details drop soon.</p>
+        <p>AI-powered full-stack product in active build. Scalable web &amp; automation pipelines.</p>
 
         <!-- Placeholder visual -->
         <div class="venture-video-container" style="background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
@@ -2549,7 +2563,7 @@
         <div class="mod-id">VENTURE · 03</div>
         <span class="status live">● LIVE CHANNEL</span>
         <h3>MantejTech Vlogs</h3>
-        <p>Building in public on YouTube — documenting the real startup grind. From soldering station demos to app launch countdowns. Instagram for the culture, YouTube for the craft.</p>
+        <p>Building in public on YouTube. Real startup grind, tech reviews, and dev vlogs.</p>
 
         <!-- YouTube embed thumbnail -->
         <div class="venture-video-container" style="aspect-ratio:16/9;max-height:260px;">
