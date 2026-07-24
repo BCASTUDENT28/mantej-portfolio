@@ -3062,68 +3062,25 @@
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px;">
       <!-- Schematic 1: Exploded ESP32 Node -->
       <div class="tech-border-box" style="display:flex; flex-direction:column; gap:20px; align-items:center;">
-        <span class="monospace-tag">FIG 1.0 — ESP32 NODE DIAGRAM</span>
-        <div class="project-schematic" style="width:100%;">
-          <svg viewBox="0 0 200 150" width="280">
-            <!-- Grid Lines -->
-            <line x1="10" y1="10" x2="190" y2="10" stroke="rgba(56, 189, 248, 0.15)" stroke-dasharray="2,2" />
-            <line x1="10" y1="75" x2="190" y2="75" stroke="rgba(56, 189, 248, 0.15)" stroke-dasharray="2,2" />
-            <line x1="10" y1="140" x2="190" y2="140" stroke="rgba(56, 189, 248, 0.15)" stroke-dasharray="2,2" />
-            <!-- Controller Chip -->
-            <rect x="60" y="40" width="80" height="70" rx="4" fill="none" stroke="#38bdf8" stroke-width="2" />
-            <!-- Core label -->
-            <text x="100" y="78" fill="#38bdf8" font-family="monospace" font-size="8" text-anchor="middle">ESP32-WROOM-32E</text>
-            <!-- Antenna -->
-            <rect x="80" y="25" width="40" height="15" fill="none" stroke="#38bdf8" stroke-dasharray="2,1" />
-            <path d="M 85,32 L 95,32 L 95,28 L 105,28 L 105,32 L 115,32" fill="none" stroke="#38bdf8" />
-            <!-- Pin leads -->
-            <line x1="45" y1="50" x2="60" y2="50" stroke="#34d399" stroke-width="1.5" />
-            <text x="38" y="52" fill="#34d399" font-family="monospace" font-size="7">[PIN_02]</text>
-            <line x1="45" y1="70" x2="60" y2="70" stroke="#34d399" stroke-width="1.5" />
-            <text x="38" y="72" fill="#34d399" font-family="monospace" font-size="7">[TX_UART]</text>
-            <line x1="45" y1="90" x2="60" y2="90" stroke="#34d399" stroke-width="1.5" />
-            <text x="38" y="92" fill="#34d399" font-family="monospace" font-size="7">[VCC_3V3]</text>
-            
-            <line x1="140" y1="50" x2="155" y2="50" stroke="#38bdf8" />
-            <text x="159" y="52" fill="#38bdf8" font-family="monospace" font-size="7">[GPIO_12]</text>
-            <line x1="140" y1="70" x2="155" y2="70" stroke="#38bdf8" />
-            <text x="159" y="72" fill="#38bdf8" font-family="monospace" font-size="7">[GPIO_14]</text>
-            <line x1="140" y1="90" x2="155" y2="90" stroke="#38bdf8" />
-            <text x="159" y="92" fill="#38bdf8" font-family="monospace" font-size="7">[GND]</text>
-          </svg>
+        <span class="monospace-tag">FIG 1.0 — ESP32 NODE HARDWARE</span>
+        <div class="project-schematic" style="width:100%; padding:0; overflow:hidden; border:1px solid rgba(56,189,248,0.35); box-shadow:0 12px 36px rgba(0,0,0,0.6);">
+          <img src="images/hardware/esp32_iot_node.png" alt="ESP32 IoT Node Microcontroller Hardware" style="width:100%; height:220px; object-fit:cover; display:block; border-radius:14px; transition:transform 0.5s ease;">
         </div>
         <div style="text-align:center;">
-          <h5 style="color:#f8fafc; font-family:var(--font-display); font-size:1rem; font-weight:700;">IoT Node Schematic</h5>
-          <p style="color:#94a3b8; font-size:0.8rem; margin-top:4px;">Exploded PIN mapping layout showing digital UART/I2C connections.</p>
+          <h5 style="color:#f8fafc; font-family:var(--font-display); font-size:1rem; font-weight:700;">ESP32 Microcontroller Macro</h5>
+          <p style="color:#94a3b8; font-size:0.8rem; margin-top:4px;">Custom PCB layout with gold-plated trace routing and active status LEDs.</p>
         </div>
       </div>
 
       <!-- Schematic 2: Exploded Arduino Uno Bus -->
       <div class="tech-border-box" style="display:flex; flex-direction:column; gap:20px; align-items:center;">
-        <span class="monospace-tag">FIG 2.0 — ARDUINO SIGNAL FLOW</span>
-        <div class="project-schematic" style="width:100%;">
-          <svg viewBox="0 0 200 150" width="280">
-            <!-- Signal trace lines -->
-            <circle cx="100" cy="75" r="55" fill="none" stroke="rgba(56, 189, 248, 0.2)" stroke-dasharray="4,4" />
-            <circle cx="100" cy="75" r="30" fill="none" stroke="#38bdf8" stroke-dasharray="2,2" />
-            <circle cx="100" cy="75" r="5" fill="#34d399" />
-            <!-- Peripheral components -->
-            <rect x="25" y="60" width="30" height="30" rx="3" fill="none" stroke="#38bdf8" />
-            <text x="40" y="78" fill="#38bdf8" font-family="monospace" font-size="8" text-anchor="middle">MCU</text>
-            
-            <rect x="145" y="60" width="30" height="30" rx="3" fill="none" stroke="#34d399" />
-            <text x="160" y="78" fill="#34d399" font-family="monospace" font-size="8" text-anchor="middle">OLED</text>
-            
-            <!-- Connection arrows -->
-            <path d="M 55,75 L 70,75" stroke="#38bdf8" stroke-width="1.5" />
-            <path d="M 130,75 L 145,75" stroke="#34d399" stroke-width="1.5" />
-            <!-- Labels -->
-            <text x="100" y="15" fill="#94a3b8" font-family="monospace" font-size="8" text-anchor="middle">SPI/I2C PROTOCOL BUS</text>
-          </svg>
+        <span class="monospace-tag">FIG 2.0 — I2C OLED DATA BUS</span>
+        <div class="project-schematic" style="width:100%; padding:0; overflow:hidden; border:1px solid rgba(52,211,153,0.35); box-shadow:0 12px 36px rgba(0,0,0,0.6);">
+          <img src="images/hardware/i2c_oled_bus.png" alt="I2C OLED Display Data Bus Hardware Module" style="width:100%; height:220px; object-fit:cover; display:block; border-radius:14px; transition:transform 0.5s ease;">
         </div>
         <div style="text-align:center;">
-          <h5 style="color:#f8fafc; font-family:var(--font-display); font-size:1rem; font-weight:700;">I2C Data Bus Blueprint</h5>
-          <p style="color:#94a3b8; font-size:0.8rem; margin-top:4px;">128x64 display connection layout showing hardware interrupts.</p>
+          <h5 style="color:#f8fafc; font-family:var(--font-display); font-size:1rem; font-weight:700;">I2C Data Bus &amp; OLED Screen</h5>
+          <p style="color:#94a3b8; font-size:0.8rem; margin-top:4px;">128x64 monochrome OLED hardware module with real-time waveform telemetry.</p>
         </div>
       </div>
     </div>
@@ -3153,24 +3110,8 @@
         </div>
       </div>
       <div style="order:2;">
-        <div class="project-schematic">
-          <svg viewBox="0 0 200 150" width="300">
-            <!-- Board outlines -->
-            <rect x="20" y="35" width="160" height="80" rx="6" fill="none" stroke="#38bdf8" stroke-width="2" />
-            <!-- USB connector -->
-            <rect x="2" y="60" width="18" height="30" fill="none" stroke="#38bdf8" />
-            <!-- Microcontroller -->
-            <rect x="40" y="55" width="40" height="40" rx="3" fill="none" stroke="#34d399" />
-            <text x="60" y="78" fill="#34d399" font-family="monospace" font-size="7" text-anchor="middle">ESP32</text>
-            <!-- NeoPixel LEDs -->
-            <circle cx="110" cy="75" r="8" fill="none" stroke="#38bdf8" />
-            <circle cx="135" cy="75" r="8" fill="none" stroke="#38bdf8" />
-            <circle cx="160" cy="75" r="8" fill="none" stroke="#38bdf8" />
-            <text x="135" y="100" fill="#94a3b8" font-family="monospace" font-size="7" text-anchor="middle">WS2812B ARRAY</text>
-            <!-- Serial trace line -->
-            <path d="M 20,75 L 40,75" stroke="#38bdf8" stroke-dasharray="2,2" />
-            <path d="M 80,75 L 102,75" stroke="#34d399" />
-          </svg>
+        <div class="project-schematic" style="width:100%; padding:0; overflow:hidden; border:1px solid rgba(56,189,248,0.35); box-shadow:0 12px 36px rgba(0,0,0,0.6);">
+          <img src="images/hardware/smart_blink_stick.png" alt="Smart Blink Stick USB Telemetry Hardware Prototype" style="width:100%; height:260px; object-fit:cover; display:block; border-radius:14px; transition:transform 0.5s ease;">
         </div>
       </div>
     </div>
@@ -3190,20 +3131,8 @@
         </div>
       </div>
       <div style="order:1;">
-        <div class="project-schematic">
-          <svg viewBox="0 0 200 150" width="300">
-            <!-- Box -->
-            <rect x="30" y="25" width="140" height="100" rx="8" fill="none" stroke="#38bdf8" stroke-width="1.5" />
-            <!-- OLED Display Screen -->
-            <rect x="50" y="40" width="100" height="40" fill="none" stroke="#34d399" stroke-width="2" />
-            <text x="100" y="63" fill="#34d399" font-family="monospace" font-size="8" text-anchor="middle">TAKE MEDS NOW</text>
-            <!-- Buzzer -->
-            <circle cx="60" cy="100" r="10" fill="none" stroke="#38bdf8" />
-            <text x="60" y="103" fill="#38bdf8" font-family="monospace" font-size="6" text-anchor="middle">BUZZ</text>
-            <!-- RTC clock chip -->
-            <rect x="110" y="90" width="40" height="20" fill="none" stroke="#38bdf8" />
-            <text x="130" y="102" fill="#38bdf8" font-family="monospace" font-size="6" text-anchor="middle">DS3231 RTC</text>
-          </svg>
+        <div class="project-schematic" style="width:100%; padding:0; overflow:hidden; border:1px solid rgba(52,211,153,0.35); box-shadow:0 12px 36px rgba(0,0,0,0.6);">
+          <img src="images/hardware/auto_medicine_reminder.png" alt="Autonomous IoT Medicine Reminder Station Prototype" style="width:100%; height:260px; object-fit:cover; display:block; border-radius:14px; transition:transform 0.5s ease;">
         </div>
       </div>
     </div>
