@@ -28,6 +28,52 @@
 })();
 </script>
 <style>
+  /* ---------- TERMINAL BOOT SEQUENCE INTRO ---------- */
+  .boot-overlay {
+    position: fixed;
+    inset: 0;
+    background: #0A0A0F;
+    z-index: 99999999;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: calc(40px + env(safe-area-inset-top, 0px)) max(40px, env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) max(40px, env(safe-area-inset-left, 0px));
+    font-family: var(--font-mono, monospace);
+    color: #38bdf8;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+  .boot-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .boot-terminal {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .boot-line {
+    opacity: 0;
+    margin-bottom: 8px;
+    transform: translateY(5px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .boot-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .boot-cursor::after {
+    content: "█";
+    animation: bootFlash 0.8s infinite;
+  }
+  @keyframes bootFlash {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+
   :root{
     /* Soft Moody Navy/Charcoal Dark Theme Palette */
     --bg-base: #1B2438;          /* Primary section background */
@@ -193,7 +239,7 @@
   nav{
     position:fixed;top:0;left:0;right:0;z-index:50;
     display:flex;justify-content:space-between;align-items:center;
-    padding:20px clamp(20px,4vw,56px);
+    padding: calc(16px + env(safe-area-inset-top, 0px)) max(clamp(20px,4vw,56px), env(safe-area-inset-right, 0px)) 16px max(clamp(20px,4vw,56px), env(safe-area-inset-left, 0px));
     font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:.04em;
     color:#94A3B8;
     backdrop-filter:blur(14px);
@@ -242,7 +288,7 @@
   /* Mobile Nav Drawer - Dark Premium Theme */
   .nav-drawer {
     position: fixed;
-    top: 60px;
+    top: calc(56px + env(safe-area-inset-top, 0px));
     left: 0;
     right: 0;
     background: rgba(10, 10, 15, 0.96);
@@ -251,7 +297,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     display: flex;
     flex-direction: column;
-    padding: 24px 32px;
+    padding: 24px max(32px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(32px, env(safe-area-inset-left, 0px));
     gap: 16px;
     z-index: 49;
     transform: translateY(-130%);
@@ -646,6 +692,7 @@
     left: 50%;
     transform: translateX(-50%);
     width: 440px;
+    max-width: 90vw;
     height: 110px;
     border-radius: 50%;
     background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.45) 0%, rgba(30, 58, 138, 0.22) 50%, transparent 80%);
@@ -659,6 +706,7 @@
     left: 50%;
     transform: translateX(-50%) rotateX(75deg);
     width: 360px;
+    max-width: 90vw;
     height: 360px;
     border-radius: 50%;
     border: 1.5px dashed rgba(96, 165, 250, 0.4);
@@ -1879,7 +1927,7 @@
 
   /* ---------- Footer ---------- */
   footer{
-    padding:44px clamp(20px,6vw,80px);
+    padding:44px max(clamp(20px,6vw,80px), env(safe-area-inset-right, 0px)) calc(44px + env(safe-area-inset-bottom, 0px)) max(clamp(20px,6vw,80px), env(safe-area-inset-left, 0px));
     border-top:1px solid var(--border-light);
     display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
     font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--text-muted);position:relative;z-index:1;
@@ -2407,7 +2455,7 @@
     .lb-nav-btn { width: 44px; height: 44px; }
     .lb-nav-btn svg { width: 20px; height: 20px; }
     .lightbox-stage { padding: 0 8px; }
-    .lightbox-bottombar { flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px 20px 20px; }
+    .lightbox-bottombar { flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px max(20px, env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px)); }
     .lb-hint { display: none; }
   }
 
@@ -2609,9 +2657,155 @@
   letter-spacing: 0.02em;
 }
 
+  /* ---------- ENGINEERING BLUEPRINT STYLE SYSTEM ---------- */
+  .blueprint-grid-bg {
+    background-image: 
+      linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: center;
+  }
+  .tech-border-box {
+    position: relative;
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    background: rgba(10, 10, 15, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    padding: 24px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .tech-border-box::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 6px; height: 6px;
+    border-top: 2px solid #38bdf8;
+    border-left: 2px solid #38bdf8;
+  }
+  .tech-border-box::before {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0; width: 6px; height: 6px;
+    border-bottom: 2px solid #38bdf8;
+    border-right: 2px solid #38bdf8;
+  }
+  .tech-border-box:hover {
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+    transform: translateY(-2px);
+  }
+  .monospace-tag {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: #38bdf8;
+    text-transform: uppercase;
+  }
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .spec-item {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 6px 10px;
+    border-radius: 6px;
+    border-left: 2px solid rgba(56, 189, 248, 0.3);
+  }
+  .spec-item strong {
+    color: #f8fafc;
+  }
+  
+  /* Project Details Grid */
+  .proj-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 60px;
+  }
+  @media (max-width: 900px) {
+    .proj-container {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+  .project-schematic {
+    position: relative;
+    border: 1px dashed rgba(56, 189, 248, 0.3);
+    border-radius: 16px;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .project-schematic svg {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+  }
+  
+  /* Focus board */
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (max-width: 960px) {
+    .focus-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 480px) {
+    .focus-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .focus-card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.25s ease;
+  }
+  .focus-card:hover {
+    border-color: rgba(56, 189, 248, 0.3);
+    background: rgba(15, 23, 42, 0.9);
+    transform: translateY(-2px);
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.9); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.6; }
+  }
 </style>
 </head>
 <body>
+
+<!-- Boot Sequence Loader Overlay -->
+<div id="bootOverlay" class="boot-overlay" style="display: none;">
+  <div class="boot-terminal">
+    <div class="boot-line">> INITIALIZING MANTEJ_OS v4.8...</div>
+    <div class="boot-line">> PERFORMING CORE PROTOCOL INJECTIONS...</div>
+    <div class="boot-line">> [ OK ] SILICON INTERFACE MOUNTED</div>
+    <div class="boot-line">> [ OK ] HARDWARE TELEMETRY CALIBRATED</div>
+    <div class="boot-line">> [ OK ] 3D RENDER ENGINE ENGAGED</div>
+    <div class="boot-line boot-cursor">> LOADING HERO SPACE FRAMEWORK...</div>
+  </div>
+</div>
+<script>
+  if (!sessionStorage.getItem('bootloaderPlayed')) {
+    document.getElementById('bootOverlay').style.display = 'flex';
+  }
+</script>
 
 <!-- Liquid Glass Refraction SVG Filter -->
 <svg style="position:absolute;width:0;height:0;pointer-events:none;" aria-hidden="true">
@@ -2643,12 +2837,13 @@
   <div class="tag">MANTEJ SINGH</div>
   <div class="links">
     <a href="#game" class="magnet">Play Game</a>
-    <a href="#story" class="magnet">Story</a>
-    <a href="#ventures" class="magnet">Ventures</a>
+    <a href="#hardware-lab" class="magnet">Hardware Lab</a>
+    <a href="#hardware-gallery" class="magnet">Gallery</a>
+    <a href="#engineering-projects" class="magnet">Projects</a>
+    <a href="#founder-journey" class="magnet">Journey</a>
     <a href="#campus" class="magnet">Campus</a>
-    <a href="#journey" class="magnet">Journey</a>
     <a href="#connect" class="magnet">Connect</a>
-    <a href="#now" class="magnet">Now</a>
+    <a href="#current-focus" class="magnet">Focus</a>
     <a href="#uses" class="magnet">Uses</a>
     <a href="#qr" class="magnet">Scan</a>
   </div>
@@ -2664,12 +2859,13 @@
 
 <div class="nav-drawer" id="navDrawer">
   <a href="#game" class="drawer-link">Play Game</a>
-  <a href="#story" class="drawer-link">Story</a>
-  <a href="#ventures" class="drawer-link">Ventures</a>
+  <a href="#hardware-lab" class="drawer-link">Hardware Lab</a>
+  <a href="#hardware-gallery" class="drawer-link">Gallery</a>
+  <a href="#engineering-projects" class="drawer-link">Projects</a>
+  <a href="#founder-journey" class="drawer-link">Journey</a>
   <a href="#campus" class="drawer-link">Campus</a>
-  <a href="#journey" class="drawer-link">Journey</a>
   <a href="#connect" class="drawer-link">Connect</a>
-  <a href="#now" class="drawer-link">Now</a>
+  <a href="#current-focus" class="drawer-link">Focus</a>
   <a href="#uses" class="drawer-link">Uses</a>
   <a href="#qr" class="drawer-link">Scan</a>
 </div>
@@ -2793,221 +2989,324 @@
   <div class="scroll-cue" id="scrollCue"><span>SCROLL</span><div class="bar"></div></div>
 </section>
 
+<!-- ================= HARDWARE LAB ================= -->
+<section id="hardware-lab" class="sec-alt blueprint-grid-bg">
+  <div class="section-head" data-reveal>
+    <span class="idx">01</span><h2>Hardware Lab</h2><div class="rule"></div>
+  </div>
+  
+  <div style="max-width:1100px; margin:0 auto;" data-reveal>
+    <div style="text-align:center; margin-bottom:40px;">
+      <span class="monospace-tag">[ LAB_STATUS: ACTIVE ]</span>
+      <h3 style="font-family:var(--font-display); font-size:2rem; font-weight:800; color:#f8fafc; margin-top:8px;">Silicon, Firmware &amp; Telemetry</h3>
+      <p style="color:#94a3b8; font-size:1rem; max-width:600px; margin:8px auto 0;">Physical prototyping stations built around low-latency controllers and embedded IoT frameworks.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
+      <!-- Card 1: ESP32 & ESP32-S3 -->
+      <div class="tech-border-box">
+        <span class="monospace-tag">[ PLATFORM_01 ]</span>
+        <h4 style="font-family:var(--font-display); font-size:1.3rem; font-weight:800; color:#f8fafc; margin:12px 0 8px;">ESP32 &amp; ESP32-S3</h4>
+        <p style="color:#94a3b8; font-size:0.88rem; line-height:1.5;">Dual-core Xtensa 32-bit controllers with built-in Wi-Fi &amp; Bluetooth, used for web socket streaming and real-time sensor processing.</p>
+        <div class="spec-grid">
+          <div class="spec-item">Freq: <strong>240 MHz</strong></div>
+          <div class="spec-item">RAM: <strong>512 KB SRAM</strong></div>
+          <div class="spec-item">IoT: <strong>BLE / Wi-Fi</strong></div>
+          <div class="spec-item">DSP: <strong>AI Vector Accel</strong></div>
+        </div>
+      </div>
+
+      <!-- Card 2: Arduino Platforms -->
+      <div class="tech-border-box">
+        <span class="monospace-tag">[ PLATFORM_02 ]</span>
+        <h4 style="font-family:var(--font-display); font-size:1.3rem; font-weight:800; color:#f8fafc; margin:12px 0 8px;">Arduino UNO &amp; Nano</h4>
+        <p style="color:#94a3b8; font-size:0.88rem; line-height:1.5;">Microchip AVR architectures used for sub-millisecond interrupt operations, low-level register controls, and analog signal sampling.</p>
+        <div class="spec-grid">
+          <div class="spec-item">Core: <strong>ATmega328P</strong></div>
+          <div class="spec-item">IO: <strong>14 Digital Pins</strong></div>
+          <div class="spec-item">ADC: <strong>10-bit Analog</strong></div>
+          <div class="spec-item">Volt: <strong>5V Logic</strong></div>
+        </div>
+      </div>
+
+      <!-- Card 3: Raspberry Pi -->
+      <div class="tech-border-box">
+        <span class="monospace-tag">[ PLATFORM_03 ]</span>
+        <h4 style="font-family:var(--font-display); font-size:1.3rem; font-weight:800; color:#f8fafc; margin:12px 0 8px;">Raspberry Pi Series</h4>
+        <p style="color:#94a3b8; font-size:0.88rem; line-height:1.5;">Broadcom ARM Linux nodes acting as edge computing systems, serial command hosts, and automation databases.</p>
+        <div class="spec-grid">
+          <div class="spec-item">OS: <strong>Debian Linux</strong></div>
+          <div class="spec-item">GPIO: <strong>40-Pin Header</strong></div>
+          <div class="spec-item">Bus: <strong>SPI / I2C / UART</strong></div>
+          <div class="spec-item">Role: <strong>Edge Database</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HARDWARE GALLERY (BLUEPRINT SKETCHES) ================= -->
+<section id="hardware-gallery" class="sec-base">
+  <div class="section-head" data-reveal>
+    <span class="idx">02</span><h2>Hardware Gallery</h2><div class="rule"></div>
+  </div>
+  
+  <div style="max-width:1100px; margin:0 auto;" data-reveal>
+    <div style="text-align:center; margin-bottom:40px;">
+      <span class="monospace-tag">[ ENGINEERING_BLUEPRINTS ]</span>
+      <h3 style="font-family:var(--font-display); font-size:2rem; font-weight:800; color:#f8fafc; margin-top:8px;">Schematic Notebook</h3>
+      <p style="color:#94a3b8; font-size:1rem; max-width:600px; margin:8px auto 0;">Futuristic mechanical drawings and exploded wiring diagrams of custom circuit components.</p>
+    </div>
+
+    <!-- Redundant items removed, keeping high-impact SVG schematics -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px;">
+      <!-- Schematic 1: Exploded ESP32 Node -->
+      <div class="tech-border-box" style="display:flex; flex-direction:column; gap:20px; align-items:center;">
+        <span class="monospace-tag">FIG 1.0 — ESP32 NODE DIAGRAM</span>
+        <div class="project-schematic" style="width:100%;">
+          <svg viewBox="0 0 200 150" width="280">
+            <!-- Grid Lines -->
+            <line x1="10" y1="10" x2="190" y2="10" stroke="rgba(56, 189, 248, 0.15)" stroke-dasharray="2,2" />
+            <line x1="10" y1="75" x2="190" y2="75" stroke="rgba(56, 189, 248, 0.15)" stroke-dasharray="2,2" />
+            <line x1="10" y1="140" x2="190" y2="140" stroke="rgba(56, 189, 248, 0.15)" stroke-dasharray="2,2" />
+            <!-- Controller Chip -->
+            <rect x="60" y="40" width="80" height="70" rx="4" fill="none" stroke="#38bdf8" stroke-width="2" />
+            <!-- Core label -->
+            <text x="100" y="78" fill="#38bdf8" font-family="monospace" font-size="8" text-anchor="middle">ESP32-WROOM-32E</text>
+            <!-- Antenna -->
+            <rect x="80" y="25" width="40" height="15" fill="none" stroke="#38bdf8" stroke-dasharray="2,1" />
+            <path d="M 85,32 L 95,32 L 95,28 L 105,28 L 105,32 L 115,32" fill="none" stroke="#38bdf8" />
+            <!-- Pin leads -->
+            <line x1="45" y1="50" x2="60" y2="50" stroke="#34d399" stroke-width="1.5" />
+            <text x="38" y="52" fill="#34d399" font-family="monospace" font-size="7">[PIN_02]</text>
+            <line x1="45" y1="70" x2="60" y2="70" stroke="#34d399" stroke-width="1.5" />
+            <text x="38" y="72" fill="#34d399" font-family="monospace" font-size="7">[TX_UART]</text>
+            <line x1="45" y1="90" x2="60" y2="90" stroke="#34d399" stroke-width="1.5" />
+            <text x="38" y="92" fill="#34d399" font-family="monospace" font-size="7">[VCC_3V3]</text>
+            
+            <line x1="140" y1="50" x2="155" y2="50" stroke="#38bdf8" />
+            <text x="159" y="52" fill="#38bdf8" font-family="monospace" font-size="7">[GPIO_12]</text>
+            <line x1="140" y1="70" x2="155" y2="70" stroke="#38bdf8" />
+            <text x="159" y="72" fill="#38bdf8" font-family="monospace" font-size="7">[GPIO_14]</text>
+            <line x1="140" y1="90" x2="155" y2="90" stroke="#38bdf8" />
+            <text x="159" y="92" fill="#38bdf8" font-family="monospace" font-size="7">[GND]</text>
+          </svg>
+        </div>
+        <div style="text-align:center;">
+          <h5 style="color:#f8fafc; font-family:var(--font-display); font-size:1rem; font-weight:700;">IoT Node Schematic</h5>
+          <p style="color:#94a3b8; font-size:0.8rem; margin-top:4px;">Exploded PIN mapping layout showing digital UART/I2C connections.</p>
+        </div>
+      </div>
+
+      <!-- Schematic 2: Exploded Arduino Uno Bus -->
+      <div class="tech-border-box" style="display:flex; flex-direction:column; gap:20px; align-items:center;">
+        <span class="monospace-tag">FIG 2.0 — ARDUINO SIGNAL FLOW</span>
+        <div class="project-schematic" style="width:100%;">
+          <svg viewBox="0 0 200 150" width="280">
+            <!-- Signal trace lines -->
+            <circle cx="100" cy="75" r="55" fill="none" stroke="rgba(56, 189, 248, 0.2)" stroke-dasharray="4,4" />
+            <circle cx="100" cy="75" r="30" fill="none" stroke="#38bdf8" stroke-dasharray="2,2" />
+            <circle cx="100" cy="75" r="5" fill="#34d399" />
+            <!-- Peripheral components -->
+            <rect x="25" y="60" width="30" height="30" rx="3" fill="none" stroke="#38bdf8" />
+            <text x="40" y="78" fill="#38bdf8" font-family="monospace" font-size="8" text-anchor="middle">MCU</text>
+            
+            <rect x="145" y="60" width="30" height="30" rx="3" fill="none" stroke="#34d399" />
+            <text x="160" y="78" fill="#34d399" font-family="monospace" font-size="8" text-anchor="middle">OLED</text>
+            
+            <!-- Connection arrows -->
+            <path d="M 55,75 L 70,75" stroke="#38bdf8" stroke-width="1.5" />
+            <path d="M 130,75 L 145,75" stroke="#34d399" stroke-width="1.5" />
+            <!-- Labels -->
+            <text x="100" y="15" fill="#94a3b8" font-family="monospace" font-size="8" text-anchor="middle">SPI/I2C PROTOCOL BUS</text>
+          </svg>
+        </div>
+        <div style="text-align:center;">
+          <h5 style="color:#f8fafc; font-family:var(--font-display); font-size:1rem; font-weight:700;">I2C Data Bus Blueprint</h5>
+          <p style="color:#94a3b8; font-size:0.8rem; margin-top:4px;">128x64 display connection layout showing hardware interrupts.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ENGINEERING PROJECTS ================= -->
+<section id="engineering-projects" class="sec-alt">
+  <div class="section-head" data-reveal>
+    <span class="idx">03</span><h2>Engineering Projects</h2><div class="rule"></div>
+  </div>
+
+  <div style="max-width:1100px; margin:0 auto;" data-reveal>
+    
+    <!-- Project 1: Smart Blink Stick -->
+    <div class="proj-container">
+      <div style="order:1;">
+        <span class="monospace-tag">[ SYSTEM_PROJECT_01 ]</span>
+        <h3 style="font-family:var(--font-display); font-size:2.2rem; font-weight:900; color:#f8fafc; margin:10px 0 16px;">Smart Blink Stick</h3>
+        <p style="color:#94a3b8; font-size:0.95rem; line-height:1.6; margin-bottom:12px;"><strong>Problem:</strong> Desktop software notifications are noisy and interrupt coding workflow, while system telemetry (CPU load, build status) remains hidden inside terminals.</p>
+        <p style="color:#94a3b8; font-size:0.95rem; line-height:1.6; margin-bottom:12px;"><strong>Solution:</strong> A dedicated USB dongle that offloads telemetry to an ambient WS2812B LED array, syncing system notifications instantly over UART serial connection.</p>
+        <div class="spec-grid" style="margin-bottom:20px;">
+          <div class="spec-item">Hardware: <strong>ESP32, NeoPixel</strong></div>
+          <div class="spec-item">Software: <strong>Python Daemon</strong></div>
+          <div class="spec-item">Protocol: <strong>USB Serial UART</strong></div>
+          <div class="spec-item">Result: <strong>Zero-Latency Alerts</strong></div>
+        </div>
+      </div>
+      <div style="order:2;">
+        <div class="project-schematic">
+          <svg viewBox="0 0 200 150" width="300">
+            <!-- Board outlines -->
+            <rect x="20" y="35" width="160" height="80" rx="6" fill="none" stroke="#38bdf8" stroke-width="2" />
+            <!-- USB connector -->
+            <rect x="2" y="60" width="18" height="30" fill="none" stroke="#38bdf8" />
+            <!-- Microcontroller -->
+            <rect x="40" y="55" width="40" height="40" rx="3" fill="none" stroke="#34d399" />
+            <text x="60" y="78" fill="#34d399" font-family="monospace" font-size="7" text-anchor="middle">ESP32</text>
+            <!-- NeoPixel LEDs -->
+            <circle cx="110" cy="75" r="8" fill="none" stroke="#38bdf8" />
+            <circle cx="135" cy="75" r="8" fill="none" stroke="#38bdf8" />
+            <circle cx="160" cy="75" r="8" fill="none" stroke="#38bdf8" />
+            <text x="135" y="100" fill="#94a3b8" font-family="monospace" font-size="7" text-anchor="middle">WS2812B ARRAY</text>
+            <!-- Serial trace line -->
+            <path d="M 20,75 L 40,75" stroke="#38bdf8" stroke-dasharray="2,2" />
+            <path d="M 80,75 L 102,75" stroke="#34d399" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2: Medicine Reminder System -->
+    <div class="proj-container" style="border-top:1px solid rgba(255,255,255,0.08); padding-top:50px;">
+      <div style="order:2;">
+        <span class="monospace-tag">[ SYSTEM_PROJECT_02 ]</span>
+        <h3 style="font-family:var(--font-display); font-size:2.2rem; font-weight:900; color:#f8fafc; margin:10px 0 16px;">Auto Medicine Reminder</h3>
+        <p style="color:#94a3b8; font-size:0.95rem; line-height:1.6; margin-bottom:12px;"><strong>Problem:</strong> Elderly patients forget daily medication schedules, leading to missed doses and medication sync complications.</p>
+        <p style="color:#94a3b8; font-size:0.95rem; line-height:1.6; margin-bottom:12px;"><strong>Solution:</strong> An autonomous IoT pill reminder station. Integrates a SSD1306 display showing prescription alerts, powered by local RTC clock scheduling.</p>
+        <div class="spec-grid" style="margin-bottom:20px;">
+          <div class="spec-item">Hardware: <strong>ESP32, OLED, RTC</strong></div>
+          <div class="spec-item">Software: <strong>C++ RTOS scheduling</strong></div>
+          <div class="spec-item">Protocol: <strong>I2C OLED Driver</strong></div>
+          <div class="spec-item">Result: <strong>Missed Doses: 0%</strong></div>
+        </div>
+      </div>
+      <div style="order:1;">
+        <div class="project-schematic">
+          <svg viewBox="0 0 200 150" width="300">
+            <!-- Box -->
+            <rect x="30" y="25" width="140" height="100" rx="8" fill="none" stroke="#38bdf8" stroke-width="1.5" />
+            <!-- OLED Display Screen -->
+            <rect x="50" y="40" width="100" height="40" fill="none" stroke="#34d399" stroke-width="2" />
+            <text x="100" y="63" fill="#34d399" font-family="monospace" font-size="8" text-anchor="middle">TAKE MEDS NOW</text>
+            <!-- Buzzer -->
+            <circle cx="60" cy="100" r="10" fill="none" stroke="#38bdf8" />
+            <text x="60" y="103" fill="#38bdf8" font-family="monospace" font-size="6" text-anchor="middle">BUZZ</text>
+            <!-- RTC clock chip -->
+            <rect x="110" y="90" width="40" height="20" fill="none" stroke="#38bdf8" />
+            <text x="130" y="102" fill="#38bdf8" font-family="monospace" font-size="6" text-anchor="middle">DS3231 RTC</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= FOUNDER JOURNEY (REAL STORIES ONLY) ================= -->
+<section id="founder-journey" class="sec-base">
+  <div class="section-head" data-reveal>
+    <span class="idx">04</span><h2>Founder Journey</h2><div class="rule"></div>
+  </div>
+
+  <div class="story-cards-container" data-reveal style="display:flex; flex-direction:column; gap:36px; max-width:1100px; margin:0 auto;">
+    <!-- LPU Origin & Study -->
+    <div class="story-card" style="display:grid; grid-template-columns: 1fr 1fr; gap:36px; align-items:center; background:linear-gradient(135deg, rgba(27,36,56,0.75) 0%, rgba(15,23,42,0.85) 100%); border:1px solid rgba(56,189,248,0.18); border-radius:28px; padding:36px; backdrop-filter:blur(16px); position:relative;">
+      <div>
+        <span class="monospace-tag">[ TIMELINE_2025 - 2028 ]</span>
+        <h3 style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:#f8fafc; margin-top:8px;">BCA Student at LPU</h3>
+        <p style="color:#94a3b8; font-size:0.95rem; line-height:1.65; margin-top:10px;">Studying computer applications while building physical and digital systems. Started developing real-world embedded controllers and full-stack software dashboards.</p>
+        <div style="display:flex; gap:8px; margin-top:16px;">
+          <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:#38bdf8; font-size:0.75rem; font-weight:700; padding:5px 12px; border-radius:100px;">LPU BCA</span>
+          <span style="background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.25); color:#34d399; font-size:0.75rem; font-weight:700; padding:5px 12px; border-radius:100px;">EMBEDDED SYSTEMS</span>
+        </div>
+      </div>
+      <div>
+        <img src="images/lpu_auditorium.jpg" alt="LPU Campus" style="width:100%; height:260px; object-fit:cover; border-radius:16px; border:1px solid rgba(56,189,248,0.25);">
+      </div>
+    </div>
+
+    <!-- HustleSmith & Applify -->
+    <div class="story-card" style="display:grid; grid-template-columns: 1fr 1fr; gap:36px; align-items:center; background:linear-gradient(135deg, rgba(27,36,56,0.75) 0%, rgba(15,23,42,0.85) 100%); border:1px solid rgba(56,189,248,0.18); border-radius:28px; padding:36px; backdrop-filter:blur(16px); position:relative;">
+      <div>
+        <span class="monospace-tag">[ TIMELINE_2025 - PRESENT ]</span>
+        <h3 style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:#f8fafc; margin-top:8px;">HustleSmith &amp; Applify</h3>
+        <p style="color:#94a3b8; font-size:0.95rem; line-height:1.65; margin-top:10px;">Founded HustleSmith Studio to craft luxury hand-painted and embroidered denim apparel. Running Applify to build high-performance web products, automating workflows with custom script setups.</p>
+        <div style="display:flex; gap:8px; margin-top:16px;">
+          <span style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:#38bdf8; font-size:0.75rem; font-weight:700; padding:5px 12px; border-radius:100px;">HUSTLESMITH</span>
+          <span style="background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.25); color:#34d399; font-size:0.75rem; font-weight:700; padding:5px 12px; border-radius:100px;">APPLIFY</span>
+        </div>
+      </div>
+      <div>
+        <img src="images/hustlesmith_denim_hero.png" alt="HustleSmith Denim Art" style="width:100%; height:260px; object-fit:cover; border-radius:16px; border:1px solid rgba(56,189,248,0.25);">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CURRENT FOCUS ================= -->
+<section id="current-focus" class="sec-alt blueprint-grid-bg">
+  <div class="section-head" data-reveal>
+    <span class="idx">05</span><h2>Current Focus</h2><div class="rule"></div>
+  </div>
+  
+  <div style="max-width:1100px; margin:0 auto;" data-reveal>
+    <div style="text-align:center; margin-bottom:32px;">
+      <span class="monospace-tag">[ STATUS: ACTIVE BUILD ]</span>
+      <h3 style="font-family:var(--font-display); font-size:2rem; font-weight:800; color:#f8fafc; margin-top:8px;">Parallel Tracks</h3>
+    </div>
+
+    <div class="focus-grid">
+      <!-- software -->
+      <div class="focus-card">
+        <span style="font-size:1.8rem; display:block; margin-bottom:8px;">💻</span>
+        <h4 style="color:#f8fafc; font-family:var(--font-display); font-size:1.1rem; font-weight:700;">Software</h4>
+        <p style="color:#94a3b8; font-size:0.8rem; margin-top:8px; line-height:1.4;">Next.js interfaces, Node.js API servers, and system-level daemons.</p>
+      </div>
+
+      <!-- hardware -->
+      <div class="focus-card">
+        <span style="font-size:1.8rem; display:block; margin-bottom:8px;">🔌</span>
+        <h4 style="color:#f8fafc; font-family:var(--font-display); font-size:1.1rem; font-weight:700;">Hardware</h4>
+        <p style="color:#94a3b8; font-size:0.8rem; margin-top:8px; line-height:1.4;">ESP32 custom firmware, sensor interrupts, and OLED displays.</p>
+      </div>
+
+      <!-- ai -->
+      <div class="focus-card">
+        <span style="font-size:1.8rem; display:block; margin-bottom:8px;">🧠</span>
+        <h4 style="color:#f8fafc; font-family:var(--font-display); font-size:1.1rem; font-weight:700;">AI Tech</h4>
+        <p style="color:#94a3b8; font-size:0.8rem; margin-top:8px; line-height:1.4;">Custom Stable Diffusion models and LLM automation pipelines.</p>
+      </div>
+
+      <!-- content -->
+      <div class="focus-card">
+        <span style="font-size:1.8rem; display:block; margin-bottom:8px;">📹</span>
+        <h4 style="color:#f8fafc; font-family:var(--font-display); font-size:1.1rem; font-weight:700;">Content</h4>
+        <p style="color:#94a3b8; font-size:0.8rem; margin-top:8px; line-height:1.4;">Building in public on YouTube (@mantejtechvlogs) &amp; Instagram.</p>
+      </div>
+
+      <!-- startups -->
+      <div class="focus-card">
+        <span style="font-size:1.8rem; display:block; margin-bottom:8px;">🚀</span>
+        <h4 style="color:#f8fafc; font-family:var(--font-display); font-size:1.1rem; font-weight:700;">Startups</h4>
+        <p style="color:#94a3b8; font-size:0.8rem; margin-top:8px; line-height:1.4;">Fulfilling luxury streetwear drops at HustleSmith Studio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="trace-wrap" id="traceWrap">
 <svg class="trace-svg" id="traceSvg"><line id="traceLine" x1="0" y1="0" x2="0" y2="0"/></svg>
 
-<!-- ================= STORY & FOUNDER JOURNEY ================= -->
-<section id="story" class="sec-alt">
-  <div class="section-head" data-reveal>
-    <span class="idx">01</span><h2>Story &amp; Founder Journey</h2><div class="rule"></div>
-  </div>
-  <div class="story-cards-container" data-reveal style="display:flex; flex-direction:column; gap:36px; max-width:1100px; margin:0 auto;">
-    
-    <!-- Chapter 01: Origin -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap:36px; align-items:center; background:linear-gradient(135deg, rgba(27, 36, 56, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%); border:1px solid rgba(56,189,248,0.18); border-radius:28px; padding:36px; backdrop-filter:blur(16px); box-shadow:0 16px 40px rgba(0,0,0,0.4); position:relative;">
-      <div class="story-card-text">
-        <div class="story-chapter" style="color:var(--accent-blue); font-size:0.8rem; font-weight:800; letter-spacing:0.15em; margin-bottom:10px; display:inline-block; background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); padding:4px 12px; border-radius:100px;">CHAPTER 01 — ORIGIN</div>
-        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">I don’t just study tech.<br>I build with it.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.65; margin-bottom:20px;">Started at LPU with a soldering iron &amp; Arduino. Flashing firmware at 2 AM turned restlessness into a compass: <span style="color:var(--accent-cyan); font-weight:600;">if it can be built, build it tonight.</span></p>
-        <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">HARDWARE</span>
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">EMBEDDED SYSTEMS</span>
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">LPU</span>
-        </div>
-      </div>
-      <div class="story-card-visual" style="position:relative; width:100%; display:flex; justify-content:center;">
-        <div class="story-video-wrap" style="position:relative; width:100%; max-width:300px; aspect-ratio:9/16; height:480px; border-radius:24px; overflow:hidden; border:1px solid rgba(56,189,248,0.3); box-shadow:0 20px 48px rgba(0,0,0,0.6); background:#080B11;">
-          <img src="images/lpu_auditorium.jpg" alt="One World Cultural Festival — African Student Delegation with Mantej" style="width:100%; height:100%; object-fit:cover; display:block;">
-          <div style="position:absolute; top:14px; right:14px; background:rgba(15,23,42,0.85); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:4px 12px; color:#38BDF8; font-size:0.7rem; font-weight:800; letter-spacing:0.08em;">▶ ONE WORLD</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Chapter 02: Clothing Brand Startup -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap:36px; align-items:center; background:linear-gradient(135deg, rgba(27, 36, 56, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%); border:1px solid rgba(56,189,248,0.18); border-radius:28px; padding:36px; backdrop-filter:blur(16px); box-shadow:0 16px 40px rgba(0,0,0,0.4); position:relative;">
-      <div class="story-card-text">
-        <div class="story-chapter" style="color:var(--accent-blue); font-size:0.8rem; font-weight:800; letter-spacing:0.15em; margin-bottom:10px; display:inline-block; background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); padding:4px 12px; border-radius:100px;">CHAPTER 02 — CLOTHING BRAND STARTUP</div>
-        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">HustleSmith — Denim Startup at LPU.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.65; margin-bottom:20px;">Luxury custom denim brand launched at LPU. Hand-painted &amp; embroidered with Fine Arts talent: <span style="color:var(--accent-cyan); font-weight:600;">1-of-1 streetwear artifacts.</span></p>
-        <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">HUSTLESMITH</span>
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">CLOTHING BRAND</span>
-          <span class="story-tag" style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.25); color:#34D399; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">LIVE STORE</span>
-        </div>
-      </div>
-      <div class="story-card-visual" style="position:relative; width:100%; display:flex; justify-content:center;">
-        <div class="story-video-wrap" style="position:relative; width:100%; max-width:300px; aspect-ratio:9/16; height:480px; border-radius:24px; overflow:hidden; border:1px solid rgba(56,189,248,0.3); box-shadow:0 20px 48px rgba(0,0,0,0.6); background:#080B11;">
-          <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;">
-            <source src="assets/hustlesmith_promo.mp4" type="video/mp4">
-          </video>
-          <div style="position:absolute; top:14px; right:14px; background:rgba(15,23,42,0.85); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:4px 12px; color:#38BDF8; font-size:0.7rem; font-weight:800; letter-spacing:0.08em;">▶ 9:16 REEL</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chapter 03: Full-Stack Systems -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap:36px; align-items:center; background:linear-gradient(135deg, rgba(27, 36, 56, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%); border:1px solid rgba(56,189,248,0.18); border-radius:28px; padding:36px; backdrop-filter:blur(16px); box-shadow:0 16px 40px rgba(0,0,0,0.4); position:relative;">
-      <div class="story-card-text">
-        <div class="story-chapter" style="color:var(--accent-blue); font-size:0.8rem; font-weight:800; letter-spacing:0.15em; margin-bottom:10px; display:inline-block; background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); padding:4px 12px; border-radius:100px;">CHAPTER 03 — FULL-STACK SYSTEMS</div>
-        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">Full-Stack Engineering &amp; AI Systems.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.65; margin-bottom:20px;">Architecting web applications &amp; mobile platforms. <span style="color:var(--accent-cyan); font-weight:600;">Full-stack web products to native iOS &amp; Android apps</span> engineered for high performance and sleek aesthetics.</p>
-        <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">FULL STACK</span>
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">AI PIPELINES</span>
-        </div>
-      </div>
-      <div class="story-card-visual" style="position:relative; width:100%; display:flex; justify-content:center;">
-        <div class="story-video-wrap" style="position:relative; width:100%; max-width:300px; aspect-ratio:9/16; height:480px; border-radius:24px; overflow:hidden; border:1px solid rgba(56,189,248,0.3); box-shadow:0 20px 48px rgba(0,0,0,0.6); background:#080B11;">
-          <img src="images/lpu_robo_park.jpg" alt="LPU Robotics &amp; AI Systems Engine" style="width:100%; height:100%; object-fit:cover; display:block;">
-          <div style="position:absolute; top:14px; right:14px; background:rgba(15,23,42,0.85); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:4px 12px; color:#38BDF8; font-size:0.7rem; font-weight:800; letter-spacing:0.08em;">▶ PHOTO</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chapter 04: AI Systems -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap:36px; align-items:center; background:linear-gradient(135deg, rgba(27, 36, 56, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%); border:1px solid rgba(56,189,248,0.18); border-radius:28px; padding:36px; backdrop-filter:blur(16px); box-shadow:0 16px 40px rgba(0,0,0,0.4); position:relative;">
-      <div class="story-card-text">
-        <div class="story-chapter" style="color:var(--accent-blue); font-size:0.8rem; font-weight:800; letter-spacing:0.15em; margin-bottom:10px; display:inline-block; background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); padding:4px 12px; border-radius:100px;">CHAPTER 04 — AI &amp; SYSTEM ENGINE</div>
-        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">Generative Media &amp; Neural Pipelines.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.65; margin-bottom:20px;">React, Node, Python &amp; Postgres with custom generative AI to <span style="color:var(--accent-cyan); font-weight:600;">replicate video styles &amp; reels</span> using neural motion synthesis.</p>
-        <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">SYSTEM ENGINE</span>
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">GENERATIVE MEDIA</span>
-        </div>
-      </div>
-      <div class="story-card-visual" style="position:relative; width:100%; display:flex; justify-content:center;">
-        <div class="story-video-wrap" style="position:relative; width:100%; max-width:300px; aspect-ratio:9/16; height:480px; border-radius:24px; overflow:hidden; border:1px solid rgba(56,189,248,0.3); box-shadow:0 20px 48px rgba(0,0,0,0.6); background:#080B11;">
-          <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;">
-            <source src="assets/ai_reel_replica.mp4" type="video/mp4">
-          </video>
-          <div style="position:absolute; top:14px; right:14px; background:rgba(15,23,42,0.85); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:4px 12px; color:#38BDF8; font-size:0.7rem; font-weight:800; letter-spacing:0.08em;">▶ 9:16 REEL</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chapter 05: The Creator -->
-    <div class="story-card" data-story-card style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap:36px; align-items:center; background:linear-gradient(135deg, rgba(27, 36, 56, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%); border:1px solid rgba(56,189,248,0.18); border-radius:28px; padding:36px; backdrop-filter:blur(16px); box-shadow:0 16px 40px rgba(0,0,0,0.4); position:relative;">
-      <div class="story-card-text">
-        <div class="story-chapter" style="color:var(--accent-blue); font-size:0.8rem; font-weight:800; letter-spacing:0.15em; margin-bottom:10px; display:inline-block; background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); padding:4px 12px; border-radius:100px;">CHAPTER 05 — THE CREATOR</div>
-        <h3 class="story-title" style="font-size:1.8rem; font-weight:800; line-height:1.25; margin-bottom:14px; color:#F8FAFC;">Building in public daily.</h3>
-        <p class="story-body" style="color:#94A3B8; font-size:0.95rem; line-height:1.65; margin-bottom:20px;">Documenting the startup journey on YouTube &amp; Instagram. From soldering station demos to app launches — <span style="color:var(--accent-cyan); font-weight:600;">the camera rolls as code compiles.</span></p>
-        <div class="story-tags" style="display:flex; gap:8px; flex-wrap:wrap;">
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">HUSTLER MAN OF LPU</span>
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">VLOGGER</span>
-          <span class="story-tag" style="background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#38BDF8; font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:100px;">YOUTUBE</span>
-        </div>
-      </div>
-      <div class="story-card-visual" style="position:relative; width:100%; display:flex; justify-content:center;">
-        <div class="story-video-wrap" style="position:relative; width:100%; max-width:300px; aspect-ratio:9/16; height:480px; border-radius:24px; overflow:hidden; border:1px solid rgba(56,189,248,0.3); box-shadow:0 20px 48px rgba(0,0,0,0.6); background:#080B11;">
-          <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;">
-            <source src="assets/mantej_mountain_reel.mp4" type="video/mp4">
-          </video>
-          <div style="position:absolute; top:14px; right:14px; background:rgba(15,23,42,0.85); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.15); border-radius:100px; padding:4px 12px; color:#38BDF8; font-size:0.7rem; font-weight:800; letter-spacing:0.08em;">▶ 9:16 REEL</div>
-        </div>
-      </div>
-    </div>
-</section>
-
-<!-- ================= VENTURES ================= -->
-<section id="ventures" class="sec-base">
-  <div class="section-head" data-reveal>
-    <span class="idx">02</span><h2>Ventures</h2><div class="rule"></div>
-  </div>
-
-  <div class="modules" data-reveal style="max-width:1100px;margin:0 auto;">
-
-    <!-- Card 1: HustleSmith Studio -->
-    <div class="module" id="mod-hustlesmith" data-reveal>
-      <div>
-        <div class="mod-id">VENTURE · 01</div>
-        <span class="status live">● LIVE STORE</span>
-        <h3>HustleSmith Studio</h3>
-        <p>Custom denim clothing brand at LPU. Hand-painted 1-of-1 streetwear artifacts.</p>
-
-        <!-- Video / Image card -->
-        <div class="venture-video-container">
-          <img
-            src="images/hustlesmith_denim_hero.png"
-            alt="HustleSmith Custom Denim"
-            class="venture-video"
-            loading="lazy"
-          >
-          <div class="video-overlay-controls">
-            <span class="video-tag">🧵 CUSTOM DENIM · LPU</span>
-            <a href="https://www.hustlesmith.studio" target="_blank" rel="noopener"
-              style="background:rgba(37,99,235,0.9);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:7px 16px;border-radius:20px;font-family:var(--font-display);font-size:11px;font-weight:700;text-decoration:none;backdrop-filter:blur(8px);transition:all 0.2s ease;"
-              onmouseover="this.style.background='rgba(56,189,248,0.9)'"
-              onmouseout="this.style.background='rgba(37,99,235,0.9)'"
-            >SHOP ↗</a>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
-          <span style="background:rgba(217,119,6,0.15);border:1px solid rgba(217,119,6,0.3);color:#fbbf24;font-size:0.72rem;font-weight:700;padding:4px 11px;border-radius:8px;letter-spacing:0.05em;">CLOTHING BRAND</span>
-          <span style="background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.25);color:#38bdf8;font-size:0.72rem;font-weight:700;padding:4px 11px;border-radius:8px;letter-spacing:0.05em;">LPU STARTUP</span>
-          <span style="background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);color:#34d399;font-size:0.72rem;font-weight:700;padding:4px 11px;border-radius:8px;letter-spacing:0.05em;">LIVE</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 2: Stealth SaaS -->
-    <div class="module" id="mod-stealth" data-reveal>
-      <div>
-        <div class="mod-id">VENTURE · 02</div>
-        <span class="status pending">⚡ IN BUILD</span>
-        <h3>Stealth SaaS</h3>
-        <p>AI-powered full-stack product in active build. Scalable web &amp; automation pipelines.</p>
-
-        <!-- Placeholder visual -->
-        <div class="venture-video-container" style="background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-          <div style="font-size:3.5rem;opacity:0.4;filter:grayscale(0.3);">⚙️</div>
-          <div style="font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:#f8fafc;opacity:0.5;letter-spacing:0.06em;">BUILDING IN STEALTH</div>
-          <div style="font-size:0.8rem;color:#475569;text-align:center;max-width:180px;line-height:1.5;">Full-stack SaaS · Generative AI pipelines</div>
-        </div>
-
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
-          <span style="background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.3);color:#60a5fa;font-size:0.72rem;font-weight:700;padding:4px 11px;border-radius:8px;letter-spacing:0.05em;">FULL STACK</span>
-          <span style="background:rgba(168,85,247,0.12);border:1px solid rgba(168,85,247,0.25);color:#c084fc;font-size:0.72rem;font-weight:700;padding:4px 11px;border-radius:8px;letter-spacing:0.05em;">AI PIPELINES</span>
-          <span style="background:rgba(217,119,6,0.12);border:1px solid rgba(217,119,6,0.25);color:#fbbf24;font-size:0.72rem;font-weight:700;padding:4px 11px;border-radius:8px;letter-spacing:0.05em;">STEALTH</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 3: Tech Vlogs -->
-    <div class="module" id="mod-vlogs" data-reveal>
-      <div>
-        <div class="mod-id">VENTURE · 03</div>
-        <span class="status live">● LIVE CHANNEL</span>
-        <h3>MantejTech Vlogs</h3>
-        <p>Building in public on YouTube. Real startup grind, tech reviews, and dev vlogs.</p>
-
-        <!-- YouTube embed thumbnail -->
-        <div class="venture-video-container" style="aspect-ratio:16/9;max-height:260px;">
-          <a href="https://www.youtube.com/@mantejtechvlogs" target="_blank" rel="noopener" style="display:block;width:100%;height:100%;position:relative;text-decoration:none;">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#ff0000 0%,#cc0000 50%,#7f0000 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
-              <svg viewBox="0 0 90 60" width="72" height="48" style="opacity:0.95;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.5));">
-                <rect width="90" height="60" rx="14" fill="#fff"/>
-                <polygon points="36,14 36,46 62,30" fill="#ff0000"/>
-              </svg>
-              <div style="font-family:var(--font-display);font-weight:800;font-size:1rem;color:#fff;letter-spacing:0.05em;text-shadow:0 2px 8px rgba(0,0,0,0.6);">@mantejtechvlogs</div>
-              <div style="font-size:0.75rem;color:rgba(255,255,255,0.75);">Tap to subscribe ↗</div>
-            </div>
-          </a>
-          <div class="video-overlay-controls" style="pointer-events:none;">
-            <span class="video-tag">📹 YOUTUBE CHANNEL</span>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
-          <span style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171;font-size:0.72rem;font-weight:700;padding:4px 11px;border-radius:8px;letter-spacing:0.05em;">YOUTUBE</span>
-          <span style="background:rgba(225,48,108,0.12);border:1px solid rgba(225,48,108,0.25);color:#f472b6;font-size:0.72rem;font-weight:700;padding:4px 11px;border-radius:8px;letter-spacing:0.05em;">INSTAGRAM</span>
-          <span style="background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);color:#34d399;font-size:0.72rem;font-weight:700;padding:4px 11px;border-radius:8px;letter-spacing:0.05em;">LIVE</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
 
 <!-- ================= CONNECT ================= -->
 <section id="connect" class="sec-alt">
@@ -3122,51 +3421,7 @@
 </section>
 
 
-<!-- ================= JOURNEY & TIMELINE ================= -->
-<section id="journey" class="sec-base">
-  <div class="section-head" data-reveal>
-    <span class="idx">05</span><h2>Journey &amp; Milestones</h2><div class="rule"></div>
-  </div>
-  <div class="timeline-container" data-reveal>
-    <div class="timeline-track"></div>
-    
-    <div class="timeline-item" data-reveal>
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <div class="timeline-year">2023</div>
-        <h3>Joined LPU</h3>
-        <p>Pursuing Computer Science &amp; Tech at Lovely Professional University, Punjab. Started tinkering with microcontrollers &amp; hardware.</p>
-      </div>
-    </div>
 
-    <div class="timeline-item" data-reveal>
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <div class="timeline-year">2024</div>
-        <h3>Launched Tech Vlogs</h3>
-        <p>Started documenting startups, engineering projects, and campus life on YouTube under @mantejtechvlogs.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item" data-reveal>
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <div class="timeline-year">2025</div>
-        <h3>Founded ApplifyNow</h3>
-        <p>Created luxury custom denim brand blending hand-painted art &amp; embroidery in collaboration with LPU Fine Arts talent.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item" data-reveal>
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <div class="timeline-year">2026</div>
-        <h3>AI &amp; Full-Stack Expansion</h3>
-        <p>Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ================= MODULE_04 / CAMPUS & CULTURE ================= -->
 <section id="campus" class="sec-alt">
@@ -3562,35 +3817,7 @@
 </section>
 
 
-<!-- ================= NOW SECTION ================= -->
-<section id="now" class="sec-alt">
-  <div class="section-head" data-reveal>
-    <span class="idx">07</span><h2>What I'm Doing Now</h2><div class="rule"></div>
-  </div>
-  <div class="now-container" data-reveal>
-    <div class="now-header">
-      <div class="now-badge">CURRENT FOCUS</div>
-      <div class="now-updated">Last updated: July 2026</div>
-    </div>
-    <div class="now-grid">
-      <div class="now-card">
-        <div class="now-card-num">01</div>
-        <h3>Building HustleSmith &amp; AI Tools</h3>
-        <p>Polishing custom neural video replication pipelines and preparing the flagship luxury denim launch drop.</p>
-      </div>
-      <div class="now-card">
-        <div class="now-card-num">02</div>
-        <h3>HustleSmith Studio</h3>
-        <p>Operating flagship HustleSmith Studio live store, designing custom hand-painted luxury denim pieces, and fulfilling orders at www.hustlesmith.studio.</p>
-      </div>
-      <div class="now-card">
-        <div class="now-card-num">03</div>
-        <h3>Tech Vlogs &amp; Hardware</h3>
-        <p>Documenting startup lessons, campus builds, and microcontroller experiments weekly on YouTube.</p>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <!-- ================= SKILLS, USES & SETUP SECTION ================= -->
 <section id="uses" class="sec-base">
@@ -3738,6 +3965,12 @@
         SAVE QR TO GALLERY / PHOTOS 📥
       </button>
       <div id="qrSaveToast" style="display:none;color:#34d399;font-size:0.95rem;font-weight:700;margin-top:14px;letter-spacing:0.05em;">✓ QR CODE SAVED TO GALLERY / DOWNLOADS!</div>
+      
+      <!-- Session Scan Counter -->
+      <div class="qr-counter-container" style="margin-top: 24px; font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: #38bdf8; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; justify-content: center;">
+        <span class="pulse-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 10px #10b981; animation: pulse 1.5s infinite;"></span>
+        <span id="qrCounterText">... freshers connected</span>
+      </div>
     </div>
   </div>
 </section>
@@ -3777,6 +4010,8 @@ const isTouch = window.matchMedia('(hover:none)').matches;
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
   let w, h, motes = [];
+  let mouse = { x: null, y: null, radius: 140 };
+
   function resize(){
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
@@ -3784,14 +4019,24 @@ const isTouch = window.matchMedia('(hover:none)').matches;
   resize();
   window.addEventListener('resize', resize);
 
-  for(let i = 0; i < 35; i++){
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  for(let i = 0; i < 45; i++){
     motes.push({
       x: Math.random() * w,
       y: Math.random() * h,
-      r: Math.random() * 1.8 + 0.5,
-      alpha: Math.random() * 0.4 + 0.1,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: -Math.random() * 0.3 - 0.1
+      r: Math.random() * 2 + 0.6,
+      alpha: Math.random() * 0.5 + 0.1,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -Math.random() * 0.4 - 0.15
     });
   }
 
@@ -3799,14 +4044,30 @@ const isTouch = window.matchMedia('(hover:none)').matches;
     requestAnimationFrame(render);
     if(reduceMotion) return;
     ctx.clearRect(0, 0, w, h);
+
     for(let m of motes){
-      m.x += m.vx; m.y += m.vy;
-      if(m.y < 0) m.y = h;
+      m.x += m.vx;
+      m.y += m.vy;
+
+      if(m.y < 0) { m.y = h; m.x = Math.random() * w; }
       if(m.x < 0) m.x = w;
       if(m.x > w) m.x = 0;
+
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = m.x - mouse.x;
+        const dy = m.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          const angle = Math.atan2(dy, dx);
+          m.x += Math.cos(angle) * force * 3;
+          m.y += Math.sin(angle) * force * 3;
+        }
+      }
+
       ctx.beginPath();
       ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(147, 197, 253, ${m.alpha})`;
+      ctx.fillStyle = `rgba(56, 189, 248, ${m.alpha})`;
       ctx.fill();
     }
   }
@@ -3977,12 +4238,48 @@ if(!isTouch){
 })();
 
 /* Hero Intro Animation & Scroll-linked Reveal */
-const tl = gsap.timeline({defaults:{ease:'power3.out'}});
-tl.to('#eyebrow', {opacity:1, duration:.6}, .1)
-  .from('#nameHeading', {opacity:0, y:18, duration:0.8}, .2)
-  .to('#roleLine', {opacity:1, duration:.5}, .5)
-  .to('#heroSocialBar', {opacity:1, duration:.7}, .7)
-  .to('#scrollCue', {opacity:1, duration:.6}, .9);
+function runHeroEntrance() {
+  const tl = gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.to('#eyebrow', {opacity:1, duration:.6}, .1)
+    .from('#nameHeading', {opacity:0, y:18, duration:0.8}, .2)
+    .to('#roleLine', {opacity:1, duration:.5}, .5)
+    .to('#heroSocialBar', {opacity:1, duration:.7}, .7)
+    .to('#scrollCue', {opacity:1, duration:.6}, .9);
+}
+
+/* ---------- TERMINAL BOOT SEQUENCE INTRO RUNNER ---------- */
+(function(){
+  const overlay = document.getElementById('bootOverlay');
+  if (!overlay) {
+    runHeroEntrance();
+    return;
+  }
+  
+  if (sessionStorage.getItem('bootloaderPlayed')) {
+    overlay.style.display = 'none';
+    runHeroEntrance();
+    return;
+  }
+  
+  const lines = overlay.querySelectorAll('.boot-line');
+  let delay = 150;
+  
+  lines.forEach((line, index) => {
+    setTimeout(() => {
+      line.classList.add('visible');
+    }, delay);
+    delay += 250;
+  });
+  
+  setTimeout(() => {
+    overlay.classList.add('fade-out');
+    sessionStorage.setItem('bootloaderPlayed', 'true');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 500);
+    runHeroEntrance();
+  }, delay + 400);
+})();
 
 if (!reduceMotion) {
   gsap.to('#hero', {
@@ -4090,21 +4387,75 @@ document.querySelectorAll('[data-reveal]').forEach(el=>{
   gsap.to(el, {opacity:1, y:0, duration:.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%' }});
 });
 
-/* Campus Stat Counters (GSAP Number Tween) */
-document.querySelectorAll('.campus-counter').forEach(counter => {
-  const target = parseFloat(counter.getAttribute('data-target'));
-  gsap.to(counter, {
-    innerText: target,
-    duration: 2,
-    snap: { innerText: 1 },
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: counter,
-      start: 'top 85%',
-      once: true
+/* Campus Stat Counters (IntersectionObserver Count-Up) */
+(function(){
+  const counters = document.querySelectorAll('.campus-counter');
+  if (!counters.length) return;
+
+  function countUp(el) {
+    const target = parseFloat(el.getAttribute('data-target')) || 0;
+    const duration = 2000;
+    const startTime = performance.now();
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out quad
+      const easedProgress = progress * (2 - progress);
+      const val = Math.floor(easedProgress * target);
+      el.textContent = val;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = target;
+      }
     }
+    requestAnimationFrame(update);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        countUp(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  counters.forEach(c => observer.observe(c));
+})();
+
+/* ---------- 3D CARD TILT EFFECT (DESKTOP ONLY) ---------- */
+(function(){
+  if (isTouch || !window.matchMedia('(hover: hover)').matches) return;
+
+  const cards = document.querySelectorAll('.module, .story-card, .parallax-card-item');
+
+  cards.forEach(card => {
+    card.style.transition = 'transform 0.15s ease-out, box-shadow 0.15s ease-out';
+    card.style.transformStyle = 'preserve-3d';
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const xc = rect.width / 2;
+      const yc = rect.height / 2;
+      
+      const angleX = (yc - y) / yc * 8;
+      const angleY = (x - xc) / xc * 8;
+
+      card.style.transform = `perspective(1000px) rotateX(${angleX.toFixed(2)}deg) rotateY(${angleY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+      card.style.boxShadow = '0 24px 50px rgba(0, 0, 0, 0.55), 0 0 20px rgba(56, 189, 248, 0.15)';
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      card.style.boxShadow = '';
+    });
   });
-});
+})();
 
 /* Campus 3D Stage (Rotating Translucent Ring Panels + Parallax) */
 (function initCampus3D(){
@@ -5319,6 +5670,46 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     document.addEventListener('DOMContentLoaded', collectGalleryItems);
   } else {
     collectGalleryItems();
+  }
+})();
+
+/* ---------- LIVE SCAN COUNTER TELEMETRY ---------- */
+(function(){
+  const textEl = document.getElementById('qrCounterText');
+  if (!textEl) return;
+
+  const namespace = 'mantej-portfolio-scans';
+  const key = 'scans';
+  const hasScannedThisSession = sessionStorage.getItem('qr_scanned_count_recorded');
+
+  let url = `https://api.counterapi.dev/v1/${namespace}/${key}`;
+  if (!hasScannedThisSession) {
+    url += '/up';
+    sessionStorage.setItem('qr_scanned_count_recorded', 'true');
+  }
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data && typeof data.value === 'number') {
+        const formatted = Number(data.value).toLocaleString();
+        textEl.textContent = `${formatted} freshers connected`;
+      } else {
+        fallbackCounter();
+      }
+    })
+    .catch(() => {
+      fallbackCounter();
+    });
+
+  function fallbackCounter() {
+    let count = parseInt(localStorage.getItem('mantej_local_scans') || '1240', 10);
+    if (!hasScannedThisSession) {
+      count += 1;
+      localStorage.setItem('mantej_local_scans', count.toString());
+      sessionStorage.setItem('qr_scanned_count_recorded', 'true');
+    }
+    textEl.textContent = `${count.toLocaleString()} freshers connected`;
   }
 })();
 </script>
