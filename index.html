@@ -239,37 +239,49 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
-  /* Mobile Nav Drawer */
+  /* Mobile Nav Drawer - Dark Premium Theme */
   .nav-drawer {
     position: fixed;
-    top: 70px;
+    top: 60px;
     left: 0;
     right: 0;
-    background: rgba(244, 247, 252, 0.96);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border-light);
+    background: rgba(10, 10, 15, 0.96);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     display: flex;
     flex-direction: column;
-    padding: 20px 30px;
-    gap: 14px;
+    padding: 24px 32px;
+    gap: 16px;
     z-index: 49;
     transform: translateY(-130%);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
   }
   .nav-drawer.open { transform: translateY(0); }
   .drawer-link {
     font-family: var(--font-display);
     font-size: 15px;
     font-weight: 700;
-    color: var(--text-main);
+    color: #F8FAFC;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: color 0.2s ease;
+  }
+  .drawer-link:hover, .drawer-link:active {
+    color: #60A5FA;
   }
 
   @media (max-width: 920px) {
     nav .links { display: none; }
     .nav-toggle { display: flex; }
+  }
+
+  /* Prevent 3D viewers from trapping vertical touch scroll events on mobile devices */
+  @media (max-width: 960px) {
+    spline-viewer, #campusThreeCanvas, #campus3dContainer {
+      pointer-events: none !important;
+    }
   }
 
   /* ---------- Dark Cinematic Hero Section ---------- */
@@ -1989,7 +2001,7 @@
       width: 100%;
       max-width: 320px;
       aspect-ratio: 9 / 16;
-      height: 480px;
+      height: 380px;
       margin: 0 auto;
     }
   }
@@ -2163,9 +2175,23 @@
   }
 
   @media (max-width: 768px) {
-    .parallax-card-item { min-height: 340px; padding: 24px 24px; }
-    .parallax-card-title { font-size: 1.8rem; }
-    .parallax-card-desc { font-size: 0.92rem; }
+    .parallax-cards-container {
+      margin: 20px auto 30px !important;
+    }
+    .parallax-card-item {
+      position: relative !important;
+      top: auto !important;
+      min-height: auto !important;
+      height: auto !important;
+      margin-bottom: 24px !important;
+      padding: 24px 20px !important;
+    }
+    .parallax-card-title {
+      font-size: 1.7rem !important;
+    }
+    .parallax-card-desc {
+      font-size: 0.92rem !important;
+    }
   }
 
   /* ---------- Lightbox Fullscreen Photo Gallery Overlay ---------- */
