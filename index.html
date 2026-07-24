@@ -1994,6 +1994,223 @@
     }
   }
 
+  /* ---------- Lightbox Fullscreen Photo Gallery Overlay ---------- */
+  .lpu-gallery-item, .story-card-visual, .venture-video-container {
+    cursor: pointer;
+  }
+
+  .lightbox-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgba(4, 7, 14, 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+  }
+  .lightbox-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .lightbox-topbar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: linear-gradient(180deg, rgba(9, 13, 22, 0.95) 0%, rgba(9, 13, 22, 0) 100%);
+  }
+
+  .lightbox-meta-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    color: #f8fafc;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  .lightbox-badge-icon { font-size: 1rem; }
+  .lightbox-counter {
+    background: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  .lightbox-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .lb-action-btn, .lb-close-btn {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f8fafc;
+    border-radius: 12px;
+    padding: 8px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+  }
+  .lb-action-btn:hover, .lb-close-btn:hover {
+    background: rgba(56, 189, 248, 0.25);
+    border-color: #38bdf8;
+    color: #38bdf8;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+    transform: translateY(-1px);
+  }
+  .esc-tag {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.65rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .lightbox-stage {
+    position: relative;
+    z-index: 5;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    overflow: hidden;
+  }
+
+  .lb-nav-btn {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #f8fafc;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    z-index: 20;
+  }
+  .lb-nav-btn:hover {
+    background: rgba(56, 189, 248, 0.95);
+    color: #0f172a;
+    border-color: #38bdf8;
+    transform: scale(1.12);
+    box-shadow: 0 0 32px rgba(56, 189, 248, 0.65);
+  }
+  .lb-nav-btn:active {
+    transform: scale(0.95);
+  }
+
+  .lightbox-img-wrapper {
+    position: relative;
+    max-width: 86vw;
+    max-height: 72vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .lightbox-img-wrapper.zoomed {
+    max-width: 98vw;
+    max-height: 88vh;
+    transform: scale(1.05);
+  }
+
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 72vh;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(56, 189, 248, 0.25);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .lightbox-img.changing {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  .lightbox-bottombar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 32px 28px;
+    background: linear-gradient(0deg, rgba(9, 13, 22, 0.95) 0%, rgba(9, 13, 22, 0) 100%);
+  }
+
+  .lb-info-content {
+    max-width: 650px;
+  }
+  .lb-tag {
+    display: inline-block;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 8px;
+  }
+  .lb-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin-bottom: 4px;
+  }
+  .lb-sub {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .lb-hint {
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .lb-nav-btn { width: 44px; height: 44px; }
+    .lb-nav-btn svg { width: 20px; height: 20px; }
+    .lightbox-stage { padding: 0 8px; }
+    .lightbox-bottombar { flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px 20px 20px; }
+    .lb-hint { display: none; }
+  }
+
   /* prefers-reduced-motion fallback */
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important;transition-duration:0.01ms !important;}
@@ -4539,6 +4756,271 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
     <div id="modalCopyToast" style="display:none; color:var(--accent-green); font-size:12px; font-weight:700; margin-top:8px;">COPIED TO CLIPBOARD! ✓</div>
   </div>
 </div>
+
+<!-- Fullscreen Interactive Photo Gallery Lightbox -->
+<div id="lightboxModal" class="lightbox-modal" style="display:none;" aria-hidden="true" role="dialog">
+  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+  
+  <!-- Top Bar Controls -->
+  <div class="lightbox-topbar">
+    <div class="lightbox-meta-badge">
+      <span class="lightbox-badge-icon">📸</span>
+      <span id="lightboxBadgeText">GALLERY VIEW</span>
+      <span class="lightbox-counter" id="lightboxCounter">01 / 16</span>
+    </div>
+    
+    <div class="lightbox-top-actions">
+      <button class="lb-action-btn" id="lbZoomBtn" title="Toggle Zoom / Fit (Z key)">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+      </button>
+      <button class="lb-action-btn" id="lbShareBtn" title="Share Image">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      </button>
+      <button class="lb-close-btn" id="lbCloseBtn" title="Close Lightbox (ESC)">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <span class="esc-tag">ESC</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Image Stage -->
+  <div class="lightbox-stage" id="lightboxStage">
+    <!-- Prev Arrow Button -->
+    <button class="lb-nav-btn lb-prev-btn" id="lbPrevBtn" aria-label="Previous Image" title="Previous Image (Left Arrow)">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+
+    <!-- Center Active Image Container -->
+    <div class="lightbox-img-wrapper" id="lbImgWrapper">
+      <img id="lbActiveImg" src="" alt="Fullscreen View" class="lightbox-img">
+    </div>
+
+    <!-- Next Arrow Button -->
+    <button class="lb-nav-btn lb-next-btn" id="lbNextBtn" aria-label="Next Image" title="Next Image (Right Arrow)">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <!-- Bottom Caption & Info Bar -->
+  <div class="lightbox-bottombar">
+    <div class="lb-info-content">
+      <div class="lb-tag" id="lbTag">LPU CAMPUS</div>
+      <h3 class="lb-title" id="lbTitle">Photo Title</h3>
+      <p class="lb-sub" id="lbSub">Photo Subtitle &amp; Description</p>
+    </div>
+    <div class="lb-hint">Tip: Use ◄ ► arrow keys to navigate, scroll, or swipe on mobile</div>
+  </div>
+</div>
+
+<script>
+/* ---------- FULLSCREEN PHOTO LIGHTBOX GALLERY ENGINE ---------- */
+(function() {
+  let galleryItems = [];
+  let currentIndex = 0;
+  let isZoomed = false;
+
+  const modal = document.getElementById('lightboxModal');
+  const backdrop = document.getElementById('lightboxBackdrop');
+  const activeImg = document.getElementById('lbActiveImg');
+  const imgWrapper = document.getElementById('lbImgWrapper');
+  const counterEl = document.getElementById('lightboxCounter');
+  const badgeTextEl = document.getElementById('lightboxBadgeText');
+  const tagEl = document.getElementById('lbTag');
+  const titleEl = document.getElementById('lbTitle');
+  const subEl = document.getElementById('lbSub');
+  const prevBtn = document.getElementById('lbPrevBtn');
+  const nextBtn = document.getElementById('lbNextBtn');
+  const closeBtn = document.getElementById('lbCloseBtn');
+  const zoomBtn = document.getElementById('lbZoomBtn');
+  const shareBtn = document.getElementById('lbShareBtn');
+
+  if (!modal || !activeImg) return;
+
+  function collectGalleryItems() {
+    galleryItems = [];
+    
+    // 1. Collect LPU Mosaic Gallery Items
+    const mosaicItems = document.querySelectorAll('.lpu-gallery-item');
+    mosaicItems.forEach((item, idx) => {
+      const img = item.querySelector('img');
+      const badge = item.querySelector('.lpu-gallery-badge');
+      const title = item.querySelector('.lpu-gallery-title');
+      const sub = item.querySelector('.lpu-gallery-sub');
+      if (img && img.src) {
+        galleryItems.push({
+          element: item,
+          src: img.src,
+          badge: badge ? badge.textContent.trim() : 'CAMPUS GALLERY',
+          title: title ? title.textContent.trim() : (img.alt || 'LPU Campus'),
+          sub: sub ? sub.textContent.trim() : 'Lovely Professional University'
+        });
+      }
+    });
+
+    // 2. Collect Story Visual Items
+    const storyVisuals = document.querySelectorAll('.story-card');
+    storyVisuals.forEach((item, idx) => {
+      const img = item.querySelector('.story-video-wrap img');
+      const chapter = item.querySelector('.story-chapter');
+      const title = item.querySelector('.story-title');
+      const body = item.querySelector('.story-body');
+      if (img && img.src) {
+        galleryItems.push({
+          element: item,
+          src: img.src,
+          badge: chapter ? chapter.textContent.trim() : 'STORY CHAPTER',
+          title: title ? title.textContent.trim() : 'Founder Journey',
+          sub: body ? body.textContent.trim() : 'Mantej Singh Story'
+        });
+      }
+    });
+
+    // 3. Collect Venture Images
+    const ventureImages = document.querySelectorAll('.venture-video-container img');
+    ventureImages.forEach((img) => {
+      if (img && img.src) {
+        const parentMod = img.closest('.module');
+        const title = parentMod ? parentMod.querySelector('h3') : null;
+        const desc = parentMod ? parentMod.querySelector('p') : null;
+        galleryItems.push({
+          element: img.parentElement,
+          src: img.src,
+          badge: 'VENTURE ART',
+          title: title ? title.textContent.trim() : 'HustleSmith Studio',
+          sub: desc ? desc.textContent.trim() : 'Startup Product Showcase'
+        });
+      }
+    });
+
+    // Attach click listeners to all items
+    galleryItems.forEach((itemData, index) => {
+      itemData.element.addEventListener('click', (e) => {
+        // Prevent opening if clicking an interactive sub-link
+        if (e.target.closest('a') || e.target.closest('button')) return;
+        openLightbox(index);
+      });
+    });
+  }
+
+  function openLightbox(index) {
+    if (index < 0 || index >= galleryItems.length) return;
+    currentIndex = index;
+    isZoomed = false;
+    if (imgWrapper) imgWrapper.classList.remove('zoomed');
+
+    modal.style.display = 'flex';
+    requestAnimationFrame(() => {
+      modal.classList.add('active');
+    });
+    document.body.style.overflow = 'hidden';
+    updateStage();
+  }
+
+  function closeLightbox() {
+    modal.classList.remove('active');
+    setTimeout(() => {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 300);
+  }
+
+  function updateStage() {
+    const data = galleryItems[currentIndex];
+    if (!data) return;
+
+    activeImg.classList.add('changing');
+
+    setTimeout(() => {
+      activeImg.src = data.src;
+      activeImg.alt = data.title;
+      if (titleEl) titleEl.textContent = data.title;
+      if (subEl) subEl.textContent = data.sub;
+      if (tagEl) tagEl.textContent = data.badge;
+      if (badgeTextEl) badgeTextEl.textContent = data.badge;
+      if (counterEl) {
+        const currentStr = String(currentIndex + 1).padStart(2, '0');
+        const totalStr = String(galleryItems.length).padStart(2, '0');
+        counterEl.textContent = `${currentStr} / ${totalStr}`;
+      }
+      activeImg.classList.remove('changing');
+    }, 120);
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % galleryItems.length;
+    updateStage();
+  }
+
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+    updateStage();
+  }
+
+  function toggleZoom() {
+    isZoomed = !isZoomed;
+    if (imgWrapper) {
+      imgWrapper.classList.toggle('zoomed', isZoomed);
+    }
+  }
+
+  // Event Listeners
+  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+  if (backdrop) backdrop.addEventListener('click', closeLightbox);
+  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevImage(); });
+  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextImage(); });
+  if (zoomBtn) zoomBtn.addEventListener('click', toggleZoom);
+  if (activeImg) activeImg.addEventListener('click', toggleZoom);
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      const data = galleryItems[currentIndex];
+      if (navigator.share && data) {
+        navigator.share({
+          title: data.title,
+          text: data.sub,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        const shareModal = document.getElementById('shareModal');
+        if (shareModal) shareModal.style.display = 'flex';
+      }
+    });
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight' || e.key === 'KeyD') nextImage();
+    if (e.key === 'ArrowLeft' || e.key === 'KeyA') prevImage();
+    if (e.key === 'KeyZ') toggleZoom();
+  });
+
+  // Mobile Touch Swipe Navigation
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  modal.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  modal.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchEndX - touchStartX;
+    if (Math.abs(diff) > 45) {
+      if (diff < 0) nextImage();
+      else prevImage();
+    }
+  }, { passive: true });
+
+  // Initialize gallery collector on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', collectGalleryItems);
+  } else {
+    collectGalleryItems();
+  }
+})();
+</script>
 
 </body>
 </html>
