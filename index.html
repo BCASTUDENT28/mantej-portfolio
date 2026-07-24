@@ -383,83 +383,37 @@
     border: 1px solid rgba(96, 165, 250, 0.3);
   }
 
-  @keyframes gradient-border {
-    0%, 100% { border-radius: 37% 29% 27% 27% / 28% 25% 41% 37%; }
-    25% { border-radius: 47% 29% 39% 49% / 61% 19% 66% 26%; }
-    50% { border-radius: 57% 23% 47% 72% / 63% 17% 66% 33%; }
-    75% { border-radius: 28% 49% 29% 100% / 93% 20% 64% 25%; }
-  }
-  @keyframes gradient-1 {
-    0%, 100% { top: 0; right: 0; }
-    50% { top: 50%; right: 25%; }
-    75% { top: 25%; right: 50%; }
-  }
-  @keyframes gradient-2 {
-    0%, 100% { top: 0; left: 0; }
-    60% { top: 75%; left: 25%; }
-    85% { top: 50%; left: 50%; }
-  }
-  @keyframes gradient-3 {
-    0%, 100% { bottom: 0; left: 0; }
-    40% { bottom: 50%; left: 25%; }
-    65% { bottom: 25%; left: 50%; }
-  }
-  @keyframes gradient-4 {
-    0%, 100% { bottom: 0; right: 0; }
-    50% { bottom: 25%; right: 40%; }
-    90% { bottom: 50%; right: 25%; }
+  @keyframes textLiquidShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   h1.name {
-    position: relative;
-    display: inline-flex;
-    overflow: hidden;
+    display: inline-block;
     font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(3rem, 6.8vw, 5.4rem);
+    font-weight: 900;
+    font-size: clamp(3.2rem, 7vw, 5.6rem);
     line-height: 1.05;
     letter-spacing: -.03em;
-    color: transparent;
-    background: #FFFFFF;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 4px 24px rgba(56, 189, 248, 0.4));
+    background: linear-gradient(
+      120deg,
+      #ffffff 0%,
+      #38bdf8 22%,
+      #a855f7 45%,
+      #f472b6 68%,
+      #34d399 88%,
+      #ffffff 100%
+    );
+    background-size: 250% 250%;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+    animation: textLiquidShift 6s ease-in-out infinite;
+    filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.45));
     margin-bottom: 8px;
     padding: 4px 0;
-    opacity: 1;
-  }
-  h1.name .groot-orb {
-    pointer-events: none;
-    position: absolute;
-    width: 25vw;
-    height: 25vw;
-    mix-blend-mode: overlay;
-    filter: blur(18px);
-    opacity: 0.9;
-  }
-  h1.name .groot-orb-1 {
-    top: -50%;
-    background-color: #38bdf8;
-    animation: gradient-border 6s ease-in-out infinite, gradient-1 12s ease-in-out infinite alternate;
-  }
-  h1.name .groot-orb-2 {
-    right: 0;
-    top: 0;
-    background-color: #a855f7;
-    animation: gradient-border 6s ease-in-out infinite, gradient-2 12s ease-in-out infinite alternate;
-  }
-  h1.name .groot-orb-3 {
-    bottom: 0;
-    left: 0;
-    background-color: #34d399;
-    animation: gradient-border 6s ease-in-out infinite, gradient-3 12s ease-in-out infinite alternate;
-  }
-  h1.name .groot-orb-4 {
-    bottom: -50%;
-    right: 0;
-    background-color: #f472b6;
-    animation: gradient-border 6s ease-in-out infinite, gradient-4 12s ease-in-out infinite alternate;
   }
 
   .role-line {
@@ -2297,15 +2251,7 @@
     <!-- Left Column: Human Intro Text & Social Links -->
     <div class="hero-content">
       <div class="eyebrow" id="eyebrow">FOUNDER &amp; FULL-STACK ENGINEER</div>
-      <h1 class="name" id="nameHeading">
-        MANTEJ SINGH
-        <span aria-hidden="true" style="pointer-events:none; position:absolute; inset:0; mix-blend-mode:lighten;">
-          <span class="groot-orb groot-orb-1"></span>
-          <span class="groot-orb groot-orb-2"></span>
-          <span class="groot-orb groot-orb-3"></span>
-          <span class="groot-orb groot-orb-4"></span>
-        </span>
-      </h1>
+      <h1 class="name" id="nameHeading">MANTEJ SINGH</h1>
       <!-- SVG threshold matrix filter for metaball gooey text morphing -->
       <svg style="position:absolute;width:0;height:0;" aria-hidden="true" focusable="false">
         <defs>
