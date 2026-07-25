@@ -7,9 +7,10 @@
 <meta name="description" content="Mantej Singh — BCA student and startup founder at LPU. Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" href="favicon.ico">
+<link rel="preload" href="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" as="fetch" crossorigin>
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js" async></script>
 <style>
   /* ---------- HARDWARE SPEC MODAL & RECRUITER PACK ---------- */
   .hw-spec-modal-backdrop, .recruiter-modal-backdrop {
@@ -3338,11 +3339,33 @@
       </div>
     </div>
 
-    <!-- Right Column: 3D Wireframe Icosahedron Core Visual -->
-    <div class="hero-robot-container" id="heroCrystalStage" style="display:flex; justify-content:center; align-items:center; position:relative; width:100%; height:420px;">
+    <!-- Right Column: 3D Interactive Robot Visual -->
+    <div class="hero-robot-container" id="robotStage" style="display:flex; justify-content:center; align-items:center; position:relative; width:100%; height:440px;">
+      <!-- Floor Spotlight Pool & Dashed Ring under feet -->
       <div class="robot-floor-glow"></div>
       <div class="robot-floor-ring"></div>
-      <canvas id="hero-canvas" style="width:100%; height:100%; max-width:460px; max-height:420px; outline:none; cursor:grab;"></canvas>
+      <div class="robot-spline-wrapper" id="splineWrapper" style="position:relative; width:100%; height:100%;">
+        <!-- Instant 2D Vector Robot Fallback Poster (First Paint) -->
+        <div class="robot-poster-fallback" id="robotFallback" style="position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(15,23,42,0.4); border-radius:24px; backdrop-filter:blur(8px); transition:opacity 0.6s ease, visibility 0.6s ease;">
+          <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:140px; height:160px; filter:drop-shadow(0 0 16px rgba(56,189,248,0.4));">
+            <rect x="25" y="15" width="50" height="42" rx="12" fill="#1E293B" stroke="#60A5FA" stroke-width="2.5"/>
+            <rect x="33" y="25" width="34" height="14" rx="5" fill="#3B82F6"/>
+            <circle cx="42" cy="32" r="3.5" fill="#60A5FA"/>
+            <circle cx="58" cy="32" r="3.5" fill="#60A5FA"/>
+            <rect x="44" y="57" width="12" height="10" fill="#334155"/>
+            <rect x="20" y="67" width="60" height="45" rx="14" fill="#0F172A" stroke="#3B82F6" stroke-width="2"/>
+            <circle cx="50" cy="85" r="7" fill="#2563EB"/>
+            <line x1="50" y1="2" x2="50" y2="15" stroke="#60A5FA" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="50" cy="3" r="3" fill="#38BDF8"/>
+          </svg>
+          <!-- Cyber HUD Loading Readout -->
+          <div id="robotHudLoader" style="margin-top:14px; display:flex; align-items:center; gap:8px; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.4); border-radius:9999px; padding:6px 16px; box-shadow:0 0 15px rgba(56,189,248,0.25);">
+            <span class="hud-spinner" style="width:8px; height:8px; background:#38bdf8; border-radius:50%; display:inline-block; animation:hudPulse 1.2s ease-in-out infinite;"></span>
+            <span style="font-family:var(--font-mono, monospace); font-size:0.75rem; color:#38bdf8; font-weight:700; letter-spacing:0.05em;">[ INITIALIZING 3D ROBOT... ]</span>
+          </div>
+        </div>
+        <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" id="splineRobotViewer" style="width:100%; height:100%; display:block; opacity:0; transition:opacity 0.8s ease;"></spline-viewer>
+      </div>
     </div>
   </div>
 
@@ -4641,98 +4664,65 @@ const isTouch = window.matchMedia('(hover:none)').matches;
   render();
 })();
 
-/* ---------- THREE.JS HERO WIREFRAME ICOSAHEDRON CRYSTAL ---------- */
+/* ---------- 3D ROBOT LOAD & MOTION ENGINE ---------- */
 (function(){
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas || typeof THREE === 'undefined') return;
+  const splineEl = document.getElementById('splineRobotViewer');
+  const fallbackEl = document.getElementById('robotFallback');
+  const robotStage = document.getElementById('robotStage');
+  const splineWrapper = document.getElementById('splineWrapper');
 
-  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  if (!splineEl) return;
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
-  camera.position.set(0, 0, 8.5);
-
-  function setSize(){
-    if (!canvas.parentElement) return;
-    const w = canvas.parentElement.clientWidth || 400;
-    const h = canvas.parentElement.clientHeight || 400;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
+  function hideFallback() {
+    if (splineEl) splineEl.style.opacity = '1';
+    if (fallbackEl) {
+      fallbackEl.style.opacity = '0';
+      setTimeout(() => { fallbackEl.style.visibility = 'hidden'; }, 600);
+    }
   }
-  setSize();
-  window.addEventListener('resize', setSize);
 
-  // Glowing wireframe icosahedron core
-  const coreGeo = new THREE.IcosahedronGeometry(1.4, 1);
-  const coreMat = new THREE.MeshBasicMaterial({
-    color: 0x38bdf8,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.75
-  });
-  const faceMesh = new THREE.Mesh(coreGeo, coreMat);
-  scene.add(faceMesh);
-
-  // Outer glowing frame ring
-  const frameGeo = new THREE.RingGeometry(1.5, 1.6, 64);
-  const frameMat = new THREE.MeshBasicMaterial({
-    color: 0x818cf8,
-    side: THREE.DoubleSide,
-    transparent: true,
-    opacity: 0.6
-  });
-  const frameMesh = new THREE.Mesh(frameGeo, frameMat);
-  faceMesh.add(frameMesh);
-
-  // Rotating cybernetic rings around crystal
-  const ring1Geo = new THREE.TorusGeometry(2.1, 0.025, 16, 80);
-  const ring1Mat = new THREE.MeshBasicMaterial({color: 0x38bdf8, wireframe: true, transparent: true, opacity: 0.7});
-  const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
-  scene.add(ring1);
-
-  const ring2Geo = new THREE.TorusGeometry(2.5, 0.02, 16, 80);
-  const ring2Mat = new THREE.MeshBasicMaterial({color: 0x34d399, wireframe: true, transparent: true, opacity: 0.5});
-  const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-  scene.add(ring2);
-
-  const ring3Geo = new THREE.TorusGeometry(2.85, 0.015, 16, 80);
-  const ring3Mat = new THREE.MeshBasicMaterial({color: 0xc084fc, wireframe: true, transparent: true, opacity: 0.4});
-  const ring3 = new THREE.Mesh(ring3Geo, ring3Mat);
-  scene.add(ring3);
-
-  let mouseX = 0, mouseY = 0;
-  window.addEventListener('mousemove', e => {
-    mouseX = (e.clientX / window.innerWidth - 0.5);
-    mouseY = (e.clientY / window.innerHeight - 0.5);
-  });
-
-  let reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function animate(){
-    requestAnimationFrame(animate);
-    if (reduceMotion) return;
-
-    faceMesh.rotation.x += 0.005;
-    faceMesh.rotation.y += 0.008;
-
-    ring1.rotation.x += 0.004;
-    ring1.rotation.y -= 0.006;
-
-    ring2.rotation.y += 0.007;
-    ring2.rotation.z += 0.003;
-
-    ring3.rotation.x -= 0.003;
-    ring3.rotation.z += 0.005;
-
-    camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
-    camera.position.y += (-mouseY * 2 - camera.position.y) * 0.05;
-    camera.lookAt(scene.position);
-
-    renderer.render(scene, camera);
+  // Remove Spline watermark logo cleanly
+  function removeSplineLogo() {
+    if (splineEl && splineEl.shadowRoot) {
+      const logo = splineEl.shadowRoot.querySelector('#logo, a[href*="spline"], .watermark, [class*="logo"]');
+      if (logo) logo.remove();
+      if (!splineEl.shadowRoot.querySelector('#hide-logo-style')) {
+        const style = document.createElement('style');
+        style.id = 'hide-logo-style';
+        style.textContent = '#logo, a[href*="spline"], .watermark, [class*="logo"] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; width: 0 !important; height: 0 !important; }';
+        splineEl.shadowRoot.appendChild(style);
+      }
+    }
   }
-  animate();
+
+  splineEl.addEventListener('load-complete', hideFallback);
+  splineEl.addEventListener('load', hideFallback);
+
+  // Safety fallback reveal timer
+  setTimeout(hideFallback, 2800);
+  const logoPoll = setInterval(removeSplineLogo, 100);
+  setTimeout(() => clearInterval(logoPoll), 8000);
+
+  // Interactive mouse tilt motion engine
+  if (robotStage && splineWrapper) {
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 16;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 16;
+    });
+
+    let currentTiltX = 0, currentTiltY = 0;
+    let reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function updateMotion() {
+      requestAnimationFrame(updateMotion);
+      if (reduceMotion) return;
+      currentTiltX += (mouseY - currentTiltX) * 0.08;
+      currentTiltY += (mouseX - currentTiltY) * 0.08;
+      splineWrapper.style.transform = `perspective(1000px) rotateX(${(-currentTiltX).toFixed(2)}deg) rotateY(${currentTiltY.toFixed(2)}deg)`;
+    }
+    updateMotion();
+  }
 })();
 
 /* Smooth Cursor Ring */
