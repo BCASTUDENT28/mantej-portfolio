@@ -3138,6 +3138,12 @@
 </style>
 </head>
 <body>
+<script>
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+</script>
 
 <!-- Boot Sequence Loader Overlay -->
 <div id="bootOverlay" class="boot-overlay" style="display: none;">
@@ -6297,7 +6303,7 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
 
     <!-- Embedded Cal.com Interactive Booking Widget -->
     <div id="cal-embed-wrapper" style="width:100%; height:500px; min-height:460px; background:rgba(15,23,42,0.9); border:1px solid rgba(255,255,255,0.1); border-radius:12px; overflow:hidden; position:relative;">
-      <iframe src="https://cal.com/bca-student-fod3gh/30min?embed=true&theme=dark" style="width:100%; height:100%; border:none;" title="Book a Meeting with Mantej - Cal.com" id="calIframe"></iframe>
+      <iframe data-src="https://cal.com/bca-student-fod3gh/30min?embed=true&theme=dark" style="width:100%; height:100%; border:none;" title="Book a Meeting with Mantej - Cal.com" id="calIframe"></iframe>
     </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; pt:8px; border-top:1px solid rgba(255,255,255,0.08); font-size:0.78rem; color:#94a3b8;">
@@ -6339,18 +6345,27 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
   const recBadge = document.getElementById('recruiterFloatingBadge');
   const closeRecBtn = document.getElementById('closeRecruiterModal');
 
-  if (recBadge && recModal) {
-    recBadge.addEventListener('click', () => {
-      recModal.classList.add('open');
-      const bDateInput = document.getElementById('bookingDate');
-      if (bDateInput && !bDateInput.value) {
-        const tmr = new Date();
-        tmr.setDate(tmr.getDate() + 1);
-        bDateInput.value = tmr.toISOString().split('T')[0];
-        bDateInput.min = new Date().toISOString().split('T')[0];
-      }
-    });
+  function openMeetingModal() {
+    if (!recModal) return;
+    recModal.classList.add('open');
+    const calFrame = document.getElementById('calIframe');
+    if (calFrame && !calFrame.src) {
+      calFrame.src = calFrame.dataset.src || 'https://cal.com/bca-student-fod3gh/30min?embed=true&theme=dark';
+    }
   }
+
+  if (recBadge) {
+    recBadge.addEventListener('click', openMeetingModal);
+  }
+
+  // Also bind all "Book a Meeting" links across the page to open meeting modal cleanly
+  document.querySelectorAll('a[href="#connect"].liquid-glass-book-btn, a.liquid-glass-book-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openMeetingModal();
+    });
+  });
+
   if (closeRecBtn && recModal) {
     closeRecBtn.addEventListener('click', () => recModal.classList.remove('open'));
     recModal.addEventListener('click', (e) => {
