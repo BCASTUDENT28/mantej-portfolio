@@ -6284,31 +6284,83 @@ const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officiall
   </div>
 </div>
 
-<!-- Book a Meeting Modal (Powered by Cal.com) -->
+<!-- Book a Meeting Modal -->
 <div id="recruiterModal" class="recruiter-modal-backdrop">
-  <div class="recruiter-modal-box" style="max-width: 680px; width: 94%; max-height: 92vh; display:flex; flex-direction:column; padding:22px; border:1px solid rgba(56,189,248,0.3);">
+  <div class="recruiter-modal-box" style="max-width: 520px; width: 92%; max-height: 90vh; overflow-y: auto;">
     <button class="modal-close-btn" id="closeRecruiterModal">&times;</button>
-    
-    <div style="margin-bottom:12px; text-align:left;">
-      <span class="monospace-tag" style="color:#38bdf8;">[ CAL.COM_API_SCHEDULER ]</span>
-      <h3 style="font-family:var(--font-display); font-size:1.5rem; font-weight:800; color:#f8fafc; margin:4px 0 2px;">Book a Meeting with Mantej</h3>
-      <p style="color:#94a3b8; font-size:0.84rem;">Select your preferred date &amp; time slot directly via <strong>Cal.com</strong>. Notifications sent to <strong style="color:#38bdf8;">hustlesmith.co@gmail.com</strong>.</p>
+    <span class="monospace-tag" style="color:#38bdf8;">[ SCHEDULE_1:1_MEETING ]</span>
+    <h3 style="font-family:var(--font-display); font-size:1.6rem; font-weight:800; color:#f8fafc; margin:10px 0 4px;">Book a Meeting with Mantej</h3>
+    <p style="color:#94a3b8; font-size:0.88rem; margin-bottom:18px;">Pick a date, time slot &amp; topic to schedule a direct 1:1 call or technical consultation.</p>
+
+    <!-- Interactive Meeting Booking Form -->
+    <form id="meetingBookingForm" onsubmit="handleMeetingBooking(event)" style="display:flex; flex-direction:column; gap:12px; text-align:left;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div>
+          <label style="display:block; font-size:0.72rem; color:#94a3b8; font-weight:700; margin-bottom:4px; letter-spacing:0.04em;">YOUR NAME</label>
+          <input type="text" id="bookingName" required placeholder="e.g. Alex Rivera" style="width:100%; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.3); border-radius:8px; padding:9px 12px; color:#fff; font-size:0.85rem; outline:none;" />
+        </div>
+        <div>
+          <label style="display:block; font-size:0.72rem; color:#94a3b8; font-weight:700; margin-bottom:4px; letter-spacing:0.04em;">EMAIL ADDRESS</label>
+          <input type="email" id="bookingEmail" required placeholder="alex@company.com" style="width:100%; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.3); border-radius:8px; padding:9px 12px; color:#fff; font-size:0.85rem; outline:none;" />
+        </div>
+      </div>
+
+      <div>
+        <label style="display:block; font-size:0.72rem; color:#94a3b8; font-weight:700; margin-bottom:4px; letter-spacing:0.04em;">MEETING TOPIC / PURPOSE</label>
+        <select id="bookingTopic" style="width:100%; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.3); border-radius:8px; padding:9px 12px; color:#fff; font-size:0.85rem; outline:none;">
+          <option value="Full-Stack Engineering & Tech Discussion">Full-Stack Engineering &amp; Tech Discussion</option>
+          <option value="Startup Venture & Business Partnership">Startup Venture &amp; Business Partnership (HustleSmith / Applify)</option>
+          <option value="Recruitment & Career Opportunity">Recruitment &amp; Career Opportunity</option>
+          <option value="1:1 Founder Coffee Chat">1:1 Founder Coffee Chat</option>
+        </select>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div>
+          <label style="display:block; font-size:0.72rem; color:#94a3b8; font-weight:700; margin-bottom:4px; letter-spacing:0.04em;">PREFERRED DATE</label>
+          <input type="date" id="bookingDate" required style="width:100%; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.3); border-radius:8px; padding:9px 12px; color:#fff; font-size:0.85rem; outline:none;" />
+        </div>
+        <div>
+          <label style="display:block; font-size:0.72rem; color:#94a3b8; font-weight:700; margin-bottom:4px; letter-spacing:0.04em;">TIME SLOT</label>
+          <select id="bookingTime" style="width:100%; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.3); border-radius:8px; padding:9px 12px; color:#fff; font-size:0.85rem; outline:none;">
+            <option value="11:00 AM IST">11:00 AM IST</option>
+            <option value="02:00 PM IST">02:00 PM IST</option>
+            <option value="05:00 PM IST">05:00 PM IST</option>
+            <option value="08:00 PM IST">08:00 PM IST</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label style="display:block; font-size:0.72rem; color:#94a3b8; font-weight:700; margin-bottom:4px; letter-spacing:0.04em;">AGENDA / NOTES (OPTIONAL)</label>
+        <textarea id="bookingNotes" rows="2" placeholder="Brief details about what you'd like to discuss..." style="width:100%; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.3); border-radius:8px; padding:8px 12px; color:#fff; font-size:0.82rem; outline:none; resize:none;"></textarea>
+      </div>
+
+      <button type="submit" class="liquid-glass-book-btn" style="justify-content:center; width:100%; font-size:0.92rem; font-weight:700; padding:11px; margin-top:4px; cursor:pointer;">
+        🗓️ Confirm &amp; Schedule Meeting
+      </button>
+    </form>
+
+    <!-- Success Confirmation Container -->
+    <div id="bookingSuccessBox" style="display:none; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:20px; text-align:center; margin-top:10px;">
+      <div style="font-size:2.2rem; margin-bottom:6px;">🎉</div>
+      <h4 style="color:#10b981; font-size:1.05rem; font-weight:700; margin-bottom:6px;">Meeting Request Submitted!</h4>
+      <p id="bookingSuccessDetails" style="color:#cbd5e1; font-size:0.85rem; line-height:1.5; margin-bottom:14px;"></p>
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <a id="addToCalBtn" href="#" target="_blank" rel="noopener" class="growth-pill-yt" style="background:#0284c7; padding:8px 14px; font-size:0.8rem; border-radius:8px; justify-content:center;">📅 Add to Google Calendar</a>
+        <button type="button" onclick="resetMeetingForm()" style="font-size:0.8rem; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:8px 14px; border-radius:8px; color:#fff; cursor:pointer;">Book Another</button>
+      </div>
     </div>
 
-    <!-- Embedded Cal.com Interactive Booking Widget -->
-    <div id="cal-embed-wrapper" style="width:100%; height:490px; min-height:450px; background:rgba(15,23,42,0.85); border:1px solid rgba(255,255,255,0.1); border-radius:12px; overflow:hidden; position:relative;">
-      <iframe src="https://cal.com/mantej?embed=true&theme=dark" style="width:100%; height:100%; border:none;" title="Cal.com Scheduling Widget" id="calIframe"></iframe>
-    </div>
-
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; pt:8px; border-top:1px solid rgba(255,255,255,0.08); font-size:0.78rem; color:#94a3b8;">
-      <span>Direct Contact: <a href="mailto:hustlesmith.co@gmail.com" style="color:#38bdf8; text-decoration:underline;">hustlesmith.co@gmail.com</a></span>
-      <a href="https://cal.com/mantej" target="_blank" rel="noopener" style="color:#38bdf8; font-weight:600; text-decoration:underline;">Open Cal.com in Full Page ↗</a>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; pt:10px; border-top:1px solid rgba(255,255,255,0.08); font-size:0.78rem; color:#94a3b8;">
+      <span>Or email directly:</span>
+      <a href="mailto:hustlesmith.co@gmail.com?subject=Direct%20Meeting%20Request" style="color:#38bdf8; font-weight:600; text-decoration:underline;">hustlesmith.co@gmail.com ↗</a>
     </div>
   </div>
 </div>
 
 <!-- Floating Book a Meeting Badge -->
-<div id="recruiterFloatingBadge" class="recruiter-floating-badge" title="Book a 1:1 Meeting with Mantej via Cal.com">
+<div id="recruiterFloatingBadge" class="recruiter-floating-badge" title="Book a 1:1 Meeting with Mantej">
   <span>Book a Meeting 📅</span>
 </div>
 
