@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Mantej Singh — Founder / Builder / Creator</title>
 <meta name="description" content="Mantej Singh — BCA student and startup founder at LPU. Turns any website URL into native iOS & Android apps. Building it live as CEO & CTO.">
+<!-- Open Graph & Social Share Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mantej.vercel.app">
+<meta property="og:title" content="Mantej Singh — Founder / Builder / Creator">
+<meta property="og:description" content="BCA student & startup founder at LPU. Building ApplifyNow & HustleSmith Studio live. Watch YouTube vlogs @mantejtechvlogs.">
+<meta property="og:image" content="https://mantej.vercel.app/brand-logo.jpg">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://mantej.vercel.app">
+<meta name="twitter:title" content="Mantej Singh — Founder / Builder / Creator">
+<meta name="twitter:description" content="BCA student & startup founder at LPU. Building ApplifyNow & HustleSmith Studio live. Watch YouTube vlogs @mantejtechvlogs.">
+<meta name="twitter:image" content="https://mantej.vercel.app/brand-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -853,7 +866,9 @@
     display: inline-flex;
     align-items: center;
     height: 56px;
-    min-width: 340px;
+    min-width: 14ch;
+    max-width: 100%;
+    overflow: hidden;
   }
   .gooey-filter-layer {
     display: flex;
@@ -4511,13 +4526,13 @@ ser = serial.Serial(<span style="color:#34d399;">'/dev/ttyUSB0'</span>, <span st
         </div>
         <div class="orbit-core-label">MANTEJ SINGH · FOUNDER</div>
       </div>
-      <div class="orbit-orb magnet" data-platform="instagram" id="orb-ig">
+      <div class="orbit-orb magnet" data-platform="instagram" id="orb-ig" tabindex="0" role="button" aria-label="Instagram Profile @hustler_mantej">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
       </div>
-      <div class="orbit-orb magnet" data-platform="youtube" id="orb-yt">
+      <div class="orbit-orb magnet" data-platform="youtube" id="orb-yt" tabindex="0" role="button" aria-label="YouTube Channel @mantejtechvlogs">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>
       </div>
-      <div class="orbit-orb magnet" data-platform="linkedin" id="orb-li">
+      <div class="orbit-orb magnet" data-platform="linkedin" id="orb-li" tabindex="0" role="button" aria-label="LinkedIn Profile">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 10v7M7 7v.01M12 17v-4.5a2.5 2.5 0 015 0V17M12 10v7"/></svg>
       </div>
       <div class="orbit-panel" id="orbitPanel">
@@ -4857,14 +4872,39 @@ if (!reduceMotion) {
   const heroSec = document.getElementById('hero');
   if (!text1 || !text2) return;
 
-  const texts = ["Founder", "Vlogger", "Freelancer", "Full Stack Dev", "Cybersecurity", "HustleSmith"];
-  const morphTime = 1.0;
-  const cooldownTime = 1.5;
+  const rawRoles = [
+    "Founder",
+    "Engineer",
+    "App Builder",
+    "SaaS Builder",
+    "Vibe Coder",
+    "All-Rounder",
+    "Creator",
+    "iOS & Android Apps",
+    "Cybersecurity",
+    "CEO & Full-Stack Dev"
+  ];
+
+  // Fisher-Yates shuffle once on page load
+  function shuffleList(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  const texts = shuffleList(rawRoles);
+
+  let morphTime = 0.32; // initial scramble time (~280-380ms)
+  let baseCooldownTime = 1.5;
 
   let textIndex = texts.length - 1;
+  let cycleCount = 0;
   let time = new Date();
   let morph = 0;
-  let cooldown = cooldownTime;
+  let cooldown = baseCooldownTime;
   let isVisible = true;
 
   const setMorph = (fraction) => {
@@ -4889,7 +4929,10 @@ if (!reduceMotion) {
     cooldown = 0;
     let fraction = morph / morphTime;
     if (fraction > 1) {
-      cooldown = cooldownTime;
+      // Vary scramble time (280-380ms) and linger extra ~600ms every 3rd/4th cycle
+      morphTime = 0.28 + Math.random() * 0.10;
+      const isLingerCycle = (cycleCount % 3 === 0 || cycleCount % 4 === 0);
+      cooldown = baseCooldownTime + (isLingerCycle ? 0.6 : 0);
       fraction = 1;
     }
     setMorph(fraction);
@@ -4924,6 +4967,7 @@ if (!reduceMotion) {
 
     if (cooldown <= 0) {
       if (shouldIncrementIndex) {
+        cycleCount++;
         textIndex = (textIndex + 1) % texts.length;
         text1.textContent = texts[textIndex % texts.length];
         text2.textContent = texts[(textIndex + 1) % texts.length];
@@ -5187,8 +5231,16 @@ const platformData = {
 
   orbs.forEach(orb=>{
     orb.el.addEventListener('mouseenter', ()=>{ orb.frozen = true; showPanel(orb); });
+    orb.el.addEventListener('focus', ()=>{ orb.frozen = true; showPanel(orb); });
     orb.el.addEventListener('mouseleave', scheduleHide);
+    orb.el.addEventListener('blur', scheduleHide);
     orb.el.addEventListener('click', ()=> launch(platformData[orb.key].link));
+    orb.el.addEventListener('keydown', (e)=>{
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        launch(platformData[orb.key].link);
+      }
+    });
   });
   panel.addEventListener('mouseenter', ()=> clearTimeout(hidePanelTimer));
   panel.addEventListener('mouseleave', ()=>{ orbs.forEach(o=>o.frozen=false); scheduleHide(); });
@@ -5274,7 +5326,7 @@ const platformData = {
   });
 })();
 
-const HUSTLESMITH_LIVE = false; // Set to true when HustleSmith Studio officially launches drop
+const HUSTLESMITH_LIVE = true; // Set to true when HustleSmith Studio officially launches drop
 
 (function syncHustlesmithStatus() {
   const statusPill = document.querySelector('#mod-hustlesmith .status');
