@@ -9,7 +9,7 @@ let html = fs.readFileSync(FILE, 'utf8');
 
 const ORDER = [
   'gradglobe-07', 'event-cultural-fest', 'claude-promo', 'event-satinder-sartaaj',
-  'gradglobe-08', 'event-car-drift', 'surviving-ai', 'event-concert-aftermovie',
+  'gradglobe-08', 'political-neki-ki-diwar', 'event-car-drift', 'surviving-ai', 'event-concert-aftermovie',
   'gradglobe-06', 'pulsecrafts-legal', 'event-lukkhe-prime', 'gradglobe-02',
   'creator-protein-skit', 'event-superbike-stunts', 'saas-intro', 'gradglobe-09',
   'event-garba-night', 'gradglobe-03', 'event-supercars', 'gradglobe-01',
