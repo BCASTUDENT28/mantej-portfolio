@@ -1,7 +1,25 @@
 import type { NextConfig } from "next";
 
+// The portfolio is a single hand-built page (public/index.html) with its own
+// Three.js scene, so Next.js only serves it and the media next to it.
 const nextConfig: NextConfig = {
-  /* config options here */
+  async rewrites() {
+    return {
+      beforeFiles: [{ source: "/", destination: "/index.html" }],
+    };
+  },
+  async headers() {
+    return [
+      {
+        source: "/videos/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
+        source: "/assets/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

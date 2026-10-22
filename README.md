@@ -1,19 +1,34 @@
-# Sandeep Mamidala — Video Editing Portfolio
+# S7 Films — Sandeep Mamidala
 
-3D (Three.js) portfolio site for my video editing and motion design work, built with Next.js.
+Video editing and motion design portfolio of **Sandeep Mamidala** (S7 Films / S7 Productions).
 
-- **Work:** 28 featured edits — 12 event / campus reels, a political campaign reel (Neki Ki Diwar), a creator skit, 9 of the 30+ GradGlobe study-abroad reels I've edited (performance + organic), PulseCrafts explainer, Surviving AI captions, Claude SaaS promo, SaaS intro, Remotion promo.
-- **Full-quality masters:** [Google Drive folder](https://drive.google.com/drive/folders/1K5kJW2a3URDs3Zn6GdUCi6xHPlZ46O8O)
-- **Contact:** mamidalasandeep5@gmail.com · +91 94937 63769 · [LinkedIn](https://linkedin.com/in/sandeepmamidala) · [GitHub](https://github.com/saxdy7) · Instagram [@saxdy7_](https://www.instagram.com/saxdy7_/) / [@s7films_](https://www.instagram.com/s7films_/)
+**Live:** https://sandeep-video-portfolio.vercel.app
 
-## Structure
+## Work on the site
 
-- `public/landing-pages/kage.html` — the 3D landing page (rendered by `src/app/page.tsx` in an iframe)
-- `public/videos/work/` — web-encoded edits (720p H.264, faststart)
-- `public/images/work/` — thumbnails
-- `scratch/apply_real_work.js` — regenerates the project grid and contact details in `kage.html`
+37 edits, mixed so every kind of work shows up early:
 
-## Run locally
+- **Performance & organic reels** for the study-abroad brand GradGlobe (30+ delivered, a selection is shown)
+- **Event films** from campus: fests, concerts, auto shows, a fashion walk, an Amazon Prime promo event
+- **Political campaign reels** in Hindi for the Neki Ki Diwar donation drive
+- **Spec ads and SaaS motion**: Spotify AI Playlist, Myntra Glamfest Tour, a SaaS product cut, the S7 Productions promo
+- **Creator edits and captions**: talking-head edits, caption overlays, explainers
+
+Full-quality masters: [Google Drive](https://drive.google.com/drive/folders/1K5kJW2a3URDs3Zn6GdUCi6xHPlZ46O8O)
+
+## Contact
+
+- Email: mamidalasandeep5@gmail.com
+- Phone / WhatsApp: +91 94937 63769
+- Instagram: [@s7films_](https://www.instagram.com/s7films_/) · [@saxdy7_](https://www.instagram.com/saxdy7_/)
+- [LinkedIn](https://linkedin.com/in/sandeepmamidala) · [GitHub](https://github.com/saxdy7)
+
+## Tech
+
+- `public/index.html`: the whole site, a scroll-driven Three.js night scene with Lenis smooth scrolling
+- `public/assets/`: fonts (Onest, Noto Sans JP, both SIL Open Font License), three.js and Lenis (MIT), scene art
+- `public/videos/work/` + `public/images/work/`: web encodes (720p H.264) and thumbnails
+- Next.js only serves the page (`next.config.ts` maps `/` to `index.html`)
 
 ```bash
 npm install
