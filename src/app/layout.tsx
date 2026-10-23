@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sandeep Mamidala — Video Editor & Motion Designer",
+  title: "Mantej Singh — Founder, Builder & Creator",
   description:
-    "Portfolio of Sandeep Mamidala (S7 Films): performance reels, event films, political campaign reels, SaaS promos and motion design.",
+    "Portfolio of Mantej Singh: tech vlogs, startup promos, high-retention reels, motion design, and digital brand films.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

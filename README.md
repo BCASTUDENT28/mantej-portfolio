@@ -1,27 +1,21 @@
-# S7 Films — Sandeep Mamidala
+# Mantej Singh — Portfolio
 
-Video editing and motion design portfolio of **Sandeep Mamidala** (S7 Films / S7 Productions).
+Founder, builder, tech vlogger, and motion design portfolio of **Mantej Singh** (HustleSmith Studio / ApplifyNow).
 
-**Live:** https://sandeep-video-portfolio.vercel.app
+**Live Portfolio:** https://mantej.vercel.app
 
 ## Work on the site
 
-37 edits, mixed so every kind of work shows up early:
+Selected creative projects, high-retention vertical reels, tech vlogs, startup explainers, and cinematic motion designs.
 
-- **Performance & organic reels** for the study-abroad brand GradGlobe (30+ delivered, a selection is shown)
-- **Event films** from campus: fests, concerts, auto shows, a fashion walk, an Amazon Prime promo event
-- **Political campaign reels** in Hindi for the Neki Ki Diwar donation drive
-- **Spec ads and SaaS motion**: Spotify AI Playlist, Myntra Glamfest Tour, a SaaS product cut, the S7 Productions promo
-- **Creator edits and captions**: talking-head edits, caption overlays, explainers
+## Contact & Socials
 
-Full-quality masters: [Google Drive](https://drive.google.com/drive/folders/1K5kJW2a3URDs3Zn6GdUCi6xHPlZ46O8O)
-
-## Contact
-
-- Email: mamidalasandeep5@gmail.com
-- Phone / WhatsApp: +91 94937 63769
-- Instagram: [@s7films_](https://www.instagram.com/s7films_/) · [@saxdy7_](https://www.instagram.com/saxdy7_/)
-- [LinkedIn](https://linkedin.com/in/sandeepmamidala) · [GitHub](https://github.com/saxdy7)
+- Email: hustlesmith.co@gmail.com
+- YouTube: [@mantejtechvlogs](https://www.youtube.com/@mantejtechvlogs)
+- Instagram: [@hustler_mantej](https://www.instagram.com/hustler_mantej/)
+- LinkedIn: [Mantej Singh](https://www.linkedin.com/in/mantej-singh-307134379/)
+- Startup Store: [HustleSmith Studio](https://www.hustlesmith.studio)
+- Book a 1:1 Meeting: [Cal.com Scheduler](https://cal.com/bca-student-fod3gh/30min)
 
 ## Tech
 

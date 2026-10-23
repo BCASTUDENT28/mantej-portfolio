@@ -1,5 +1,5 @@
 {
-  "name": "s7-films-portfolio",
+  "name": "mantej-portfolio",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -21,6 +21,6 @@
     "eslint-config-next": "16.3.8",
     "typescript": "^5"
   },
-  "description": "Sandeep Mamidala (S7 Films) — video editing and motion design portfolio",
-  "author": "Sandeep Mamidala <mamidalasandeep5@gmail.com>"
+  "description": "Mantej Singh — founder, builder, tech vlogger and motion design portfolio",
+  "author": "Mantej Singh <hustlesmith.co@gmail.com>"
 }
